@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="name">
+    <span>بچین</span>
+  </div>
+
+  <div class="enter-info">
+    <span>اطلاعات زیر رو وارد کن! </span>
+    <span class="light">دیگه آخرشه</span>
+  </div>
+
+  <div class="sign-up-form">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <!-- فیلد نام -->
+      <mat-form-field appearance="outline">
+        <mat-label>نام</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="نام خود را وارد کنید"
+        />
+      </mat-form-field>
+
+      <!-- فیلد نام کاربری -->
+      <mat-form-field appearance="outline">
+        <mat-label>نام کاربری</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          placeholder="نام کاربری خود را وارد کنید"
+          required
+        />
+        <mat-error *ngIf="signUpForm.get('username')?.hasError('required')">
+          نام کاربری الزامی است
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('username')?.hasError('minlength')">
+          نام کاربری حداقل باید 3 کاراکتر باشد.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- فیلد رمز عبور -->
+      <mat-form-field appearance="outline">
+        <mat-label>رمز عبور</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          placeholder="رمز عبور خود را وارد کنید"
+          required
+        />
+        <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">
+          رمز عبور الزامی است
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">
+          رمز عبور حداقل باید 6 کاراکتر باشد.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="button-container">
+        <!-- دکمه ثبت فرم -->
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          ثبت نام
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
