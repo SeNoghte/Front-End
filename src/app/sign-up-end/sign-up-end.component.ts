@@ -10,9 +10,8 @@ import {merge} from 'rxjs';
 import {MatSelectModule} from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 
-
 @Component({
-  selector: 'app-sign-up',
+  selector: 'app-sign-up-end',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -24,14 +23,14 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatButtonModule
   ],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './sign-up-end.component.html',
+  styleUrl: './sign-up-end.component.scss'
 })
-
-export class SignUpComponent {
+export class SignUpEndComponent {
   signUpForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.minLength(3)]), // نام کاربری الزامی است
+    name: new FormControl(''), 
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]), // نام کاربری الزامی است
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]) // رمز عبور الزامی است
   });
   
   onSubmit() {
@@ -40,9 +39,5 @@ export class SignUpComponent {
     } else {
       console.log('Form is not valid');
     }
-  }
-
-  navigateToLogin(){
-    
   }
 }

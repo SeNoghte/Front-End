@@ -151,11 +151,12 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-
-    .mat-mdc-raised-button {
-      border-radius: 5px !important;
-    }
   }
+
+  .mat-mdc-raised-button {
+    border-radius: 5px !important;
+  }
+
   .mat-mdc-form-field {
     width: calc(100% - 2.75rem) !important;
     margin-top: 0.5rem;
@@ -164,5 +165,19 @@ body {
   .mat-mdc-raised-button:not(:disabled) {
     color: white;
     background-color: #7d00fa;
+  }
+
+  .google .mat-mdc-raised-button:not(:disabled) {
+    color: #7d00fa;
+    background-color: white;
+  }
+
+  .google {
+    .mat-mdc-button,
+    .mat-mdc-unelevated-button,
+    .mat-mdc-raised-button,
+    .mat-mdc-outlined-button {
+      border: 1px solid #7d00fa;
+    }
   }
 }
