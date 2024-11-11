@@ -13,17 +13,21 @@
 
   <div class="sign-up-form">
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <!-- فیلد نام کاربری -->
+      <!-- فیلد email -->
       <mat-form-field appearance="outline">
         <mat-label>ایمیل</mat-label>
         <input
           matInput
-          formControlName="email"
+          [formControl]="signUpForm.controls.email"
           placeholder="ایمیل"
           required
         />
-        <mat-error *ngIf="signUpForm.get('username')?.hasError('required')">
+
+        <mat-error *ngIf="signUpForm.controls.email?.hasError('required')">
           ایمیل الزامی است
+        </mat-error>
+        <mat-error *ngIf="signUpForm.controls.email?.hasError('email') && !signUpForm.get('email')?.hasError('required')">
+          لطفاً یک ایمیل معتبر وارد کنید
         </mat-error>
 
       </mat-form-field>

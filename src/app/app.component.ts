@@ -28,8 +28,9 @@ export class AppComponent {
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Hide navigation for specific routes
-        if (['/sign-up', '/sign-up-auth'].includes(event.url)) {
+        // Hide navigation if the URL starts with specific paths
+        const url = event.url.split('?')[0]; // Get the base path without query params
+        if (url === '/login' || url === '/sign-up' || url === '/sign-up-auth') {
           this.navVisibilityService.hide();
         } else {
           this.navVisibilityService.show();
