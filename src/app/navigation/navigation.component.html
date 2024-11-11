@@ -1,4 +1,4 @@
-<div class="nav-container">
+<div *ngIf="isVisible" class="nav-container">
     <button (click)="setActive('home')" [class.active]="activeTab === 'home'">
       <img
         [src]="activeTab === 'home' ? '../../assets/icons/home_chosen.svg' : '../../assets/icons/home_unchosen.svg'"
