@@ -9,7 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { merge } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-auth',
@@ -35,22 +36,25 @@ export class SignUpAuthComponent {
 
   email: string | null = null;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute , private router : Router) { }
 
   ngOnInit(): void {
     // دریافت پارامتر `email` از queryParams
     this.route.queryParams.subscribe(params => {
-      const email = params['email'];
-      if (email) {
-        this.signUpForm.get('email')?.setValue(email); // مقداردهی فیلد ایمیل
+      this.email = params['email'];
+      if (this.email) {
+        this.signUpForm.get('email')?.setValue(this.email); // مقداردهی فیلد ایمیل
       }
     });
   }
 
+  
   onSubmit() {
     if (this.signUpForm.valid) {
       // منطق ارسال فرم یا تایید کد
+      const em = this.email
       console.log('Form Data:', this.signUpForm.value);
+      this.router.navigate(['/sign-up-end'], { queryParams: { em } });
     } else {
       console.log('Form is not valid');
     }

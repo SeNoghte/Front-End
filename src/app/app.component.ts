@@ -30,7 +30,7 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         // Hide navigation if the URL starts with specific paths
         const url = event.url.split('?')[0]; // Get the base path without query params
-        if (url === '/login' || url === '/sign-up' || url === '/sign-up-auth') {
+        if (url === '/login' || url === '/sign-up' || url === '/sign-up-auth' || url === '/sign-up-end') {
           this.navVisibilityService.hide();
         } else {
           this.navVisibilityService.show();

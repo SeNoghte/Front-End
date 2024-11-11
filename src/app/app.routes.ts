@@ -9,5 +9,6 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'sign-up-auth', component: SignUpAuthComponent },
+    { path: 'sign-up-end', component: SignUpEndComponent },
     // Other routes can go here
 ];

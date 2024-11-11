@@ -66,9 +66,6 @@ export class SignUpComponent {
       })
     } else {
       console.log('outer else');
-
-      if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
-        this.router.navigate(['/sign-up-auth']);
     }
   }
 
