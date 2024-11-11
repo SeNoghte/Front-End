@@ -181,3 +181,9 @@ body {
     }
   }
 }
+
+.button-container {
+  .mdc-button__label {
+    display: flex !important;
+  }
+}
