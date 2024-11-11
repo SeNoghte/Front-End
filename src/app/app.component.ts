@@ -4,12 +4,13 @@ import { SignUpComponent } from "./sign-up/sign-up.component";
 import { SignUpAuthComponent } from './sign-up-auth/sign-up-auth.component';
 import { SignUpEndComponent } from './sign-up-end/sign-up-end.component';
 import { LoginComponent } from "./login/login.component";
+import { NavigationComponent } from "./navigation/navigation.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SignUpComponent, SignUpAuthComponent, SignUpEndComponent, LoginComponent],
+  imports: [RouterOutlet, SignUpComponent, SignUpAuthComponent, SignUpEndComponent, LoginComponent, NavigationComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

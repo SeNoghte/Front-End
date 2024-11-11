@@ -1,0 +1,28 @@
+.nav-container {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f8f8f8;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+  }
+  
+  button {
+    background: none;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  button img {
+    width: 30px; /* Adjust the icon size */
+    height: 30px;
+    opacity: 0.5; /* Normal (unselected) state */
+  }
+  
+  button.active img {
+    opacity: 1; /* Selected (active) state */
+  }
+  
