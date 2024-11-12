@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class NavigationVisibilityService {
-  private visibilitySubject = new BehaviorSubject<boolean>(true);
+  private visibilitySubject = new BehaviorSubject<boolean>(false);
   visibility$ = this.visibilitySubject.asObservable();
 
   show() {

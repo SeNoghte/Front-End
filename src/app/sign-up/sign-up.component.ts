@@ -14,6 +14,13 @@ import { response } from 'express';
 import { error } from 'console';
 import { Router } from '@angular/router';
 
+interface VerificationResponse {
+  verificationCodeId: string;
+  success: boolean;
+  message: string | null;
+  errorCode: number;
+}
+
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -52,16 +59,22 @@ export class SignUpComponent {
 
       const email = this.signUpForm.value.email;
 
-      this.http.post(this.apiUrl, { email }).subscribe({
+      this.http.post<VerificationResponse>(this.apiUrl, { email }).subscribe({
         next: (response) => {
           console.log('verification code sent successfully:', response);
+          
+          const verificationCodeId = response['verificationCodeId'];
+
+          console.log('verification code sent successfully:', verificationCodeId);
+
+
+          if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
+            this.router.navigate(['/sign-up-auth'], { queryParams: { email,verificationCodeId  } });
         },
         error: (error) => {
           console.error('Error sending verification code: ', error)
           console.log('inner else');
 
-          if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
-            this.router.navigate(['/sign-up-auth'], { queryParams: { email } });
         }
       })
     } else {
@@ -70,6 +83,7 @@ export class SignUpComponent {
   }
 
   navigateToLogin() {
+    this.router.navigate(['/login']);
 
   }
 }
