@@ -12,7 +12,7 @@ declare var google: any;
   templateUrl: './google-login-button.component.html',
   styleUrl: './google-login-button.component.scss'
 })
-export class GoogleLoginButtonComponent {
+  export class GoogleLoginButtonComponent {
   @Output() loginSuccess = new EventEmitter<any>();
   @Output() loginFailure = new EventEmitter<any>();
   @ViewChild('googleButtonContainer', { static: true }) googleButtonContainer!: ElementRef;
@@ -35,10 +35,13 @@ export class GoogleLoginButtonComponent {
   }
 
   handleCredentialResponse(response: any): void {
+    console.log('Google response object:', response);  // Log the full response
     const jwtToken = response.credential;
-    console.log('JWT Token:', jwtToken);
-
-    // Emit the token for parent component or handle the login logic here
-    this.loginSuccess.emit(jwtToken);
+    if (jwtToken) {
+      console.log('JWT Token received:', jwtToken);
+      // Handle the token, e.g., store it or send it to your backend
+    } else {
+      console.error('JWT Token not received');
+    }
   }
 }
