@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignUpAuthComponent } from './sign-up-auth/sign-up-auth.component';
 import { SignUpEndComponent } from './sign-up-end/sign-up-end.component';
+import { LandingComponent } from './landing/landing.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'sign-up', pathMatch: 'full' }, // Redirect to 'sign-up' on load
@@ -10,5 +11,6 @@ export const routes: Routes = [
     { path: 'sign-up', component: SignUpComponent },
     { path: 'sign-up-auth', component: SignUpAuthComponent },
     { path: 'sign-up-end', component: SignUpEndComponent },
+    { path: 'landing', component: LandingComponent },
     // Other routes can go here
 ];

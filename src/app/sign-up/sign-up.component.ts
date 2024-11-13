@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { merge } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { response } from 'express';
-import { error } from 'console';
 import { Router } from '@angular/router';
+import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { GoogleLoginButtonComponent } from "../google-login-button/google-login-button.component";
+
 
 interface VerificationResponse {
   verificationCodeId: string;
@@ -34,23 +31,44 @@ interface VerificationResponse {
     MatSelectModule,
     MatButtonModule,
     HttpClientModule,
-  ],
+    GoogleLoginButtonComponent
+],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class SignUpComponent {
+  private apiUrl = 'https://api.becheen.ir:7001/api/User/SendVerificationCode';
+  componentId: string;
+
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]), // نام کاربری الزامی است
   });
 
-  private apiUrl = 'https://api.becheen.ir:7001/api/User/SendVerificationCode';
-
   constructor(private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private navVisibilityService: NavigationVisibilityService,
   ) {
+    this.componentId = Math.random().toString(36).substring(2, 15);
+  }
 
+  ngOnInit() : void { 
+    this.navVisibilityService.hide()
+
+    // if (!localStorage.getItem('reloaded')) {
+    //   localStorage.setItem('reloaded', 'true');
+    //   window.location.reload();
+    // } else {
+    //   localStorage.removeItem('reloaded');
+    // }
+
+    let body = <HTMLDivElement>document.body;
+    let script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    body.appendChild(script);
   }
 
   onSubmit() {
@@ -84,6 +102,13 @@ export class SignUpComponent {
 
   navigateToLogin() {
     this.router.navigate(['/login']);
+  }
 
+  onGoogleLoginSuccess(credential: any): void {
+    console.log('Sign-Up: Google login successful:', credential);
+  }
+
+  onGoogleLoginFailure(error: any): void {
+    console.error('Sign-Up: Google login failed:', error);
   }
 }

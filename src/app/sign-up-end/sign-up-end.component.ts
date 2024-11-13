@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 
 @Component({
   selector: 'app-sign-up-end',
@@ -42,7 +43,8 @@ export class SignUpEndComponent {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient) { }
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {

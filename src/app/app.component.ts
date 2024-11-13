@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  constructor(private router: Router, private navVisibilityService: NavigationVisibilityService) {}
+  constructor(private router: Router, private navVisibilityService: NavigationVisibilityService) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
