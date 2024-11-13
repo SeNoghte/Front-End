@@ -1,0 +1,165 @@
+.group-info {
+  .header {
+    width: 100%;
+    font-size: 14px;
+
+    .header-up {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 14px;
+      margin-bottom: 16px;
+      margin-top: 50px;
+      ;
+    }
+
+    .edit {
+      order: -1;
+      color: #bd4cf1;
+      text-decoration: none;
+      font-size: 16px;
+      font-family: 'Arad', sans-serif;
+      margin-left: 12px;
+    }
+
+    .back {
+      display: flex;
+      align-items: center;
+      color: #000;
+      text-decoration: none;
+      font-size: 14px;
+      margin-right: 12px;
+
+
+      .icon {
+        margin-right: 50px;
+      }
+    }
+  }
+
+  .group-logo {
+    width: 114px;
+    height: 114px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    border-radius: 57px;
+    margin-left: 120px;
+  }
+
+  .group-name {
+    font-family: 'Arad';
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    color: rgba(0, 0, 0, 1);
+    text-align: center;
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+
+  .group-description {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 16px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 24px;
+    margin-right: 24px;
+    color: rgba(0, 0, 0, 1);
+    font-size: 14px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .creation-date {
+    text-align: right;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 1);
+    ;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 24px;
+    margin-right: 24px;
+    font-family: 'Arad';
+    background-color: rgba(255, 255, 255, 1);
+    padding: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .members {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 24px;
+    margin-right: 24px;
+
+    .add-member {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: #bd4cf1;
+      font-size: 14px;
+      text-decoration: none;
+      font-family: 'Arad', sans-serif;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .member {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .name {
+        font-size: 14px;
+        color: #333;
+        font-family: 'Arad', sans-serif;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        order: 1;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .no-members-message {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      font-family: 'Arad', sans-serif;
+    }
+  }
+
+  .leave-group {
+    width: 88%;
+    padding: 15px;
+    border: 1px solid #ff0000;
+    background-color: rgba(255, 255, 255, 1);
+    color: #ff0000;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Arad', sans-serif;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 22px;
+  }
+}
