@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="enter-info">
+    <div>
+      <span>به </span>
+      <span class="big-becheen">بچین </span>
+      <span>خوش اومدی </span>
+    </div>
+
+    <div class="sub-title">اطلاعاتت رو وارد کن تا وارد دنیای بچین بشی</div>
+  </div>
+
+  <div class="sign-up-form">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <!-- فیلد email -->
+      <mat-form-field appearance="outline">
+        <mat-label>ایمیل</mat-label>
+        <input
+          matInput
+          [formControl]="signUpForm.controls.email"
+          placeholder="ایمیل"
+          required
+        />
+
+        <mat-error *ngIf="signUpForm.controls.email?.hasError('required')">
+          ایمیل الزامی است
+        </mat-error>
+        <mat-error
+          *ngIf="
+            signUpForm.controls.email?.hasError('email') &&
+            !signUpForm.get('email')?.hasError('required')
+          "
+        >
+          لطفاً یک ایمیل معتبر وارد کنید
+        </mat-error>
+      </mat-form-field>
+
+      <div class="button-container">
+        <!-- دکمه ثبت فرم -->
+        <button mat-raised-button color="primary" type="submit">بعدی</button>
+      </div>
+    </form>
+
+    <div class="nav-to-login">
+      <p>
+        قبلاً ثبت نام کردی؟
+        <a
+          (click)="navigateToLogin()"
+          style="color: purple; text-decoration: none; cursor: pointer"
+          >وارد</a
+        >
+        <span> شو!</span>
+      </p>
+    </div>
+
+    <div
+      class="divider"
+      style="display: flex; align-items: center; margin: 1.5rem 1.375rem"
+    >
+      <hr style="flex: 1; border: none; border-top: 1px solid #ccc" />
+      <span style="padding: 0 10px; color: #888">یا</span>
+      <hr style="flex: 1; border: none; border-top: 1px solid #ccc" />
+    </div>
+
+    <!-- <asl-google-signin-button (click)="signInWithGoogle()"> -->
+
+    <div class="button-container google">
+      <app-google-login-button
+      (loginSuccess)="onGoogleLoginSuccess($event)"
+      (loginFailure)="onGoogleLoginFailure($event)">
+    </app-google-login-button>
+      <!-- <div
+        id="g_id_onload"
+        data-client_id="178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="redirect"
+        data-login_uri="http://localhost:4200/landing"
+        data-auto_prompt="false"
+      ></div>
+
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="continue_with"
+        data-size="large"
+        data-locale="fa"
+        data-logo_alignment="left"
+      ></div> -->
+    </div>
+  </div>
+</div>

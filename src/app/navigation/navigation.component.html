@@ -1,0 +1,27 @@
+<div *ngIf="isVisible" class="nav-container">
+    <button (click)="setActive('home')" [class.active]="activeTab === 'home'">
+      <img
+        [src]="activeTab === 'home' ? '../../assets/icons/home_chosen.svg' : '../../assets/icons/home_unchosen.svg'"
+        alt="Home Icon"
+      />
+    </button>
+    <button (click)="setActive('search')" [class.active]="activeTab === 'search'">
+      <img
+        [src]="activeTab === 'search' ? 'assets/icons/search_chosen.svg' : 'assets/icons/search_unchosen.svg'"
+        alt="Search Icon"
+      />
+    </button>
+    <button (click)="setActive('groups')" [class.active]="activeTab === 'groups'">
+      <img
+        [src]="activeTab === 'groups' ? '../../assets/icons/group_chosen.svg' : '../../assets/icons/group_unchosen.svg'"
+        alt="Groups Icon"
+      />
+    </button>
+    <button (click)="setActive('profile')" [class.active]="activeTab === 'profile'">
+      <img
+        [src]="activeTab === 'profile' ? '../../assets/icons/profile_chosen.svg' : '../../assets/icons/profile_unchosen.svg'"
+        alt="Profile Icon"
+      />
+    </button>
+  </div>
+  

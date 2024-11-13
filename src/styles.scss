@@ -1,1 +1,189 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@use "sass:map";
+@include mat.core();
+
+// @function _patch-error-palette($palette) {
+//   @return map.merge(
+//     $palette,
+//     (
+//       error: (
+//         0: #000000,
+//         10: #410002,
+//         20: #690005,
+//         25: #7e0007,
+//         30: #93000a,
+//         35: #a80710,
+//         40: #ba1a1a,
+//         50: #de3730,
+//         60: #ff5449,
+//         70: #ff897d,
+//         80: #ffb4ab,
+//         90: #ffdad6,
+//         95: #ffedea,
+//         98: #fff8f7,
+//         99: #fffbff,
+//         100: #ffffff,
+//       ),
+//     )
+//   );
+// }
+// // Define a custom primary palette based on #BD4CF1
+// $green-palette: _patch-error-palette((
+//   0: #000000,
+//   10: #002200,
+//   20: #013a00,
+//   25: #014600,
+//   30: #015300,
+//   35: #026100,
+//   40: #026e00,
+//   50: #038b00,
+//   60: #03a800,
+//   70: #03c700,
+//   80: #02e600,
+//   90: #77ff61,
+//   95: #cbffb8,
+//   98: #edffe1,
+//   99: #f7ffee,
+//   100: #ffffff,
+//   secondary: (
+//     0: #000000,
+//     10: #121f0e,
+//     20: #263422,
+//     25: #313f2c,
+//     30: #3c4b37,
+//     35: #485642,
+//     40: #54634d,
+//     50: #6c7b65,
+//     60: #86957e,
+//     70: #a0b097,
+//     80: #bbcbb2,
+//     90: #d7e8cd,
+//     95: #e5f6da,
+//     98: #eeffe3,
+//     99: #f7ffee,
+//     100: #ffffff,
+//   ),
+//   neutral: (
+//     0: #000000,
+//     10: #1a1c18,
+//     20: #2f312d,
+//     25: #3a3c38,
+//     30: #454743,
+//     35: #51534e,
+//     40: #5d5f5a,
+//     50: #767872,
+//     60: #90918c,
+//     70: #abaca6,
+//     80: #c6c7c1,
+//     90: #e2e3dc,
+//     95: #f1f1eb,
+//     98: #f9faf3,
+//     99: #fcfdf6,
+//     100: #ffffff,
+//     4: #0c0f0b,
+//     6: #121410,
+//     12: #1e201c,
+//     17: #282b26,
+//     22: #333531,
+//     24: #383a35,
+//     87: #dadbd3,
+//     92: #e8e9e1,
+//     94: #eeeee7,
+//     96: #f3f4ed,
+//   ),
+//   neutral-variant: (
+//     0: #000000,
+//     10: #181d15,
+//     20: #2c3229,
+//     25: #373d34,
+//     30: #43483f,
+//     35: #4e544a,
+//     40: #5a6056,
+//     50: #73796e,
+//     60: #8d9387,
+//     70: #a7ada1,
+//     80: #c3c8bc,
+//     90: #dfe4d7,
+//     95: #edf3e5,
+//     98: #f6fbee,
+//     99: #f9fef1,
+//     100: #ffffff,
+//   ),
+// ));
+
+// Define the theme using the custom primary palette
+$Front-End-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      // primary: $custom-primary-palette,
+      // Updated primary palette
+      tertiary: mat.$blue-palette,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+:root {
+  @include mat.all-component-themes($Front-End-theme);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0 !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.sign-up-form {
+  form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .mat-mdc-raised-button {
+    border-radius: 5px !important;
+  }
+
+  .mat-mdc-form-field {
+    width: calc(100% - 2.75rem) !important;
+    margin-top: 0.5rem;
+  }
+
+  .mat-mdc-raised-button:not(:disabled) {
+    color: white;
+    background-color: #7d00fa;
+  }
+
+  .google .mat-mdc-raised-button:not(:disabled) {
+    color: #7d00fa;
+    background-color: white;
+  }
+
+  .google {
+    .mat-mdc-button,
+    .mat-mdc-unelevated-button,
+    .mat-mdc-raised-button,
+    .mat-mdc-outlined-button {
+      border: 1px solid #7d00fa;
+    }
+  }
+}
+
+.button-container {
+  .mdc-button__label {
+    display: flex !important;
+  }
+}
