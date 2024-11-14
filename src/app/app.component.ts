@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+<<<<<<< HEAD
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { SignUpAuthComponent } from './sign-up-auth/sign-up-auth.component';
@@ -8,10 +9,16 @@ import { NavigationComponent } from "./navigation/navigation.component";
 import { NavigationVisibilityService } from './services/navigation-visibility.service';
 import { CommonModule } from '@angular/common';
 
+=======
+import { GroupPageComponent } from './group-page/group-page.component';
+import { GroupInfoComponent } from './group-info/group-info.component';
+import { RouterModule } from '@angular/router';
+>>>>>>> origin/dev-group-page
 
 @Component({
   selector: 'app-root',
   standalone: true,
+<<<<<<< HEAD
   imports: [RouterOutlet,
     SignUpComponent,
     SignUpAuthComponent,
@@ -19,9 +26,13 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     NavigationComponent,
     CommonModule,],
+=======
+  imports: [RouterModule, GroupPageComponent, GroupInfoComponent],
+>>>>>>> origin/dev-group-page
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
+<<<<<<< HEAD
 export class AppComponent {
   constructor(private router: Router, private navVisibilityService: NavigationVisibilityService) { }
 
@@ -39,3 +50,6 @@ export class AppComponent {
     });
   }
 }
+=======
+export class AppComponent { }
+>>>>>>> origin/dev-group-page
