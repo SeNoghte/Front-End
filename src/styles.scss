@@ -2,6 +2,25 @@
 @use "sass:map";
 @include mat.core();
 
+@font-face {
+    font-family: 'Arad-VF';
+    src: url('assets/fonts/Arad-VF.woff2') format('woff2 supports variations'),
+        url('assets/fonts/Arad-VF.woff2') format('woff2-variations');
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+html {
+    font-family: 'Arad-VF', sans-serif;
+    font-variation-settings: "DSTY" 2;
+
+    * {
+        font-family: 'Arad-VF', sans-serif;
+        font-variation-settings: "DSTY" 2;
+    }
+}
+
 // @function _patch-error-palette($palette) {
 //   @return map.merge(
 //     $palette,
@@ -143,7 +162,6 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .sign-up-form {
