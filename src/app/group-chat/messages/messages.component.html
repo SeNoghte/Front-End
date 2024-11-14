@@ -1,0 +1,30 @@
+<div class="chat-box">
+    @for (msg of messages; track messages) {
+    <div class="total-message">
+        @if(!msg.isMe){
+        <img [src]="msg.profileImage" alt="Profile Image" class="profile-image">
+        }
+        <div [ngClass]="{'message-mine': msg.isMe, 'message-theirs': !msg.isMe }">
+
+            <div class="message-content">
+                @if(!msg.isMe){
+                <p class="sender">{{ msg.senderName }}</p>
+                }
+                <div style="display: flex; justify-content: space-between; align-items: center">
+
+                    <p class="text">{{ msg.message }}</p>
+                    <span [ngClass]="{'date-mine': msg.isMe, 'date-theirs': !msg.isMe}">{{ msg.dateTime | date:'HH:mm'
+                        }}</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    }
+
+</div>
+<div class="input-container" [ngClass]="{ 'focused': inputValue !== '' }">
+    <input class="field" type="text" placeholder="پیام" [(ngModel)]="inputValue" (input)="adjustInputWidth()" oninput="handleInputChange()"/>
+    <img *ngIf="showIcon" (click)="sendMessage()" src="assets/icons/up.svg">
+</div>
