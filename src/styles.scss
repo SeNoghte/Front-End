@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@use "sass:map";
+@include mat.core();
+
+@font-face {
+    font-family: 'Arad-VF';
+    src: url('assets/fonts/Arad-VF.woff2') format('woff2 supports variations'),
+        url('assets/fonts/Arad-VF.woff2') format('woff2-variations');
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+html {
+    font-family: 'Arad-VF', sans-serif;
+    font-variation-settings: "DSTY" 2;
+
+    * {
+        font-family: 'Arad-VF', sans-serif;
+        font-variation-settings: "DSTY" 2;
+    }
+}
