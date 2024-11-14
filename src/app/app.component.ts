@@ -15,14 +15,8 @@ import { GroupInfoComponent } from './group-info/group-info.component';
   standalone: true,
   imports: [
     RouterOutlet,
-    SignUpComponent,
-    SignUpAuthComponent,
-    SignUpEndComponent,
-    LoginComponent,
     NavigationComponent,
     CommonModule, 
-    GroupPageComponent, 
-    GroupInfoComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
