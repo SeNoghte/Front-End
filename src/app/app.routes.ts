@@ -16,7 +16,6 @@ export const routes: Routes = [
   { path: 'sign-up-end', component: SignUpEndComponent },
   { path: 'landing', component: LandingComponent },
   { path: 'group-page', component: GroupPageComponent },
-  { path: 'group-info', component: GroupInfoComponent }
-  {component: GroupChatComponent, path: 'chat'}
-  // Other routes can go here
+  { path: 'group-info', component: GroupInfoComponent },
+  { path: 'chat', component: GroupChatComponent },
 ];
