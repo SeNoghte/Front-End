@@ -7,6 +7,7 @@ import { LandingComponent } from './landing/landing.component';
 import { GroupPageComponent } from './group-page/group-page.component';
 import { GroupInfoComponent } from './group-info/group-info.component';
 import { GroupChatComponent } from './group-chat/group-chat.component';
+import { GroupEditComponent } from './group-edit/group-edit.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' }, // Redirect to 'sign-up' on load
@@ -18,4 +19,5 @@ export const routes: Routes = [
   { path: 'group-page', component: GroupPageComponent },
   { path: 'group-info', component: GroupInfoComponent },
   { path: 'chat', component: GroupChatComponent },
+  { path: 'group-edit', component: GroupEditComponent },
 ];

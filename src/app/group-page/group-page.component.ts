@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-group-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss']
 })
@@ -20,12 +21,13 @@ export class GroupPageComponent implements OnInit, OnDestroy {
   private searchSubscription!: Subscription;
 
   groups = [
-    { name: 'صخره نوردی ستاک', image: 'path/to/image1.jpg' },
-    { name: 'کافه بازی ونگ', image: 'path/to/image2.jpg' },
-    { name: 'فوتبال دانشکده کامپیوتر', image: 'path/to/image3.jpg' },
+    { name: 'صخره نوردی ستاک', image: 'assets/icons/member1.svg' },
+    { name: 'کافه بازی ونگ', image: 'assets/icons/member2.svg' },
+    { name: 'فوتبال دانشکده کامپیوتر', image: 'assets/icons/member3.svg' },
   ];
 
   searchResults = this.groups;
+
   ngOnInit() {
     this.searchSubscription = this.searchSubject.pipe(
       debounceTime(300)
@@ -49,6 +51,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
   }
 
   toggleEdit() {
+
   }
 
   onSearch() {

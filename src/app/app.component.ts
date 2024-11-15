@@ -16,7 +16,7 @@ import { GroupInfoComponent } from './group-info/group-info.component';
   imports: [
     RouterOutlet,
     NavigationComponent,
-    CommonModule, 
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
