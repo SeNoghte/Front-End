@@ -1,7 +1,6 @@
 .nav-container {
     display: flex;
     justify-content: space-around;
-    background-color: #f8f8f8;
     padding: 10px 0;
     border-top: 1px solid #ddd;
   }
@@ -17,12 +16,8 @@
   }
   
   button img {
-    width: 30px; /* Adjust the icon size */
-    height: 30px;
-    opacity: 0.5; /* Normal (unselected) state */
+    width: 1.875rem;
+    height: 1.875rem;
   }
-  
-//   button.active img {
-//     opacity: 1; /* Selected (active) state */
-//   }
+
   

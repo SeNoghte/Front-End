@@ -1,17 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {  Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { merge } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface VerificationCode {
+  success: boolean;
+  message: string | undefined;
+  errorCode: number;
+  verificationCodeId: string;
+}
 
 @Component({
   selector: 'app-sign-up-auth',
@@ -30,6 +35,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   templateUrl: './sign-up-auth.component.html',
   styleUrl: './sign-up-auth.component.scss'
 })
+
 export class SignUpAuthComponent {
   private verifyApiUrl = 'https://api.becheen.ir:7001/api/User/VerifyVerificationCode'; // The API endpoint for verification
   verificationCodeId: string | null = null;
@@ -43,19 +49,21 @@ export class SignUpAuthComponent {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private navVisibilityService: NavigationVisibilityService,
+    private toastr: ToastrService,
+  ) { }
 
   ngOnInit(): void {
-    // دریافت پارامتر `email` از queryParams
+    this.navVisibilityService.hide()
+
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
       this.verificationCodeId = params['verificationCodeId'];
 
       if (this.email) {
-        this.signUpForm.get('email')?.setValue(this.email); // مقداردهی فیلد ایمیل
+        this.signUpForm.get('email')?.setValue(this.email); 
       }
-      console.log('Received email:', this.email);
-      console.log('Received verificationCodeId:', this.verificationCodeId);
     });
   }
 
@@ -68,19 +76,22 @@ export class SignUpAuthComponent {
         verificationCodeId: this.verificationCodeId
       }
 
-      console.log(payload)
-
-      this.http.post(this.verifyApiUrl, payload).subscribe({
+      this.http.post<VerificationCode>(this.verifyApiUrl, payload).subscribe({
         next  : (response) => {
-          console.log('verification successful : ', response);
-          this.router.navigate(['/sign-up-end'], { queryParams: { email : this.email, verificationCodeId : this.verificationCodeId } });
+          if(response.success){
+            this.toastr.success('کد تایید شد!');
+            this.router.navigate(['/sign-up-end'], { queryParams: { email : this.email, verificationCodeId : this.verificationCodeId } });
+          }
+          else{
+            this.toastr.error(response.message);
+          }
         },
         error : (error) => {
-          console.error('Verification failed : ',error);
+          this.toastr.error(error);
         }
       })
-    } else {
-      console.log('Form is not valid');
+    } 
+    else {
     }
   }
 }

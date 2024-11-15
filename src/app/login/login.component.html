@@ -10,16 +10,14 @@
 
   <div class="sign-up-form">
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <!-- فیلد نام کاربری -->
       <mat-form-field appearance="outline">
         <mat-label>نام کاربری یا ایمیل</mat-label>
-        <input matInput formControlName="email" placeholder="ایمیل" required />
-        <mat-error *ngIf="signUpForm.get('username')?.hasError('required')">
-          ایمیل الزامی است
+        <input matInput formControlName="emailOrUsername" placeholder="ایمیل" required />
+        <mat-error *ngIf="signUpForm.get('emailOrUsername')?.hasError('required')">
+          ایمیل یا نام کاربری الزامی است
         </mat-error>
       </mat-form-field>
 
-      <!-- فیلد رمز عبور -->
       <mat-form-field appearance="outline">
         <mat-label>رمز عبور</mat-label>
         <input
@@ -39,7 +37,7 @@
 
       <div class="button-container">
         <!-- دکمه ثبت فرم -->
-        <button mat-raised-button color="primary" type="submit">ورود</button>
+        <button mat-flat-button color="primary" type="submit">ورود</button>
       </div>
     </form>
 
@@ -64,16 +62,11 @@
       <hr style="flex: 1; border: none; border-top: 1px solid #ccc" />
     </div>
 
-    <!-- <div class="button-container google">
-      <app-google-login-button
-        (loginSuccess)="onGoogleLoginSuccess($event)"
-        (loginFailure)="onGoogleLoginFailure($event)"
-      >
-      </app-google-login-button>
-    </div> -->
-
-    <button (click)="test()">
-      google
-    </button>
+    <div class="button-container google">
+      <button mat-stroked-button (click)="googleLogin()" class="mat-stroked-text-regular btn-border-primary">
+        <img src="assets/icons/google.svg">
+        <span>ورود به گوگل</span>
+      </button>
+    </div>
   </div>
 </div>

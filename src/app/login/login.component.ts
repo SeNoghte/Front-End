@@ -7,8 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { GoogleLoginButtonComponent } from '../google-login-button/google-login-button.component';
-import { urlencoded } from 'express';
+import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface Login {
+  success: boolean;
+  message: string | undefined;
+  errorCode: number;
+  token: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -23,7 +30,7 @@ import { urlencoded } from 'express';
     MatSelectModule,
     MatButtonModule,
     HttpClientModule,
-    GoogleLoginButtonComponent,
+    MatButtonModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -31,48 +38,46 @@ import { urlencoded } from 'express';
 
 export class LoginComponent {
   signUpForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.minLength(3)]), // نام کاربری الزامی است
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]) // رمز عبور الزامی است
+    emailOrUsername: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  private loginApiUrl = 'https://api.becheen.ir:7001/api/User/Login'; // Replace with your login API URL
+  private loginApiUrl = 'https://api.becheen.ir:7001/api/User/Login';
 
   ngOnInit(): void {
-    // if (!localStorage.getItem('reloaded')) {
-    //   localStorage.setItem('reloaded', 'true');
-    //   window.location.reload();
-    // } else {
-    //   localStorage.removeItem('reloaded');
-    // }
-    let body = <HTMLDivElement>document.body;
-    let script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    body.appendChild(script);
+    this.navVisibilityService.hide()
   }
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router,
+    private http: HttpClient,
+    private navVisibilityService: NavigationVisibilityService,
+    private toastr: ToastrService,
+
+  ) { }
 
   onSubmit() {
     if (this.signUpForm.valid) {
-      // Prepare the payload
       const payload = {
         emailOrUsername: this.signUpForm.get('email')?.value,
         password: this.signUpForm.get('password')?.value
       };
 
-      this.http.post(this.loginApiUrl, payload).subscribe({
+      this.http.post<Login>(this.loginApiUrl, payload).subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
-          // this.router.navigate(['/home']); // Replace `/home` with your target route
+          if (response.success) {
+            localStorage.setItem('JWTtoken', response.token);
+            console.log('Saved JWT Token:', localStorage.getItem('authToken'));
+            this.toastr.success('Login successful!');
+          }
+          else {
+            this.toastr.error(response.message);
+          }
         },
         error: (error) => {
-          console.error('Login failed:', error);
+          this.toastr.error(error);
         }
       });
     } else {
-      console.log('Form is not valid');
     }
   }
 
@@ -80,25 +85,7 @@ export class LoginComponent {
     this.router.navigate(['/sign-up']);
   }
 
-  onGoogleLoginSuccess(credential: any): void {
-    console.log('Login: Google login successful:', credential);
-  }
-
-  onGoogleLoginFailure(error: any): void {
-    console.error('Login: Google login failed:', error);
-  }
-
-  test() {
-    // const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth'; // your external URL
-    // const params = new URLSearchParams({
-    //   client_id: '178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com',
-    //   redirect_uri: encodeURIComponent('http://localhost:4200/landing'),
-    //   response_type: 'code',
-    //   scope: encodeURIComponent('openid email profile'),
-    // }).toString();
-
-
+  googleLogin() {
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com&redirect_uri=http://localhost:4200/landing&response_type=code&scope=openid%20email%20profile`;
-    // console.log(`${baseUrl}?${params}`);
   }
 }

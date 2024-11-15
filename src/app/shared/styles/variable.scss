@@ -1,14 +1,14 @@
-$primary-color: #BD4CF1;
-$primary-light: #CB76F2;
+:root {
+  --primary: #bd4cf1;
+  --primary-light: #cb76f2;
 
-$error: #FF0000;
+  --error: #ff0000;
 
-$base: #FFFFFF;
-$gray-1: #F5F5F5;
-$gray-2: #C8C8C8;
-$gray-3: #B2B2B2;
-$gray-4: #6B6B6B;
-$gray-5: #5B5B5B;
-$base-opposite: #000000;
-
-
+  --base: #ffffff;
+  --gray-1: #f5f5f5;
+  --gray-2: #c8c8c8;
+  --gray-3: #b2b2b2;
+  --gray-4: #6b6b6b;
+  --gray-5: #5b5b5b;
+  --base-opposite: #000000;
+}

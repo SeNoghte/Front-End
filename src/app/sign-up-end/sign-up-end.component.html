@@ -10,17 +10,22 @@
   
     <div class="sign-up-form">
       <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-        <!-- فیلد نام -->
         <mat-form-field appearance="outline">
           <mat-label>نام</mat-label>
           <input
             matInput
             formControlName="name"
             placeholder="نام خود را وارد کنید"
+            required=""
           />
+          <mat-error *ngIf="signUpForm.get('name')?.hasError('required')">
+            نام الزامی است
+          </mat-error>
+          <mat-error *ngIf="signUpForm.get('name')?.hasError('minlength')">
+            نام حداقل باید 3 کاراکتر باشد.
+          </mat-error>
         </mat-form-field>
   
-        <!-- فیلد نام کاربری -->
         <mat-form-field appearance="outline">
           <mat-label>نام کاربری</mat-label>
           <input
@@ -35,9 +40,11 @@
           <mat-error *ngIf="signUpForm.get('username')?.hasError('minlength')">
             نام کاربری حداقل باید 3 کاراکتر باشد.
           </mat-error>
+          <mat-error *ngIf="signUpForm.get('username')?.hasError('pattern')">
+            نام کاربری فقط می‌تواند شامل حروف انگلیسی، آندرلاین و خط تیره باشد.
+          </mat-error>
         </mat-form-field>
   
-        <!-- فیلد رمز عبور -->
         <mat-form-field appearance="outline">
           <mat-label>رمز عبور</mat-label>
           <input
@@ -50,15 +57,17 @@
           <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">
             رمز عبور الزامی است
           </mat-error>
-          <mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">
+          <!-- <mat-error *ngIf="signUpForm.get('password')?.hasError('minlength')">
             رمز عبور حداقل باید 6 کاراکتر باشد.
+          </mat-error> -->
+          <mat-error *ngIf="signUpForm.get('password')?.hasError('pattern')">
+            رمز عبور باید شامل حروف بزرگ، کوچک، عدد و یک کاراکتر خاص باشد و حداقل 8 کاراکتر داشته باشد.
           </mat-error>
         </mat-form-field>
   
         <div class="button-container">
-          <!-- دکمه ثبت فرم -->
           <button
-            mat-raised-button
+            mat-flat-button
             color="primary"
             type="submit"
           >
