@@ -149,16 +149,6 @@ body {
     margin-top: 0.5rem;
   }
 
-  .mat-mdc-raised-button:not(:disabled) {
-    color: white;
-    background-color: #7d00fa;
-  }
-
-  .google .mat-mdc-raised-button:not(:disabled) {
-    color: #7d00fa;
-    background-color: white;
-  }
-
   .google {
 
     .mat-mdc-button,
@@ -174,4 +164,18 @@ body {
   .mdc-button__label {
     display: flex !important;
   }
+}
+
+.google {
+  .mat-mdc-outlined-button {
+    border-radius: 0.25rem ;
+  }
+}
+
+.mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled){
+  color: black !important;
+}
+
+button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.mat-mdc-button-base {
+  border-radius: 0.25rem;
 }

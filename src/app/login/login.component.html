@@ -39,7 +39,7 @@
 
       <div class="button-container">
         <!-- دکمه ثبت فرم -->
-        <button mat-raised-button color="primary" type="submit">ورود</button>
+        <button mat-flat-button color="primary" type="submit">ورود</button>
       </div>
     </form>
 
@@ -64,16 +64,11 @@
       <hr style="flex: 1; border: none; border-top: 1px solid #ccc" />
     </div>
 
-    <!-- <div class="button-container google">
-      <app-google-login-button
-        (loginSuccess)="onGoogleLoginSuccess($event)"
-        (loginFailure)="onGoogleLoginFailure($event)"
-      >
-      </app-google-login-button>
-    </div> -->
-
-    <button (click)="test()">
-      google
-    </button>
+    <div class="button-container google">
+      <button mat-stroked-button (click)="googleLogin()" class="mat-stroked-text-regular">
+        <img src="assets/icons/google.svg">
+        <span>ورود به گوگل</span>
+      </button>
+    </div>
   </div>
 </div>

@@ -1,49 +1,50 @@
-.container{
-    height: 100%;
-    padding-top: 11.3125rem;
+.container {
+  height: 100%;
+  padding-top: 11.3125rem;
 
-    .sign-up-form{
-        padding-top: 2rem;
+  .sign-up-form {
+    padding-top: 2rem;
 
-        .button-container {
-            height: 3.5rem;
-            width: calc(100% - 2.75rem);
-            margin-top: 1.25rem;
-            margin-right: auto;
-            margin-left: auto;
+    .button-container {
+      height: 3.5rem;
+      width: calc(100% - 2.75rem);
+      margin-top: 1.25rem;
+      margin-right: auto;
+      margin-left: auto;
 
-            button {
-                width: 100%;
-                height: 100%;
-                font-size: 1rem;
-            }
-        }
-
-        .nav-to-login{
-            margin-right: 1.875rem;
-            margin-top: 1rem;
-        }
-    }
-
-    .enter-info{
-        margin-top: 0.5rem;
-        color: #6B6B6B;
+      button {
+        width: 100%;
+        height: 100%;
         font-size: 1rem;
-        text-align: start;
-        margin-inline-start: 1.375rem;
-
-        .big-becheen{
-            font-size: 1.5rem;
-            color: #BD4CF1;
-        }
-
-        .light{
-            color: #C8C8C8;
-        }
+      }
     }
+
+    .nav-to-login {
+      margin-right: 1.875rem;
+      margin-top: 1rem;
+    }
+  }
+
+  .enter-info {
+    margin-top: 0.5rem;
+    color: #6b6b6b;
+    font-size: 1rem;
+    text-align: start;
+    margin-inline-start: 1.375rem;
+
+    .big-becheen {
+      font-size: 1.5rem;
+      color: #bd4cf1;
+    }
+
+    .light {
+      color: #c8c8c8;
+    }
+  }
 }
 
-.google-icon {
-    margin-left: 0.5rem;
+.google {
+  span {
+    margin-inline-start: 0.5rem;
   }
-  
+}

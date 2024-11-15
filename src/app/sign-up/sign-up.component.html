@@ -61,32 +61,11 @@
       <hr style="flex: 1; border: none; border-top: 1px solid #ccc" />
     </div>
 
-    <!-- <asl-google-signin-button (click)="signInWithGoogle()"> -->
-
     <div class="button-container google">
-      <app-google-login-button
-      (loginSuccess)="onGoogleLoginSuccess($event)"
-      (loginFailure)="onGoogleLoginFailure($event)">
-    </app-google-login-button>
-      <!-- <div
-        id="g_id_onload"
-        data-client_id="178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com"
-        data-context="signin"
-        data-ux_mode="redirect"
-        data-login_uri="http://localhost:4200/landing"
-        data-auto_prompt="false"
-      ></div>
-
-      <div
-        class="g_id_signin"
-        data-type="standard"
-        data-shape="rectangular"
-        data-theme="outline"
-        data-text="continue_with"
-        data-size="large"
-        data-locale="fa"
-        data-logo_alignment="left"
-      ></div> -->
+      <button mat-stroked-button (click)="googleLogin()" class="mat-stroked-text-regular">
+        <img src="assets/icons/google.svg">
+        <span>ورود به گوگل</span>
+      </button>
     </div>
   </div>
 </div>

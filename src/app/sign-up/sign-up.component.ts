@@ -31,7 +31,7 @@ interface VerificationResponse {
     MatSelectModule,
     MatButtonModule,
     HttpClientModule,
-    GoogleLoginButtonComponent
+    MatButtonModule
 ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -43,7 +43,7 @@ export class SignUpComponent {
   componentId: string;
 
   signUpForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]), // نام کاربری الزامی است
+    email: new FormControl('', [Validators.required, Validators.email])
   });
 
   constructor(private http: HttpClient,
@@ -55,20 +55,6 @@ export class SignUpComponent {
 
   ngOnInit() : void { 
     this.navVisibilityService.hide()
-
-    // if (!localStorage.getItem('reloaded')) {
-    //   localStorage.setItem('reloaded', 'true');
-    //   window.location.reload();
-    // } else {
-    //   localStorage.removeItem('reloaded');
-    // }
-
-    let body = <HTMLDivElement>document.body;
-    let script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    body.appendChild(script);
   }
 
   onSubmit() {
@@ -104,11 +90,7 @@ export class SignUpComponent {
     this.router.navigate(['/login']);
   }
 
-  onGoogleLoginSuccess(credential: any): void {
-    console.log('Sign-Up: Google login successful:', credential);
-  }
-
-  onGoogleLoginFailure(error: any): void {
-    console.error('Sign-Up: Google login failed:', error);
+  googleLogin() {
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com&redirect_uri=http://localhost:4200/landing&response_type=code&scope=openid%20email%20profile`;
   }
 }

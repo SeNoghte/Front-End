@@ -24,6 +24,7 @@ import { urlencoded } from 'express';
     MatButtonModule,
     HttpClientModule,
     GoogleLoginButtonComponent,
+    MatButtonModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -31,32 +32,19 @@ import { urlencoded } from 'express';
 
 export class LoginComponent {
   signUpForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.minLength(3)]), // نام کاربری الزامی است
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]) // رمز عبور الزامی است
+    email: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]) 
   });
 
-  private loginApiUrl = 'https://api.becheen.ir:7001/api/User/Login'; // Replace with your login API URL
-
+  private loginApiUrl = 'https://api.becheen.ir:7001/api/User/Login';
   ngOnInit(): void {
-    // if (!localStorage.getItem('reloaded')) {
-    //   localStorage.setItem('reloaded', 'true');
-    //   window.location.reload();
-    // } else {
-    //   localStorage.removeItem('reloaded');
-    // }
-    let body = <HTMLDivElement>document.body;
-    let script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    body.appendChild(script);
+
   }
 
   constructor(private router: Router, private http: HttpClient) { }
 
   onSubmit() {
     if (this.signUpForm.valid) {
-      // Prepare the payload
       const payload = {
         email: this.signUpForm.get('email')?.value,
         password: this.signUpForm.get('password')?.value
@@ -65,7 +53,6 @@ export class LoginComponent {
       this.http.post(this.loginApiUrl, payload).subscribe({
         next: (response) => {
           console.log('Login successful:', response);
-          // this.router.navigate(['/home']); // Replace `/home` with your target route
         },
         error: (error) => {
           console.error('Login failed:', error);
@@ -80,15 +67,7 @@ export class LoginComponent {
     this.router.navigate(['/sign-up']);
   }
 
-  onGoogleLoginSuccess(credential: any): void {
-    console.log('Login: Google login successful:', credential);
-  }
-
-  onGoogleLoginFailure(error: any): void {
-    console.error('Login: Google login failed:', error);
-  }
-
-  test() {
+  googleLogin() {
     // const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth'; // your external URL
     // const params = new URLSearchParams({
     //   client_id: '178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com',
