@@ -73,17 +73,17 @@ export class MessagesComponent {
       console.log('connection started');
       this.hubConnection
         .invoke('joinGroupHub', this.selectedGroup)
-        .catch(err => console.log(err));
-    }).catch(err => console.log(err));
+        .catch((err: any) => console.log(err));
+    }).catch((err: any) => console.log(err));
 
     this.hubConnection.onclose(() => {
       console.log('try to re start connection');
       this.hubConnection.start().then(() => {
         console.log('connection re started');
-      }).catch(err => console.log(err));
+      }).catch((err: any) => console.log(err));
     });
 
-    this.hubConnection.on('NewMessage', (data) => {
+    this.hubConnection.on('NewMessage', (data: Message) => {
       let newMessage: Message = data;
 
       if (newMessage.senderUserId === this.userId) {
@@ -98,7 +98,7 @@ export class MessagesComponent {
   public stopConnection() {
     this.hubConnection.stop().then(() => {
       console.log('stopped');
-    }).catch(err => console.log(err));
+    }).catch((err: any) => console.log(err));
   }
 
   getMessages() {
