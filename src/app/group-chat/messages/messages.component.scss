@@ -1,5 +1,5 @@
 .chat-box {
-    height: 590px;
+    height: 536px;
     background: #F5F5F5;
     border: #d4d4d4;
     border-style: solid;
@@ -23,6 +23,7 @@
     display: flex;
     align-items: flex-end;
     margin-bottom: 10px;
+    margin: 5px 5px 5px auto;
 }
 
 .message-mine {
@@ -32,12 +33,10 @@
     border-top-right-radius: 16px;
     border-bottom-left-radius: 16px;
     padding: 12px;
-    max-width: 80%;
     align-self: flex-end;
     display: flex;
     flex-direction: column;
     gap: 5px;
-    order: -1;
     margin: 5px 0 5px auto;
 
     .date-mine {
@@ -48,6 +47,7 @@
 }
 
 .message-theirs {
+    text-align: left;
     align-items: self-end;
     display: flex;
     margin-bottom: 10px;
@@ -57,10 +57,16 @@
     height: auto;
     padding: 12px;
     gap: 10px;
-
+    margin: 0px 165px 5px auto;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
+
+    .date-theirs {
+        font-size: 13px;
+        text-align: right;
+        color: #5d5c5c;
+    }
 }
 
 .profile-image {
@@ -74,48 +80,40 @@
     font-weight: bold;
 }
 
-.date-theirs {
-    font-size: 13px;
-    text-align: right;
-    color: #5d5c5c;
-}
-
 .input-container {
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    padding: 0 10px;
+    border: 1px solid #9f9f9f;
+    border-radius: 47px;
+    margin: 1rem auto;
+    transition: width 0.3s ease;
+    width: calc(100% - 20px);
 }
 
 .input-container input {
-    transition: width 0.3s ease;
     width: 100%;
-    padding-right: 35px;
-    margin-right: 25px;
-}
-
-
-.input-container.focused .icon {
-    display: inline;
-}
-
-.input-container.focused {
-    width: 358px;
-}
-
-.input-container button {
-    visibility: visible;
+    padding: 18px 0px 12px 21px;
+    margin: 0;
+    border: none;
+    outline: none;
 }
 
 .input-container button {
     width: 32px;
     height: 32px;
-    margin-left: -40px;
-    margin-top: 10px;
-    display: inline-block;
+    margin-left: 8px;
     visibility: hidden;
+    transition: visibility 0.3s ease;
 }
+
+.input-container.focused button {
+    visibility: visible;
+}
+
 
 .input-container input:focus {
     border-color: #BD4CF1BF; 
     outline: none;
+    padding: -10px;
 }

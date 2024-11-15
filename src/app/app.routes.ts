@@ -18,6 +18,6 @@ export const routes: Routes = [
   { path: 'landing', component: LandingComponent },
   { path: 'group-page', component: GroupPageComponent },
   { path: 'group-info', component: GroupInfoComponent },
-  { path: 'chat', component: GroupChatComponent },
+  { path: 'chat-group', component: GroupChatComponent },
   { path: 'group-edit', component: GroupEditComponent },
 ];

@@ -1,9 +1,6 @@
 <div class="chat-box">
     @for (msg of messages; track messages) {
     <div class="total-message">
-        @if(!msg.isMe){
-        <img [src]="msg.profileImage" alt="Profile Image" class="profile-image">
-        }
         <div [ngClass]="{'message-mine': msg.isMe, 'message-theirs': !msg.isMe }">
 
             <div class="message-content">
@@ -17,14 +14,17 @@
                         }}</span>
                 </div>
             </div>
-
+           
         </div>
+        @if(!msg.isMe){
+            <img [src]="msg.profileImage" alt="Profile Image" class="profile-image">
+            }
 
     </div>
     }
 
 </div>
 <div class="input-container" [ngClass]="{ 'focused': inputValue !== '' }">
-    <input class="field" type="text" placeholder="پیام" [(ngModel)]="inputValue" (input)="adjustInputWidth()" oninput="handleInputChange()"/>
     <img *ngIf="showIcon" (click)="sendMessage()" src="assets/icons/up.svg">
+    <input class="field" style="margin-right: 20px;" type="text" placeholder="پیام" [(ngModel)]="sendingMessage" (input)="adjustInputWidth()" oninput="handleInputChange()"/>
 </div>
