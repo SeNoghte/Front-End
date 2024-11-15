@@ -1,0 +1,25 @@
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  border-radius: 0.25rem !important;
+}
+
+.btn-border-primary.mat-mdc-button,
+.btn-border-primary.mat-mdc-raised-button,
+.btn-border-primary.mat-mdc-unelevated-button,
+.btn-border-primary.mat-mdc-outlined-button {
+  border: 1px solid var(--primary) !important;
+}
+
+.mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled) {
+  color: black !important;
+}
+
+button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.mat-mdc-button-base {
+  border-radius: 0.25rem;
+}
+
+.button-container {
+  .mdc-button__label {
+    display: flex !important;
+  }
+}
