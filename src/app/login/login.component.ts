@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { GoogleLoginButtonComponent } from '../google-login-button/google-login-button.component';
+import { urlencoded } from 'express';
 
 @Component({
   selector: 'app-login',
@@ -85,5 +86,19 @@ export class LoginComponent {
 
   onGoogleLoginFailure(error: any): void {
     console.error('Login: Google login failed:', error);
+  }
+
+  test() {
+    // const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth'; // your external URL
+    // const params = new URLSearchParams({
+    //   client_id: '178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com',
+    //   redirect_uri: encodeURIComponent('http://localhost:4200/landing'),
+    //   response_type: 'code',
+    //   scope: encodeURIComponent('openid email profile'),
+    // }).toString();
+
+
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com&redirect_uri=http://localhost:4200/landing&response_type=code&scope=openid%20email%20profile`;
+    // console.log(`${baseUrl}?${params}`);
   }
 }
