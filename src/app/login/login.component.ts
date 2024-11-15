@@ -58,13 +58,14 @@ export class LoginComponent {
   onSubmit() {
     if (this.signUpForm.valid) {
       const payload = {
-        emailOrUsername: this.signUpForm.get('email')?.value,
+        emailOrUsername: this.signUpForm.get('emailOrUsername')?.value,
         password: this.signUpForm.get('password')?.value
       };
 
       this.http.post<Login>(this.loginApiUrl, payload).subscribe({
         next: (response) => {
           if (response.success) {
+            console.log(response)
             localStorage.setItem('JWTtoken', response.token);
             console.log('Saved JWT Token:', localStorage.getItem('authToken'));
             this.toastr.success('Login successful!');
