@@ -10,16 +10,14 @@
 
   <div class="sign-up-form">
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <!-- فیلد نام کاربری -->
       <mat-form-field appearance="outline">
         <mat-label>نام کاربری یا ایمیل</mat-label>
-        <input matInput formControlName="email" placeholder="ایمیل" required />
-        <mat-error *ngIf="signUpForm.get('username')?.hasError('required')">
-          ایمیل الزامی است
+        <input matInput formControlName="emailOrUsername" placeholder="ایمیل" required />
+        <mat-error *ngIf="signUpForm.get('emailOrUsername')?.hasError('required')">
+          ایمیل یا نام کاربری الزامی است
         </mat-error>
       </mat-form-field>
 
-      <!-- فیلد رمز عبور -->
       <mat-form-field appearance="outline">
         <mat-label>رمز عبور</mat-label>
         <input

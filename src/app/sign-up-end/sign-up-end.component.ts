@@ -12,6 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface SignUp {
+  success: boolean;
+  message: string | undefined;
+  errorCode: number;
+}
 
 @Component({
   selector: 'app-sign-up-end',
@@ -32,9 +39,13 @@ import { NavigationVisibilityService } from '../services/navigation-visibility.s
 })
 export class SignUpEndComponent {
   signUpForm = new FormGroup({
-    name: new FormControl(''),
-    username: new FormControl('', [Validators.required, Validators.minLength(3)]), // نام کاربری الزامی است
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]) // رمز عبور الزامی است
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z0-9_-]+$/)]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]
+    )
   });
 
   email: string | null = null;
@@ -43,14 +54,17 @@ export class SignUpEndComponent {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
       this.verificationCodeId = params['verificationCodeId'];
-      console.log('email : ', this.email, 'verfi id : ', this.verificationCodeId)
+
+      console.log(this.email);
+      console.log(this.verificationCodeId);
     });
   }
 
@@ -65,19 +79,22 @@ export class SignUpEndComponent {
         verificationCodeId: this.verificationCodeId
       };
 
-      this.http.post(this.signUpApiUrl, payload).subscribe({
+      this.http.post<SignUp>(this.signUpApiUrl, payload).subscribe({
         next: (response) => {
-          console.log('Sign-up successful:', response);
-          // Navigate to a success page or home page after successful sign-up
-          this.router.navigate(['/login']); // Replace `/welcome` with your target route
+          if (response.success) {
+            this.router.navigate(['/login']); // Replace `/welcome` with your target route
+            this.toastr.success('ثبت نام با موفقیت انجام شد');
+          }
+          else {
+            this.toastr.error(response.message);
+          }
         },
         error: (error) => {
-          console.error('Sign-up failed:', error);
-          // Handle error (e.g., show an error message)
+          this.toastr.error(error);
         }
       });
     } else {
-      console.log('Form is not valid');
+      // this.toastr.error('Form is not valid');
     }
   }
 }

@@ -8,12 +8,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 interface VerificationResponse {
   verificationCodeId: string;
   success: boolean;
-  message: string | null;
+  message: string | undefined;
   errorCode: number;
 }
 
@@ -47,6 +48,7 @@ export class SignUpComponent {
   constructor(private http: HttpClient,
     private router: Router,
     private navVisibilityService: NavigationVisibilityService,
+    private toastr: ToastrService,
   ) {
   }
 
@@ -56,30 +58,26 @@ export class SignUpComponent {
 
   onSubmit() {
     if (this.signUpForm.valid) {
-      console.log('Form Data:', this.signUpForm.value);
-
       const email = this.signUpForm.value.email;
 
       this.http.post<VerificationResponse>(this.apiUrl, { email }).subscribe({
-        next: (response) => {
-          console.log('verification code sent successfully:', response);
-          
-          const verificationCodeId = response['verificationCodeId'];
-
-          console.log('verification code sent successfully:', verificationCodeId);
-
-
-          if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
-            this.router.navigate(['/sign-up-auth'], { queryParams: { email,verificationCodeId  } });
+        next: (response) => { 
+          var verificationCodeId = '';  
+          if(response.success){
+            verificationCodeId = response['verificationCodeId'];
+            this.toastr.success('کد تایید ارسال شد!');
+            
+            if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
+              this.router.navigate(['/sign-up-auth'], { queryParams: { email,verificationCodeId  } });
+          }       
+          else{
+            this.toastr.error(response.message);
+          }
         },
         error: (error) => {
-          console.error('Error sending verification code: ', error)
-          console.log('inner else');
-
         }
       })
     } else {
-      console.log('outer else');
     }
   }
 

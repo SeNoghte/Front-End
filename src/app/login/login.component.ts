@@ -8,6 +8,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface Login {
+  success: boolean;
+  message: string | undefined;
+  errorCode: number;
+  token: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -30,7 +38,7 @@ import { NavigationVisibilityService } from '../services/navigation-visibility.s
 
 export class LoginComponent {
   signUpForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    emailOrUsername: new FormControl('', [Validators.required, Validators.minLength(3)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
@@ -43,19 +51,30 @@ export class LoginComponent {
   constructor(private router: Router,
     private http: HttpClient,
     private navVisibilityService: NavigationVisibilityService,
+    private toastr: ToastrService,
+
   ) { }
 
   onSubmit() {
     if (this.signUpForm.valid) {
       const payload = {
-        email: this.signUpForm.get('email')?.value,
+        emailOrUsername: this.signUpForm.get('email')?.value,
         password: this.signUpForm.get('password')?.value
       };
 
-      this.http.post(this.loginApiUrl, payload).subscribe({
+      this.http.post<Login>(this.loginApiUrl, payload).subscribe({
         next: (response) => {
+          if (response.success) {
+            localStorage.setItem('JWTtoken', response.token);
+            console.log('Saved JWT Token:', localStorage.getItem('authToken'));
+            this.toastr.success('Login successful!');
+          }
+          else {
+            this.toastr.error(response.message);
+          }
         },
         error: (error) => {
+          this.toastr.error(error);
         }
       });
     } else {

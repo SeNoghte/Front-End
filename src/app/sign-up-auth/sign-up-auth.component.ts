@@ -9,6 +9,14 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface VerificationCode {
+  success: boolean;
+  message: string | undefined;
+  errorCode: number;
+  verificationCodeId: string;
+}
 
 @Component({
   selector: 'app-sign-up-auth',
@@ -43,6 +51,7 @@ export class SignUpAuthComponent {
     private router: Router,
     private http: HttpClient,
     private navVisibilityService: NavigationVisibilityService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -67,14 +76,22 @@ export class SignUpAuthComponent {
         verificationCodeId: this.verificationCodeId
       }
 
-      this.http.post(this.verifyApiUrl, payload).subscribe({
+      this.http.post<VerificationCode>(this.verifyApiUrl, payload).subscribe({
         next  : (response) => {
-          this.router.navigate(['/sign-up-end'], { queryParams: { email : this.email, verificationCodeId : this.verificationCodeId } });
+          if(response.success){
+            this.toastr.success('کد تایید شد!');
+            this.router.navigate(['/sign-up-end'], { queryParams: { email : this.email, verificationCodeId : this.verificationCodeId } });
+          }
+          else{
+            this.toastr.error(response.message);
+          }
         },
         error : (error) => {
+          this.toastr.error(error);
         }
       })
-    } else {
+    } 
+    else {
     }
   }
 }

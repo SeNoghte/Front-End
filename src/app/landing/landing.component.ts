@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-landing',
@@ -9,13 +10,17 @@ import { Router } from '@angular/router';
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private toastr: ToastrService,
+  ) {}
 
   ngOnInit(): void {
     const token = this.getCodeFromUrl();
     console.log('Received JWT Token:', token);
 
-
+    localStorage.setItem('JWTtoken', token!);
+    this.toastr.success('Login successful!');
   }
 
   getCodeFromUrl(): string | null {
