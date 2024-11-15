@@ -58,7 +58,7 @@ export class LoginComponent {
     if (this.signUpForm.valid) {
       // Prepare the payload
       const payload = {
-        email: this.signUpForm.get('email')?.value,
+        emailOrUsername: this.signUpForm.get('email')?.value,
         password: this.signUpForm.get('password')?.value
       };
 
