@@ -1,0 +1,32 @@
+<div class="edit-group">
+  <div class="header">
+    <a class="back" [routerLink]="['/group-info']">
+      <img class="back-button" src="assets/icons/back.svg" />
+      بازگشت
+    </a>
+    <a class="submit" (click)="saveChanges()">ثبت</a>
+  </div>
+
+  <div class="group-logo">
+    <img src="assets/icons/group-profile.svg" alt="Group Logo" />
+  </div>
+
+  <a class="edit-image" (click)="editImage()">ویرایش تصویر</a>
+
+  <mat-form-field class="edit-input" appearance="outline">
+    <mat-label>نام</mat-label>
+    <input matInput [(ngModel)]="groupName" #nameInput="ngModel" required />
+    <mat-error *ngIf="nameInput.invalid && nameInput.touched">
+      وارد کردن نام الزامی است
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="edit-input" appearance="outline">
+    <mat-label>توضیحات</mat-label>
+    <input matInput [(ngModel)]="groupDescription" />
+  </mat-form-field>
+
+  <hr class="divider" />
+
+  <button class="delete-group" (click)="deleteGroup()">حذف اکیپ</button>
+</div>
