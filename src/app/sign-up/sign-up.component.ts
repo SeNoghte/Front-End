@@ -51,7 +51,7 @@ export class SignUpComponent {
   }
 
   ngOnInit() : void { 
-    // this.navVisibilityService.hide()
+    this.navVisibilityService.hide()
   }
 
   onSubmit() {

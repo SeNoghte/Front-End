@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 
 @Component({
   selector: 'app-login',
@@ -30,15 +31,19 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)]) 
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
   private loginApiUrl = 'https://api.becheen.ir:7001/api/User/Login';
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    this.navVisibilityService.hide()
   }
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router,
+    private http: HttpClient,
+    private navVisibilityService: NavigationVisibilityService,
+  ) { }
 
   onSubmit() {
     if (this.signUpForm.valid) {
@@ -49,14 +54,11 @@ export class LoginComponent {
 
       this.http.post(this.loginApiUrl, payload).subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
         },
         error: (error) => {
-          console.error('Login failed:', error);
         }
       });
     } else {
-      console.log('Form is not valid');
     }
   }
 
@@ -65,16 +67,6 @@ export class LoginComponent {
   }
 
   googleLogin() {
-    // const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth'; // your external URL
-    // const params = new URLSearchParams({
-    //   client_id: '178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com',
-    //   redirect_uri: encodeURIComponent('http://localhost:4200/landing'),
-    //   response_type: 'code',
-    //   scope: encodeURIComponent('openid email profile'),
-    // }).toString();
-
-
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=178853996623-7d8dh0tal921q54iju05fhqhqdm03gen.apps.googleusercontent.com&redirect_uri=http://localhost:4200/landing&response_type=code&scope=openid%20email%20profile`;
-    // console.log(`${baseUrl}?${params}`);
   }
 }
