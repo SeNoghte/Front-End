@@ -7,8 +7,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { GoogleLoginButtonComponent } from '../google-login-button/google-login-button.component';
-import { urlencoded } from 'express';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +21,6 @@ import { urlencoded } from 'express';
     MatSelectModule,
     MatButtonModule,
     HttpClientModule,
-    GoogleLoginButtonComponent,
     MatButtonModule
   ],
   templateUrl: './login.component.html',

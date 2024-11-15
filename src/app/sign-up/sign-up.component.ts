@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
-import { GoogleLoginButtonComponent } from "../google-login-button/google-login-button.component";
 
 
 interface VerificationResponse {
