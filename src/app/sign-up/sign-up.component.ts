@@ -39,7 +39,6 @@ interface VerificationResponse {
 
 export class SignUpComponent {
   private apiUrl = 'https://api.becheen.ir:7001/api/User/SendVerificationCode';
-  componentId: string;
 
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
@@ -49,11 +48,10 @@ export class SignUpComponent {
     private router: Router,
     private navVisibilityService: NavigationVisibilityService,
   ) {
-    this.componentId = Math.random().toString(36).substring(2, 15);
   }
 
   ngOnInit() : void { 
-    this.navVisibilityService.hide()
+    // this.navVisibilityService.hide()
   }
 
   onSubmit() {
