@@ -65,7 +65,6 @@ export class LoginComponent {
       this.http.post<Login>(this.loginApiUrl, payload).subscribe({
         next: (response) => {
           if (response.success) {
-            console.log(response)
             localStorage.setItem('JWTtoken', response.token);
             console.log('Saved JWT Token:', localStorage.getItem('authToken'));
             this.toastr.success('Login successful!');
