@@ -11,7 +11,8 @@ import { GroupEditComponent } from './group-edit/group-edit.component';
 import { RecoveryPassEmailComponent } from './recovery-pass-email/recovery-pass-email.component';
 import { RecoveryPassCodeComponent } from './recovery-pass-code/recovery-pass-code.component';
 import { RecoveryPassNewPassComponent } from './recovery-pass-new-pass/recovery-pass-new-pass.component';
-
+import { CreateGroupComponent } from './create-group/create-group.component';
+import { AddGroupMemberComponent } from './add-group-member/add-group-member.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -26,4 +27,6 @@ export const routes: Routes = [
   { path: 'recovery-pass-email', component: RecoveryPassEmailComponent },
   { path: 'recovery-pass-code', component: RecoveryPassCodeComponent },
   { path: 'recovery-pass-new-pass', component: RecoveryPassNewPassComponent },
+  { path: 'create-group', component: CreateGroupComponent },
+  { path: 'add-member',  component: AddGroupMemberComponent}
 ];
