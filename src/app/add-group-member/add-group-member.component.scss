@@ -1,8 +1,8 @@
 .header {
     display: flex;
     justify-content: space-between;
-    margin-top: 3vh;
-    padding: 2vh;
+    margin-top: 16px;
+    padding: 1rem;
 
     .next-button {
         color: var(--primary);
@@ -12,8 +12,12 @@
         display: flex;
 
         .back-button {
-            height: 3vh;
+            height: 25px;
         }
+    }
+
+    .header-name{
+        color: var(--gray-5);
     }
 }
 
