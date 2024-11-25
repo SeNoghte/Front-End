@@ -1,8 +1,12 @@
 .header {
     display: flex;
     justify-content: space-between;
-    margin-top: 3vh;
-    padding: 2vh;
+    margin-top: 16px;
+    padding: 1rem;
+
+    .header-name {
+        color: var(--gray-5);
+    }
 
     .next-button {
         color: var(--primary);
@@ -12,7 +16,7 @@
         display: flex;
 
         .back-button {
-            height: 3vh;
+            height: 25px;
         }
     }
 }
@@ -29,24 +33,29 @@
         align-items: center;
         justify-content: center;
 
+        .input-file {
+            display: none;
+        }
+
         .background-image {
             background-color: var(--gray-2);
             border-radius: 50%;
-            height: 13.51vh;
-            width: 13.51vh;
-            margin-top: 7.98vh;
+            height: 114px;
+            width: 114px;
+            margin-top: 60px;
             position: relative;
-
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
             .default-image {
-                position: absolute;
-                margin-right: 2.61vh;
-                margin-top: 2.3vh;
+                position: absolute;  
             }
 
             .has-image {
                 border-radius: 50%;
-                height: 13.51vh;
-                width: 13.51vh;
+                height: 114px;
+                width: 114px;
             }
         }
 
@@ -61,5 +70,12 @@
         align-items: center;
         flex-direction: column;
         padding: 1rem;
+    }
+
+    .form {
+        padding: 20%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
     }
 }
