@@ -1,0 +1,65 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3vh;
+    padding: 2vh;
+
+    .next-button {
+        color: var(--primary);
+    }
+
+    .back {
+        display: flex;
+
+        .back-button {
+            height: 3vh;
+        }
+    }
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .image-part {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .background-image {
+            background-color: var(--gray-2);
+            border-radius: 50%;
+            height: 13.51vh;
+            width: 13.51vh;
+            margin-top: 7.98vh;
+            position: relative;
+
+            .default-image {
+                position: absolute;
+                margin-right: 2.61vh;
+                margin-top: 2.3vh;
+            }
+
+            .has-image {
+                border-radius: 50%;
+                height: 13.51vh;
+                width: 13.51vh;
+            }
+        }
+
+        .set-photo {
+            color: var(--primary);
+            text-align: center;
+        }
+    }
+
+    .form-field {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+    }
+}

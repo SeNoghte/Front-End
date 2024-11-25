@@ -8,7 +8,8 @@ import { GroupPageComponent } from './group-page/group-page.component';
 import { GroupInfoComponent } from './group-info/group-info.component';
 import { GroupChatComponent } from './group-chat/group-chat.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
-
+import { CreateGroupComponent } from './create-group/create-group.component';
+import { AddGroupMemberComponent } from './add-group-member/add-group-member.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' }, // Redirect to 'sign-up' on load
   { path: 'login', component: LoginComponent },
@@ -20,4 +21,6 @@ export const routes: Routes = [
   { path: 'group-info', component: GroupInfoComponent },
   { path: 'chat-group', component: GroupChatComponent },
   { path: 'group-edit', component: GroupEditComponent },
+  { path: 'create-group', component: CreateGroupComponent },
+  { path: 'add-member',  component: AddGroupMemberComponent}
 ];
