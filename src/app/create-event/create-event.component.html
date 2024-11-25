@@ -1,0 +1,67 @@
+<div>
+    <div class="header">
+        <div class="back">
+            <img class="back-button" src="assets/icons/back.svg">
+            <p class="back_title">بازگشت</p>
+        </div>
+        <h4 class="header-name">برنامه جدید</h4>
+        <a class="next-button">ثبت</a>
+    </div>
+    <div class="body">
+        <form [formGroup]="createEventForm" (ngSubmit)="onSubmit()">
+            <div class="image-part" (click)="fileInput.click()">
+                <div class="background-image">
+                    <img [class.has-image]="imagePath && imagePath.length>0" [class.default-image]="!imagePath"
+                        [src]="imagePath && imagePath.length>0 ? imagePath : '/assets/icons/group-default-photo.svg'" />
+                </div>
+                <input class="input-file" type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput>
+                @if(imagePath.length != null){
+                <a class="set-photo">افزودن تصویر</a>
+                }
+                @else{
+
+                <a class="set-photo">ویرایش تصویر</a>
+                }
+            </div>
+            <div class="form">
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>عنوان</mat-label>
+                    <input matInput type="text" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="field">
+                    <mat-label>توضیحات</mat-label>
+                    <input matInput type="text" />
+                </mat-form-field>
+                <mat-form-field class="date-picker" appearance="outline" hideRequiredMarker style="width: 100%;">
+                    <mat-label>تاریخ تولد</mat-label>
+                    <input [(ngModel)]="date" style="margin-top: 0.25rem; width: 100px;" matInput [matDatepicker]="datepicker" />
+                    <mat-datepicker-toggle [disableRipple]="true" matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                        <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel class="custom-cancel-button">لغو</button>
+                            <button mat-raised-button color="primary" matDatepickerApply class="custom-apply-button">انتخاب</button>
+                          </mat-datepicker-actions>
+                    </mat-datepicker>
+                  </mat-form-field>
+                <!-- <mat-form-field class="date-picker" appearance="outline" class="field">
+                    <mat-label>تاریخ</mat-label>
+                    <input style="margin-top: 0.25rem;" matInput [matDatepicker]="datepicker"
+                        required />
+                    <mat-error>لطفا تاریخ صحیح وارد کنید.</mat-error>
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                        <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel>لغو</button>
+                            <button mat-raised-button color="primary" matDatepickerApply>
+                                انتخاب
+                            </button>
+                        </mat-datepicker-actions>
+                    </mat-datepicker>
+                </mat-form-field> -->
+                <div class="detail" (click)="redirectDetailEvent()">
+                    <h4 class="detail-button" >جزئیات(یا ریزه کاری ها)</h4>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
