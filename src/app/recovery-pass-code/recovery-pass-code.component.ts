@@ -30,6 +30,7 @@ interface VerificationCode {
     CommonModule,
     MatSelectModule,
     MatButtonModule,
+    HttpClientModule
   ],
   templateUrl: './recovery-pass-code.component.html',
   styleUrl: './recovery-pass-code.component.scss'
@@ -52,6 +53,8 @@ export class RecoveryPassCodeComponent {
   ) { }
 
   ngOnInit(): void {
+    console.log('here : recovery pass code')
+
     this.navVisibilityService.hide()
 
     this.route.queryParams.subscribe(params => {
@@ -65,7 +68,7 @@ export class RecoveryPassCodeComponent {
   }
 
   onSubmit() {
-    this.router.navigate(['/recovery-pass-new-pass'], { queryParams: { email: 'dfdj@f.com', verificationCodeId:123456 } });
+    this.router.navigate(['/recovery-pass-new-pass'], { queryParams: { email: 'dfdj@f.com', verificationCodeId: 123456 } });
 
     // if (this.signUpForm.valid) {
     //   const code = this.signUpForm.get('confirmationCode')?.value;
@@ -94,4 +97,7 @@ export class RecoveryPassCodeComponent {
     // }
   }
 
+  navToRecoveryEmail() {
+    this.router.navigate(['/recovery-pass-email'])
+  }
 }

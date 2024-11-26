@@ -57,6 +57,7 @@ export class RecoveryPassEmailComponent {
 
 
   onSubmit() {
+    console.log('go to recovery pass code')
     this.router.navigate(['/recovery-pass-code'], { queryParams: { email : 'dafdkj@gm.com', verificationCodeId : 12345 } });
 
     // if (this.signUpForm.valid) {
