@@ -1,11 +1,10 @@
 .edit-group {
   width: 100%;
   margin: 0;
-  font-family: 'Arad', sans-serif;
-  color: #333;
+  color: var(--gray-5);
   direction: rtl;
   text-align: center;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: var(--base);
 
   .header {
     display: flex;
@@ -19,18 +18,18 @@
     .back {
       display: flex;
       align-items: center;
-      color: #000;
+      color: var(--base-opposite);
       font-size: 16px;
       text-decoration: none;
       cursor: pointer;
 
       img {
-        margin-left: 8px;
+        margin-inline-start: 8px;
       }
     }
 
     .submit {
-      color: #bd4cf1;
+      color: var(--primary);
       font-weight: 400;
       font-size: 16px;
       cursor: pointer;
@@ -43,7 +42,7 @@
     height: 114px;
     margin: 20px auto;
     border-radius: 50%;
-    background-color: #f5f5f5;
+    background-color: var(--gray-1);
 
     img {
       width: 100%;
@@ -54,7 +53,7 @@
 
   .edit-image {
     display: block;
-    color: #bd4cf1;
+    color: var(--primary);
     font-size: 14px;
     margin-top: 10px;
     text-decoration: none;
@@ -68,6 +67,7 @@
 
     mat-form-field {
       width: 100%;
+      direction: rtl;
     }
 
     .mat-form-field-wrapper {
@@ -75,14 +75,15 @@
     }
 
     .mat-form-field-flex {
-      background-color: #fff;
+      background-color: var(--base);
       border-radius: 5px;
     }
 
     input {
       font-size: 1rem;
-      color: #666;
+      color: var(--gray-4);
       text-align: right;
+      direction: rtl;
       font-family: inherit;
     }
   }
@@ -90,16 +91,14 @@
   .delete-group {
     width: calc(100% - 40px);
     padding: 15px;
-    border: 1px solid #ff0000;
-    background-color: rgba(255, 255, 255, 1);
-    color: #ff0000;
+    border: 1px solid var(--error);
+    background-color: var(--base);
+    color: var(--error);
     font-size: 14px;
     font-weight: 600;
     text-align: center;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Arad', sans-serif;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
   }
 
@@ -108,7 +107,6 @@
     max-width: 150rem;
     margin: 20px auto;
     border: none;
-    border-top: 1px solid rgba(178, 178, 178, 1);
+    border-top: 1px solid var(--gray-3);
   }
-
 }

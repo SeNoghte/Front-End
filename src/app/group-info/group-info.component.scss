@@ -1,7 +1,7 @@
 .group-info {
   direction: rtl;
   min-height: 100vh;
-  background-color: rgba(245, 245, 245, 1);
+  background-color: var(--gray-1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,27 +20,25 @@
     }
 
     .edit {
-      color: #bd4cf1;
+      color: var(--primary);
       text-decoration: none;
       font-size: 16px;
-      font-family: 'Arad', sans-serif;
-      margin-right: 12px;
-      margin-left: 16px;
+      margin-inline-end: 12px;
+      margin-inline-start: 16px;
     }
 
     .back {
       display: flex;
       align-items: center;
-      color: #000;
+      color: var(--base-opposite);
       text-decoration: none;
-      font-size: 14px;
-      margin-left: 12px;
-      margin-right: 5px;
+      font-size: 16px;
+      margin-inline-start: 12px;
+      margin-inline-end: 5px;
 
       img {
-        margin-left: 8px;
+        margin-inline-start: 8px;
       }
-
     }
   }
 
@@ -48,72 +46,64 @@
     width: 114px;
     height: 114px;
     margin: 50px auto 10px auto;
-    border-radius: 57px;
+    border-radius: 50%;
   }
 
   .group-name {
-    font-family: 'Arad';
     font-size: 16px;
     font-weight: 700;
-    color: rgba(0, 0, 0, 1);
+    color: var(--base-opposite);
     text-align: center;
     margin-bottom: 20px;
   }
 
   .group-description {
-    text-align: right;
+    text-align: start;
     font-size: 14px;
-    color: #000;
-    font-family: 'Arad', sans-serif;
-    background-color: rgba(255, 255, 255, 1);
+    color: var(--base-opposite);
+    background-color: var(--base);
     padding: 16px;
     border-radius: 5px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
     margin: 20px 24px 10px;
   }
 
   .creation-date {
-    text-align: right;
+    text-align: start;
     font-size: 14px;
-    color: #888;
-    font-family: 'Arad', sans-serif;
-    background-color: rgba(255, 255, 255, 1);
+    color: var(--gray-4);
+    background-color: var(--base);
     padding: 10px 16px;
     border-radius: 5px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
     margin: 20px 24px 10px;
 
-
     .date {
-      color: #000;
+      color: var(--base-opposite);
       font-weight: bold;
-      margin-right: 5px;
+      margin-inline-end: 5px;
     }
   }
-
 
   .members {
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: var(--base);
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
     margin: 20px 24px;
 
     .add-member {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      color: #bd4cf1;
+      color: var(--primary);
       font-size: 14px;
       text-decoration: none;
-      font-family: 'Arad', sans-serif;
       padding-bottom: 10px;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid var(--gray-2);
 
       img {
-        margin-left: 10px;
+        margin-inline-start: 10px;
+        margin-inline-end: 8px;
       }
     }
 
@@ -123,17 +113,15 @@
       gap: 10px;
       justify-content: flex-start;
       padding: 10px 0;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid var(--gray-2);
 
       &:last-child {
         border-bottom: none;
-
       }
 
       .name {
         font-size: 14px;
-        color: #333;
-        font-family: 'Arad', sans-serif;
+        color: var(--gray-5);
       }
 
       .avatar {
@@ -141,31 +129,27 @@
         height: 40px;
         border-radius: 50%;
         object-fit: cover;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       }
     }
 
     .no-members-message {
       text-align: center;
       font-size: 14px;
-      color: #888;
-      font-family: 'Arad', sans-serif;
+      color: var(--gray-4);
     }
   }
 
   .leave-group {
     width: calc(100% - 48px);
     padding: 15px;
-    border: 1px solid #ff0000;
-    background-color: rgba(255, 255, 255, 1);
-    color: #ff0000;
+    border: 1px solid var(--error);
+    background-color: var(--base);
+    color: var(--error);
     font-size: 14px;
     font-weight: 600;
     text-align: center;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Arad', sans-serif;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     margin: 0 24px 20px;
   }
 }

@@ -44,7 +44,7 @@
       <img [src]="group.image" alt="Group Image" />
       <span>{{ group.name }}</span>
     </div>
-    <div *ngIf="searchResults.length === 0">
+    <div class="no-results-message" *ngIf="searchResults.length === 0">
       هیچ گروهی مطابق با جستجوی شما یافت نشد.
     </div>
   </div>

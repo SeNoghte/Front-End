@@ -17,7 +17,7 @@
     <mat-label>نام</mat-label>
     <input matInput [(ngModel)]="groupName" #nameInput="ngModel" required />
     <mat-error *ngIf="nameInput.invalid && nameInput.touched">
-      وارد کردن نام الزامی است
+      وارد کردن نام الزامی است.
     </mat-error>
   </mat-form-field>
 
