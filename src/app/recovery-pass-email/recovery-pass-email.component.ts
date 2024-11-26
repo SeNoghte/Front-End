@@ -54,28 +54,32 @@ export class RecoveryPassEmailComponent {
     private toastr: ToastrService,
   ) { }
 
+
+
   onSubmit() {
-    if (this.signUpForm.valid) {
-      const email = this.signUpForm.value.email;
+    this.router.navigate(['/recovery-pass-code'], { queryParams: { email : 'dafdkj@gm.com', verificationCodeId : 12345 } });
 
-      this.http.post<VerificationResponse>(this.apiUrl, { email }).subscribe({
-        next: (response) => {
-          var verificationCodeId = '';
-          if (response.success) {
-            verificationCodeId = response['verificationCodeId'];
-            this.toastr.success('کد تایید ارسال شد!');
+    // if (this.signUpForm.valid) {
+    //   const email = this.signUpForm.value.email;
 
-            if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
-              this.router.navigate(['/sign-up-auth'], { queryParams: { email, verificationCodeId } });
-          }
-          else {
-            this.toastr.error(response.message);
-          }
-        },
-        error: (error) => {
-        }
-      })
-    } else {
-    }
+    //   this.http.post<VerificationResponse>(this.apiUrl, { email }).subscribe({
+    //     next: (response) => {
+    //       var verificationCodeId = '';
+    //       if (response.success) {
+    //         verificationCodeId = response['verificationCodeId'];
+    //         this.toastr.success('کد تایید ارسال شد!');
+
+    //         if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
+    //           this.router.navigate(['/recovery-pass-code'], { queryParams: { email, verificationCodeId } });
+    //       }
+    //       else {
+    //         this.toastr.error(response.message);
+    //       }
+    //     },
+    //     error: (error) => {
+    //     }
+    //   })
+    // } else {
+    // }
   }
 }

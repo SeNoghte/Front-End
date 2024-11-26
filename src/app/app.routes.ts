@@ -9,6 +9,7 @@ import { GroupInfoComponent } from './group-info/group-info.component';
 import { GroupChatComponent } from './group-chat/group-chat.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { RecoveryPassEmailComponent } from './recovery-pass-email/recovery-pass-email.component';
+import { RecoveryPassCodeComponent } from './recovery-pass-code/recovery-pass-code.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' },
@@ -22,4 +23,5 @@ export const routes: Routes = [
   { path: 'chat-group', component: GroupChatComponent },
   { path: 'group-edit', component: GroupEditComponent },
   { path: 'recovery-pass-email', component: RecoveryPassEmailComponent },
+  { path: 'recovery-pass-code', component: RecoveryPassCodeComponent },
 ];

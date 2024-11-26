@@ -1,42 +1,43 @@
 <div class="container">
-    <div class="enter-info">
-      <div>
-        <span>به </span>
-        <span class="big-becheen">بچین </span>
-        <span>خوش اومدی </span>
-      </div>
-  
-      <div class="sub-title">اطلاعاتت رو وارد کن تا وارد دنیای بچین بشی</div>
+  <div class="enter-info">
+    <div>
+      <span>به </span>
+      <span class="big-becheen">بچین </span>
+      <span>خوش اومدی </span>
     </div>
-  
-    <div class="sign-up-form">
-      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>ایمیل</mat-label>
-          <input
-            matInput
-            [formControl]="signUpForm.controls.email"
-            placeholder="ایمیل"
-            required
-          />
-  
-          <mat-error *ngIf="signUpForm.controls.email?.hasError('required')">
-            ایمیل الزامی است
-          </mat-error>
-          <mat-error
-            *ngIf="
-              signUpForm.controls.email?.hasError('email') &&
-              !signUpForm.get('email')?.hasError('required')
-            "
-          >
-            لطفاً یک ایمیل معتبر وارد کنید
-          </mat-error>
-        </mat-form-field>
-  
-        <div class="button-container">
-          <button mat-flat-button color="primary" type="submit">بعدی</button>
-        </div>
-      </form>
-    </div>
+
+    <div class="sub-title">اطلاعاتت رو وارد کن تا وارد دنیای بچین بشی</div>
   </div>
-  
+
+  <div class="sign-up-form">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>ایمیل</mat-label>
+        <input
+          matInput
+          [formControl]="signUpForm.controls.email"
+          placeholder="ایمیل"
+          required
+        />
+
+        <mat-error *ngIf="signUpForm.controls.email?.hasError('required')">
+          ایمیل الزامی است
+        </mat-error>
+        <mat-error
+          *ngIf="
+            signUpForm.controls.email?.hasError('email') &&
+            !signUpForm.get('email')?.hasError('required')
+          "
+        >
+          لطفاً یک ایمیل معتبر وارد کنید
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <div class="button-container">
+        <button mat-flat-button color="primary" type="submit">بعدی</button>
+      </div>
+    </form>
+  </div>
+</div>
