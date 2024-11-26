@@ -30,7 +30,6 @@ interface VerificationCode {
     CommonModule,
     MatSelectModule,
     MatButtonModule,
-    HttpClientModule
   ],
   templateUrl: './recovery-pass-code.component.html',
   styleUrl: './recovery-pass-code.component.scss'
@@ -66,34 +65,33 @@ export class RecoveryPassCodeComponent {
   }
 
   onSubmit() {
-    if (this.signUpForm.valid) {
-      const code = this.signUpForm.get('confirmationCode')?.value;
+    this.router.navigate(['/recovery-pass-new-pass'], { queryParams: { email: 'dfdj@f.com', verificationCodeId:123456 } });
 
-      const payload = {
-        code: code,
-        verificationCodeId: this.verificationCodeId
-      }
+    // if (this.signUpForm.valid) {
+    //   const code = this.signUpForm.get('confirmationCode')?.value;
 
-      this.http.post<VerificationCode>(this.verifyApiUrl, payload).subscribe({
-        next: (response) => {
-          if (response.success) {
-            this.toastr.success('کد تایید شد!');
-            this.router.navigate(['/sign-up-end'], { queryParams: { email: this.email, verificationCodeId: this.verificationCodeId } });
-          }
-          else {
-            this.toastr.error(response.message);
-          }
-        },
-        error: (error) => {
-          this.toastr.error(error);
-        }
-      })
-    }
-    else {
-    }
+    //   const payload = {
+    //     code: code,
+    //     verificationCodeId: this.verificationCodeId
+    //   }
+
+    //   this.http.post<VerificationCode>(this.verifyApiUrl, payload).subscribe({
+    //     next: (response) => {
+    //       if (response.success) {
+    //         this.toastr.success('کد تایید شد!');
+    //         this.router.navigate(['/sign-up-end'], { queryParams: { email: this.email, verificationCodeId: this.verificationCodeId } });
+    //       }
+    //       else {
+    //         this.toastr.error(response.message);
+    //       }
+    //     },
+    //     error: (error) => {
+    //       this.toastr.error(error);
+    //     }
+    //   })
+    // }
+    // else {
+    // }
   }
 
-  navToRecoveryEmail(){
-    this.router.navigate(['/recovery-pass-email'])
-  }
 }
