@@ -3,8 +3,6 @@
   width: 100%;
   margin: 0;
   color: var(--gray-5);
-  direction: rtl;
-  text-align: end;
   background-color: var(--base);
 
   .header {
@@ -73,8 +71,6 @@
     }
 
     .no-results-message {
-      direction: rtl;
-      text-align: right;
       font-size: 16px;
       color: var(--gray-4);
       margin: 10px 0;
@@ -96,28 +92,22 @@
     .search-field {
       width: 100%;
       border-radius: 5px;
-      direction: rtl;
-      text-align: right;
 
       .mat-form-field-wrapper {
         padding: 0;
-        text-align: right;
-        direction: rtl;
+
       }
 
       .mat-form-field-flex {
         border: none;
         border-radius: 5px;
-        text-align: right;
-        direction: rtl;
+
       }
 
       input {
         padding: 0 8px;
         font-size: 1rem;
         color: var(--gray-4);
-        text-align: right;
-        direction: rtl;
         font-family: inherit;
         letter-spacing: 0;
       }
