@@ -2,11 +2,8 @@
 .search-page {
   width: 100%;
   margin: 0;
-  font-family: 'Arad', sans-serif;
-  color: #333;
-  direction: rtl;
-  text-align: right;
-  background-color: rgba(255, 255, 255, 1);
+  color: var(--gray-5);
+  background-color: var(--base);
 
   .header {
     display: flex;
@@ -22,7 +19,7 @@
     .edit {
       display: flex;
       align-items: center;
-      color: rgba(189, 76, 241, 1);
+      color: var(--primary);
       font-weight: 400;
       font-size: 16px;
       text-decoration: none;
@@ -34,13 +31,13 @@
     .edit-icon {
       width: 16px;
       height: 16px;
-      margin-left: 4px;
+      margin-inline-start: 4px;
     }
 
     h2 {
       font-size: 16px;
       font-weight: 700;
-      color: rgba(91, 91, 91, 1);
+      color: var(--gray-5);
       margin: 0;
     }
   }
@@ -56,19 +53,27 @@
       display: flex;
       align-items: center;
       padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(200, 200, 200, 1);
+      border-bottom: 1px solid var(--gray-2);
 
       img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        margin-left: 0.75rem;
+        margin-inline-start: 0.75rem;
       }
 
       span {
         font-size: 1rem;
-        color: #333;
+        color: var(--gray-5);
+        margin-inline-start: 0.75rem;
+        margin-top: 0.5rem;
       }
+    }
+
+    .no-results-message {
+      font-size: 16px;
+      color: var(--gray-4);
+      margin: 10px 0;
     }
   }
 }
@@ -84,26 +89,27 @@
     max-width: 400px;
     margin-top: 50px;
 
-
     .search-field {
       width: 100%;
       border-radius: 5px;
 
       .mat-form-field-wrapper {
         padding: 0;
+
       }
 
       .mat-form-field-flex {
         border: none;
         border-radius: 5px;
+
       }
 
       input {
         padding: 0 8px;
         font-size: 1rem;
-        color: #666;
-        text-align: right;
+        color: var(--gray-4);
         font-family: inherit;
+        letter-spacing: 0;
       }
 
       .search-icon-button {
@@ -118,8 +124,9 @@
           width: 30px;
           height: 30px;
           opacity: 0.6;
-          margin-left: 23px;
+          margin-inline-start: 23px;
           margin-top: 8px;
+          direction: ltr;
         }
       }
     }
