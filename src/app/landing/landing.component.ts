@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -5,28 +6,52 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [],
+  imports: [
+    HttpClientModule
+  ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent {
   constructor(
+    private http: HttpClient,
     private router: Router,
     private toastr: ToastrService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const token = this.getCodeFromUrl();
-    console.log('Received JWT Token:', token);
+    console.log('Received code Token from google :', token);
+    if (token){
+      this.sendAuthorizationCode(token)
+    }
+  }
 
-    localStorage.setItem('JWTtoken', token!);
-    this.toastr.success('Login successful!');
+  sendAuthorizationCode(authCode: String) {
+    const authorizationCode = authCode;
+    const apiUrl = 'https://api.becheen.ir:7001/api/User/GoogleLogin';
+
+    const requestBody = { authorizationCode };
+
+    this.http.post(apiUrl, requestBody).subscribe(
+      (response: any) => {
+        if (response.success && response.token) {
+          console.log('JWT Token:', response.token);
+          localStorage.setItem('jwtToken', response.token);
+        } else {
+          console.error('Failed to retrieve JWT token:', response.message);
+        }
+      },
+      (error) => {
+        console.error('API Error:', error);
+      }
+    );
   }
 
   getCodeFromUrl(): string | null {
     const urlParams = new URLSearchParams(window.location.search);
     let token = urlParams.get('code');
-    
+
     return token;
   }
 }

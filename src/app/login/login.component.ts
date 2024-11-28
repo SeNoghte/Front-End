@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -33,7 +33,7 @@ interface Login {
     MatButtonModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 
 export class LoginComponent {
@@ -66,7 +66,7 @@ export class LoginComponent {
         next: (response) => {
           if (response.success) {
             localStorage.setItem('JWTtoken', response.token);
-            console.log('Saved JWT Token:', localStorage.getItem('authToken'));
+            console.log('Saved JWT Token:', localStorage.getItem('JWTtoken'));
             this.toastr.success('Login successful!');
           }
           else {
@@ -83,6 +83,10 @@ export class LoginComponent {
 
   navigateToLogin() {
     this.router.navigate(['/sign-up']);
+  }
+
+  navToRecovery(){
+    this.router.navigate(['/recovery-pass-email']);
   }
 
   googleLogin() {

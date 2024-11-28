@@ -1,6 +1,6 @@
 <div class="container">
   <div class="enter-info">
-    <div>
+    <div class="title">
       <span>به </span>
       <span class="big-becheen">بچین </span>
       <span>خوش برگشتی </span>
@@ -35,8 +35,9 @@
         </mat-error>
       </mat-form-field>
 
+      <a class="pink-underlined-txt" (click)="navToRecovery()">فراموشی رمز عبور</a>
+
       <div class="button-container">
-        <!-- دکمه ثبت فرم -->
         <button mat-flat-button color="primary" type="submit">ورود</button>
       </div>
     </form>
@@ -46,7 +47,7 @@
         حساب نداری؟ خب
         <a
           (click)="navigateToLogin()"
-          style="color: purple; text-decoration: none; cursor: pointer"
+          class="pink-underlined-txt"
           >ثبت نام</a
         >
         <span> کن!</span>

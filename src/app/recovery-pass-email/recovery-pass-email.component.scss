@@ -1,6 +1,15 @@
 .container {
   height: 100%;
-  padding-top: 11.3125rem;
+  padding-top: 4rem;
+
+  .back-btn {
+    margin-bottom: 6.75rem;
+    margin-inline-start: 1rem;
+
+    img {
+      margin-inline-end: 0.5rem;
+    }
+  }
 
   .sign-up-form {
     padding-top: 2rem;
@@ -10,6 +19,8 @@
       align-items: center;
       flex-direction: column;
     }
+
+
 
     .button-container {
       height: 3.5rem;
@@ -28,31 +39,23 @@
     .nav-to-login {
       margin-right: 1.875rem;
       margin-top: 1rem;
-
-      a {
-        margin-inline-start: 0;
-      }
     }
   }
 
   .enter-info {
     margin-top: 0.5rem;
-    color: var(--gray-4);
+    color: #6b6b6b;
     font-size: 1rem;
     text-align: start;
     margin-inline-start: 1.375rem;
 
-    .title{
-      font-weight: 800;
-    }
-
     .big-becheen {
       font-size: 1.5rem;
-      color: var(--primary);
+      color: #bd4cf1;
     }
 
     .light {
-      color: var(--gray-2);
+      color: #c8c8c8;
     }
   }
 }
@@ -61,4 +64,10 @@
   span {
     margin-inline-start: 0.5rem;
   }
+}
+
+.nav-to-login-link {
+  color: #7b1480;
+  text-decoration: none;
+  cursor: pointer;
 }

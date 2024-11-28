@@ -45,7 +45,8 @@ export class SignUpComponent {
     email: new FormControl('', [Validators.required, Validators.email])
   });
 
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private router: Router,
     private navVisibilityService: NavigationVisibilityService,
     private toastr: ToastrService,

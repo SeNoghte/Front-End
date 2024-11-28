@@ -20,7 +20,6 @@ export class NavigationComponent {
   constructor(private navVisibilityService: NavigationVisibilityService) {}
 
   ngOnInit(): void {
-    // Subscribe to visibility observable
     this.navVisibilityService.visibility$.subscribe(visible => {
       this.isVisible = visible;
     });
@@ -28,6 +27,5 @@ export class NavigationComponent {
 
   setActive(tab: string) {
     this.activeTab = tab;
-    // Handle navigation logic here, e.g., navigate to different pages
   }
 }

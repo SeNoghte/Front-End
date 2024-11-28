@@ -6,8 +6,7 @@
     text-align: start;
     margin-inline-start: 1rem;
     font-size: 2rem;
-    color: var(--primary);
-    font-weight: 800;
+    color: #bd4cf1;
   }
 
   .sign-up-form {
@@ -19,6 +18,16 @@
       flex-direction: column;
     }
 
+    .modifiy-email-txt {
+      a {
+        margin: 0;
+      }
+
+      margin-top: 0.5rem;
+      margin-inline-start: 2rem;
+      margin-inline-end: auto;
+    }
+
     .button-container {
       height: 3.5rem;
       width: calc(100% - 2.75rem);
@@ -28,19 +37,20 @@
         width: 100%;
         height: 100%;
         font-size: 1rem;
+        // background-color: #BD4CF1;
       }
     }
   }
 
   .enter-info {
     margin-top: 0.5rem;
-    color: var(--gray-4);
+    color: #6b6b6b;
     font-size: 1rem;
     text-align: start;
     margin-inline-start: 1.375rem;
 
     .light {
-      color: var(--gray-2);
+      color: #c8c8c8;
     }
   }
 }

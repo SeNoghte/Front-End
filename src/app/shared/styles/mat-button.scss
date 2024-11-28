@@ -10,7 +10,8 @@
   border: 1px solid var(--primary) !important;
 }
 
-.mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled) {
+.mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled),
+.mat-mdc-button:not(:disabled) {
   color: black !important;
 }
 
@@ -18,8 +19,6 @@ button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.m
   border-radius: 0.25rem;
 }
 
-.button-container {
-  .mdc-button__label {
-    display: flex !important;
-  }
+.mdc-button__label {
+  display: flex !important;
 }

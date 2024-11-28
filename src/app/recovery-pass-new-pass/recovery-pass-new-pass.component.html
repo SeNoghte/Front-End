@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="name">
+    <span>بچین</span>
+  </div>
+
+  <div class="enter-info">
+    <span> رمز جدید رو وارد کن </span>
+    <span class="light">
+        حواست باشه اندفعه یادت نره!
+    </span>
+  </div>
+
+  <div class="sign-up-form">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label> رمز عبور جدید </mat-label>
+        <input matInput type="password" formControlName="password" required />
+        <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">
+          رمز عبور الزامی است
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('password')?.hasError('pattern')">
+          رمز عبور باید شامل حروف بزرگ، کوچک، عدد و یک کاراکتر خاص باشد و حداقل
+          8 کاراکتر داشته باشد.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label> تکرار رمز عبور جدید </mat-label>
+        <input matInput type="password" formControlName="repeatPass" required />
+        <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">
+          رمز عبور الزامی است
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('password')?.hasError('pattern')">
+          رمز عبور باید شامل حروف بزرگ، کوچک، عدد و یک کاراکتر خاص باشد و حداقل
+          8 کاراکتر داشته باشد.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-flat-button color="primary" type="submit">ثبت نام</button>
+      </div>
+    </form>
+  </div>
+</div>
