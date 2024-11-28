@@ -1,6 +1,15 @@
 .container {
   height: 100%;
-  padding-top: 11.3125rem;
+  padding-top: 4rem;
+
+  .back-btn {
+    margin-bottom: 6.75rem;
+    margin-inline-start: 1rem;
+
+    img {
+      margin-inline-end: 0.5rem;
+    }
+  }
 
   .sign-up-form {
     padding-top: 2rem;
