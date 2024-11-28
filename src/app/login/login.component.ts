@@ -68,7 +68,6 @@ export class LoginComponent {
             localStorage.setItem('JWTtoken', response.token);
             console.log('Saved JWT Token:', localStorage.getItem('JWTtoken'));
             this.toastr.success('Login successful!');
-            this.callGetUsersApi();
           }
           else {
             this.toastr.error(response.message);
@@ -81,51 +80,6 @@ export class LoginComponent {
     } else {
     }
   }
-
-  callGetUsersApi() {
-    const apiUrl = 'https://api.becheen.ir:7001/api/User/GetUsers'; // API endpoint
-
-    const jwtToken = localStorage.getItem('JWTtoken');
-
-    console.log("JWT token in get users : ", jwtToken)
-
-    const requestBody = {};
-
-    // Make the POST request with the headers
-        this.http.post(apiUrl, requestBody).subscribe(
-      (response) => {
-        console.log('Response from GetUsers API:', response);
-      },
-      (error) => {
-        console.error('Error calling GetUsers API:', error);
-      }
-    );
-  }
-
-  // callGetUsersApi() {
-  //   const apiUrl = 'https://api.becheen.ir:7001/api/User/GetUsers'; // آدرس API
-  //   const jwtToken = localStorage.getItem('JWTtoken'); // دریافت توکن از LocalStorage
-  
-  //   console.log("JWT token in get users : ", jwtToken);
-  
-  //   const requestBody = {}; // بدنه درخواست (در صورت نیاز)
-  
-  //   // تنظیم هدر به صورت دستی
-  //   const headers = {
-  //     Authorization: `Bearer ${jwtToken}`
-  //   };
-  
-  //   // ارسال درخواست با هدر سفارشی
-  //   this.http.post(apiUrl, requestBody, { headers }).subscribe(
-  //     (response) => {
-  //       console.log('Response from GetUsers API:', response);
-  //     },
-  //     (error) => {
-  //       console.error('Error calling GetUsers API:', error);
-  //     }
-  //   );
-  // }
-  
 
   navigateToLogin() {
     this.router.navigate(['/sign-up']);

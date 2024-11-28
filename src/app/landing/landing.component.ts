@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [],
+  imports: [
+    HttpClientModule
+  ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
@@ -23,28 +25,6 @@ export class LandingComponent {
     if (token){
       this.sendAuthorizationCode(token)
     }
-
-    // this.callApi();
-  }
-
-  callApi() {
-    const apiUrl = 'https://api.becheen.ir:7001/api/Group/Create';
-
-    const payload = {
-      name: 'Test Group',
-      description: 'This is a test group',
-      imageId: 'test-image-id',
-      membersToAdd: ['member1', 'member2'],
-    };
-
-    this.http.post(apiUrl, payload).subscribe(
-      (response) => {
-        console.log('API Response:', response);
-      },
-      (error) => {
-        console.error('API Error:', error);
-      }
-    );
   }
 
   sendAuthorizationCode(authCode: String) {
