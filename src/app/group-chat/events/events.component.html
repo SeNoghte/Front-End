@@ -1,1 +1,18 @@
-<p>events works!</p>
+<div>
+  <div class="toggle-btn-container">
+    <section>
+        <mat-button-toggle-group
+        name="favoriteColor"
+        aria-label="Favorite Color"
+        [hideSingleSelectionIndicator]="hideSingleSelectionIndicator()"
+      >
+        <mat-button-toggle value="red">
+            <img src="../../../assets/icons/view_headline.svg">
+        </mat-button-toggle>
+        <mat-button-toggle value="green">
+            <img src="../../../assets/icons/view_calendar.svg">
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </section>
+  </div>
+</div>
