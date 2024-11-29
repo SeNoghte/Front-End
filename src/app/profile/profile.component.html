@@ -1,21 +1,26 @@
 <div class="profile-container">
   <div class="header">
     <button *ngIf="!isOwner" class="back-button">بازگشت</button>
-    <h1 *ngIf="isOwner">پروفایل</h1>
-    <button *ngIf="isOwner" class="edit-button" (click)="editProfile()">ویرایش</button>
+    <h1 *ngIf="isOwner" class="profile-title">پروفایل</h1>
+    <button *ngIf="isOwner" class="edit-button" [routerLink]="'/profile-edit'" (click)="editProfile()">ویرایش</button>
   </div>
 
   <div class="profile-info">
     <div class="profile-picture">
-      <img src="https://via.placeholder.com/80" alt="Profile Picture" />
+      <img [src]="userProfile.imageUrl" alt="Profile Picture" />
     </div>
     <h2 class="name">{{ userProfile.name }}</h2>
     <p class="username">&#64;{{ userProfile.username }}</p>
-    <div class="white-card">
+
+    <div class="status-section white-card">
       <p class="status">{{ userProfile.status }}</p>
     </div>
-    <div class="white-card last-updated">
-      <p>بچینی شده در {{ userProfile.lastUpdated }}</p>
+
+    <div class="last-updated-section white-card">
+      <p>
+        <span class="label">بچینی شده از</span>
+        <span class="value">{{ userProfile.lastUpdated }}</span>
+      </p>
     </div>
   </div>
 
@@ -24,13 +29,13 @@
       [class.active]="activeTab === 'teams'"
       (click)="switchTab('teams')"
     >
-      {{ isOwner ? 'اکیپ‌ها' : 'اکیپ‌های مشترک' }}
+      <span>{{ isOwner ? 'اکیپ‌ها' : 'اکیپ‌های مشترک' }}</span>
     </button>
     <button
       [class.active]="activeTab === 'programs'"
       (click)="switchTab('programs')"
     >
-      {{ isOwner ? 'برنامه‌ها' : 'برنامه‌های مشترک' }}
+      <span>{{ isOwner ? 'برنامه‌ها' : 'برنامه‌های مشترک' }}</span>
     </button>
   </div>
 
@@ -41,10 +46,9 @@
         <span>{{ team.name }}</span>
       </div>
     </div>
+
     <div *ngIf="activeTab === 'programs'" class="programs">
-      <p>
-        {{ isOwner ? programsMessage.owner : programsMessage.others }}
-      </p>
+      <p>{{ isOwner ? programsMessage.owner : programsMessage.others }}</p>
     </div>
   </div>
 </div>

@@ -9,6 +9,7 @@ import { NavigationVisibilityService } from './services/navigation-visibility.se
 import { CommonModule } from '@angular/common';
 import { GroupPageComponent } from './group-page/group-page.component';
 import { GroupInfoComponent } from './group-info/group-info.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ import { GroupInfoComponent } from './group-info/group-info.component';
   imports: [
     RouterOutlet,
     NavigationComponent,
-    CommonModule, 
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

@@ -1,49 +1,78 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent {
-  // متغیر برای تعیین حالت صاحب پروفایل یا مشاهده پروفایل دیگران
+export class ProfileComponent implements OnInit {
   isOwner: boolean = true;
-
-  // داده‌های پروفایل (شبیه‌سازی شده)
   userProfile = {
-    name: 'سیاوش قمیشی',
-    username: 'siavash_joon',
-    status: 'من به بن بست نرسیدم، راهمو سد کردن. با تو مشکلی ندارم با خودم لج کردم',
-    lastUpdated: '11 شهریور 1402',
+    name: '',
+    username: '',
+    email: '',
+    status: '',
+    lastUpdated: '',
+    imageUrl: ''
   };
 
-  // لیست اکیپ‌ها یا اکیپ‌های مشترک
   teams = [
-    { name: 'صخره نوردی ستاک', icon: 'https://via.placeholder.com/40' },
-    { name: 'کافه بازی ونک', icon: 'https://via.placeholder.com/40' },
-    { name: 'فوتبال دانشکده کامپیوتر', icon: 'https://via.placeholder.com/40' },
+    { name: 'صخره نوردی ستاک', icon: 'assets/icons/member1.svg' },
+    { name: 'کافه بازی ونک', icon: 'assets/icons/member2.svg' },
+    { name: 'فوتبال دانشکده کامپیوتر', icon: 'assets/icons/member3.svg' },
   ];
 
-  // متن پیش‌فرض برای برنامه‌ها
   programsMessage = {
     owner: 'برنامه‌ای در حال حاضر موجود نیست.',
     others: 'برنامه‌های مشترک وجود ندارد.',
   };
 
-  // تب فعال
   activeTab: string = 'teams';
 
-  // تغییر تب
-  switchTab(tab: string) {
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+      this.fetchUserProfile();
+
+
+  }
+
+  fetchUserProfile(): void {
+    const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
+    this.http.post<any>(apiUrl, {}).subscribe(
+      (response) => {
+        if (response.success) {
+          this.userProfile = {
+            name: response.user.name,
+            username: response.user.username,
+            email: response.user.email,
+            status: 'درباره من',
+            lastUpdated: new Date(response.user.joinedDate).toLocaleDateString(),
+            imageUrl: response.user.image || 'assets/icons/default-profile-image.svg'
+          };
+        } else {
+          console.error('Error fetching profile:', response.message);
+        }
+      },
+      (error) => {
+        console.error('API request failed:', error);
+      }
+    );
+  }
+
+  switchTab(tab: string): void {
     this.activeTab = tab;
   }
 
-  // عملکرد ویرایش (برای آینده)
-  editProfile() {
+  editProfile(): void {
     console.log('Edit button clicked');
-    // می‌توانید اینجا کد مربوط به ویرایش را اضافه کنید
+    // this.router.navigate(['/profile-edit']);
   }
 }

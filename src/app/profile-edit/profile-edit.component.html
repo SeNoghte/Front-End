@@ -1,0 +1,55 @@
+<div class="edit-profile">
+  <div class="header">
+    <a class="back" [routerLink]="['/profile']">
+      <img class="back-button" src="assets/icons/back.svg" />
+      بازگشت
+    </a>
+    <a class="submit" (click)="saveChanges()">ثبت </a>
+  </div>
+
+  <div class="profile-logo">
+    <img
+      *ngIf="imageUrl; else defaultImage"
+      [src]="imageUrl"
+      alt="Profile Image"
+    />
+    <ng-template #defaultImage>
+      <img src="assets/default-profile-image.png" alt="Default Profile Image" />
+    </ng-template>
+  </div>
+
+  <a class="edit-image" (click)="editImage()">ویرایش تصویر</a>
+
+  <mat-form-field class="edit-input" appearance="outline">
+    <mat-label>ایمیل</mat-label>
+    <input matInput [(ngModel)]="email" [readonly]="true" />
+  </mat-form-field>
+
+  <mat-form-field class="edit-input" appearance="outline">
+    <mat-label>نام</mat-label>
+    <input matInput [(ngModel)]="fullName" #fullNameInput="ngModel" required />
+    <mat-error *ngIf="fullNameInput.invalid && fullNameInput.touched">
+      وارد کردن نام الزامی است.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="edit-input" appearance="outline">
+    <mat-label>نام کاربری</mat-label>
+    <input matInput [(ngModel)]="userName" #userNameInput="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field class="edit-input" appearance="outline">
+    <mat-label>درباره من</mat-label>
+    <input
+      matInput
+      [(ngModel)]="profileDescription"
+      #profileDescriptionInput="ngModel"
+    />
+  </mat-form-field>
+
+  <hr class="divider" />
+
+  <button class="delete-account" (click)="deleteAccount()">
+    خروج از حساب کاربری
+  </button>
+</div>

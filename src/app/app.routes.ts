@@ -12,6 +12,7 @@ import { RecoveryPassEmailComponent } from './recovery-pass-email/recovery-pass-
 import { RecoveryPassCodeComponent } from './recovery-pass-code/recovery-pass-code.component';
 import { RecoveryPassNewPassComponent } from './recovery-pass-new-pass/recovery-pass-new-pass.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' },
@@ -27,5 +28,6 @@ export const routes: Routes = [
   { path: 'recovery-pass-email', component: RecoveryPassEmailComponent },
   { path: 'recovery-pass-code', component: RecoveryPassCodeComponent },
   { path: 'recovery-pass-new-pass', component: RecoveryPassNewPassComponent },
-  { path: 'profile', component: ProfileComponent}
+  { path: 'profile', component: ProfileComponent},
+  { path: 'profile-edit', component: ProfileEditComponent}
 ];
