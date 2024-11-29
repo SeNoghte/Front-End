@@ -1,17 +1,40 @@
 <div>
+  <div class="events-list">
+
+    <div class="event-card" *ngFor="let event of events">
+
+      <div class="images-container">
+        <img src="../../../assets/icons/image.png" alt="Event Image" class="event-image" />
+
+        <div class="event-header">
+          <img src="../../../assets/icons/image.png" alt="Profile" class="profile-image" />
+          <span class="profile-name">{{ event.name }}</span>
+        </div>
+      </div>
+
+      <div class="event-info">
+        <h3 class="event-title">{{ event.title }}</h3>
+        <p class="event-description">{{ event.description }}</p>
+        <div class="event-date">{{ event.date }}</div>
+      </div>
+
+    </div>
+
+  </div>
+
   <div class="toggle-btn-container">
     <section>
-        <mat-button-toggle-group
+      <mat-button-toggle-group
         name="favoriteColor"
         aria-label="Favorite Color"
         [hideSingleSelectionIndicator]="hideSingleSelectionIndicator()"
         value="headline_view"
       >
         <mat-button-toggle value="calendar_view">
-            <img src="../../../assets/icons/view_calendar.svg">
+          <img src="../../../assets/icons/view_calendar.svg" />
         </mat-button-toggle>
         <mat-button-toggle value="headline_view">
-            <img src="../../../assets/icons/view_headline.svg">
+          <img src="../../../assets/icons/view_headline.svg" />
         </mat-button-toggle>
       </mat-button-toggle-group>
     </section>
