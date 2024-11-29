@@ -200,7 +200,7 @@ export class CreateEventComponent {
   ) { }
 
   redirectDetailEvent() {
-    this.Router.navigate(['detail']);
+    this.Router.navigate(['detail-event']);
   }
 
   onSubmit() {

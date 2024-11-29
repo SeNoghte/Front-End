@@ -37,7 +37,7 @@ interface VerificationCode {
 })
 
 export class SignUpAuthComponent {
-  private verifyApiUrl = 'https://api.becheen.ir:7001/api/User/VerifyVerificationCode'; // The API endpoint for verification
+  private verifyApiUrl = 'https://api.becheen.ir:6001/api/User/VerifyVerificationCode'; // The API endpoint for verification
   verificationCodeId: string | null = null;
   email: string | null = null;
 

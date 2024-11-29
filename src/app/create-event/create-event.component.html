@@ -34,7 +34,7 @@
                 </mat-form-field>
                 <mat-form-field class="date-picker" appearance="outline" hideRequiredMarker style="width: 100%;">
                     <mat-label>تاریخ تولد</mat-label>
-                    <input [(ngModel)]="date" style="margin-top: 0.25rem; width: 100px;" matInput [matDatepicker]="datepicker" />
+                    <input style="margin-top: 0.25rem; width: 100px;" matInput [matDatepicker]="datepicker" />
                     <mat-datepicker-toggle [disableRipple]="true" matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                     <mat-datepicker #datepicker>
                         <mat-datepicker-actions>
@@ -43,21 +43,6 @@
                           </mat-datepicker-actions>
                     </mat-datepicker>
                   </mat-form-field>
-                <!-- <mat-form-field class="date-picker" appearance="outline" class="field">
-                    <mat-label>تاریخ</mat-label>
-                    <input style="margin-top: 0.25rem;" matInput [matDatepicker]="datepicker"
-                        required />
-                    <mat-error>لطفا تاریخ صحیح وارد کنید.</mat-error>
-                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                    <mat-datepicker #datepicker>
-                        <mat-datepicker-actions>
-                            <button mat-button matDatepickerCancel>لغو</button>
-                            <button mat-raised-button color="primary" matDatepickerApply>
-                                انتخاب
-                            </button>
-                        </mat-datepicker-actions>
-                    </mat-datepicker>
-                </mat-form-field> -->
                 <div class="detail" (click)="redirectDetailEvent()">
                     <h4 class="detail-button" >جزئیات(یا ریزه کاری ها)</h4>
                 </div>
