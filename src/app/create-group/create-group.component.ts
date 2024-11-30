@@ -7,8 +7,6 @@ import { Router } from '@angular/router';
 import { NewGroupInfoService } from '../services/new-group-info.service';
 import { ToastrService } from 'ngx-toastr';
 
-
-
 @Component({
   selector: 'app-create-group',
   standalone: true,
@@ -26,9 +24,7 @@ export class CreateGroupComponent {
     imageUrl: new FormControl<string>(''),
     membersToAdd: new FormControl([]),
   });
-  onSubmit() {
-    console.log(this.newGroupInfo);
-  }
+
   data = {
     image: "",
   }
@@ -51,7 +47,6 @@ export class CreateGroupComponent {
     if (input.files && input.files.length > 0) {
 
       this.selectedFile = event.target.files[0] as File;
-      console.log(this.selectedFile);
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePath = reader.result as string;
@@ -69,7 +64,7 @@ export class CreateGroupComponent {
           this.newGroupInfo.controls.imageUrl.setValue(response.imageId);
         },
         error => {
-          console.error('خطا در سرویس:', error);
+          this.toastr.error('خطا در ثبت اطلاعات!');
         }
       );
     }
@@ -80,13 +75,13 @@ export class CreateGroupComponent {
     this.http.post<CreateApiResponse>(createApiUrl, this.newGroupInfo.value).subscribe(
       (response: CreateApiResponse) => {
         this.groupId = response.groupId;
-        if (this.groupId != "") {
+        if (response.success) {
           this.Router.navigate(['add-member'],{ queryParams: { groupId: this.groupId} });
+          this.toastr.success('گروه با موفقیت ایجاد شد.');
         }
-        this.toastr.success('گروه با موفقیت ایجاد شد.');
       },
       error => {
-        console.error('خطا در سرویس:', error);
+        this.toastr.error('خطا در ثبت اطلاعات!');
       }
     );
     

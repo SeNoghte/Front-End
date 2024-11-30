@@ -8,7 +8,7 @@
     <a class="next-button" (click)="nextStep()">بعدی</a>
   </div>
   <div class="body">
-    <form [formGroup]="newGroupInfo" (ngSubmit)="onSubmit()">
+    <form [formGroup]="newGroupInfo" >
       <div class="image-part" (click)="fileInput.click()">
         <div class="background-image">
           <img [class.has-image]="imagePath && imagePath.length>0"
