@@ -28,7 +28,7 @@ export class ProfileEditComponent implements OnInit {
   email: string = '';
   profileDescription: string = '';
   userId: string = '';
-  imageUrl: string = '';
+  imageUrl: string = 'assets/icons/default-profile-image.svg';
   selectedImage: File | null = null;
   imagePreviewUrl: string | null = null;
 
@@ -38,22 +38,18 @@ export class ProfileEditComponent implements OnInit {
     this.fetchUserProfile();
   }
 
-
   fetchUserProfile(): void {
     const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
-
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success) {
-
           const user = response.user;
           this.fullName = user.name;
           this.userName = user.username;
           this.email = user.email;
-          this.profileDescription = user.profileDescription;
+          this.profileDescription = user.profileDescription || '';
           this.userId = user.userId;
-          this.imageUrl = user.image;
-          this.imageUrl = user.image || 'assets/icons/default-profile-image.svg';
+          this.imageUrl = user.image || this.imageUrl;
         } else {
           alert('Failed to fetch user data.');
         }
@@ -65,24 +61,49 @@ export class ProfileEditComponent implements OnInit {
     );
   }
 
-
   onImageSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.selectedImage = file;
-      this.previewImage(file);
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreviewUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      this.uploadProfileImage();
     }
   }
 
+  uploadProfileImage(): void {
+    if (!this.selectedImage) {
+      alert('لطفاً یک تصویر انتخاب کنید.');
+      return;
+    }
 
-  previewImage(file: File): void {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.imagePreviewUrl = e.target.result;
-    };
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append('Image', this.selectedImage, this.selectedImage.name);
+    formData.append('Type', this.selectedImage.type);
+
+    const apiUrl = 'https://api.becheen.ir:6001/api/Image/Upload';
+
+    this.http.post<{ success: boolean, imageUrl?: string }>(apiUrl, formData).subscribe(
+      (response) => {
+        if (response && response.success && response.imageUrl) {
+          this.imageUrl = `${response.imageUrl}?t=${new Date().getTime()}`;
+          this.imagePreviewUrl = null;
+          alert('تصویر با موفقیت آپلود شد!');
+        } else {
+          alert('مشکلی در آپلود تصویر رخ داد.');
+        }
+      },
+      (error) => {
+        console.error('Error uploading profile image:', error);
+        alert(`خطا در آپلود تصویر: ${error.status} - ${error.error?.message || error.statusText}`);
+      }
+    );
   }
-
 
   editImage(): void {
     const inputElement: HTMLInputElement = document.createElement('input');
@@ -90,58 +111,5 @@ export class ProfileEditComponent implements OnInit {
     inputElement.accept = 'image/*';
     inputElement.click();
     inputElement.addEventListener('change', (event: any) => this.onImageSelected(event));
-  }
-
-
-  saveChanges(): void {
-    if (!this.fullName || !this.userName || !this.profileDescription) {
-      alert('لطفاً همه فیلدها را پر کنید.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('userId', this.userId);
-    formData.append('fullName', this.fullName);
-    formData.append('userName', this.userName);
-    formData.append('email', this.email);
-    formData.append('profileDescription', this.profileDescription);
-
-    if (this.selectedImage) {
-      formData.append('image', this.selectedImage);
-    }
-
-    const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
-    const headers = new HttpHeaders({
-
-    });
-
-    this.http.post<any>(apiUrl, formData, { headers }).subscribe(
-      (response) => {
-        if (response.success) {
-          alert('تغییرات با موفقیت ذخیره شد!');
-          this.fetchUserProfile();
-        } else {
-          alert('مشکلی پیش آمده، لطفاً دوباره تلاش کنید.');
-        }
-      },
-      (error) => {
-        console.error('Error saving user data:', error);
-        alert(`خطا در ذخیره تغییرات: ${error.status} - ${error.statusText}`);
-        if (error.status === 404) {
-          console.error('Endpoint not found. Please check the API URL and method.');
-        } else {
-          console.error('Server error:', error.message);
-        }
-      }
-    );
-  }
-
-
-  deleteAccount(): void {
-    const confirmDelete = confirm('آیا مطمئن هستید که می‌خواهید حساب خود را حذف کنید؟');
-    if (confirmDelete) {
-      console.log('حساب کاربری حذف شد');
-      alert('حساب کاربری شما حذف شد.');
-    }
   }
 }

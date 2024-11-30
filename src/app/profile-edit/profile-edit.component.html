@@ -1,20 +1,25 @@
 <div class="edit-profile">
   <div class="header">
     <a class="back" [routerLink]="['/profile']">
-      <img class="back-button" src="assets/icons/back.svg" />
+      <img class="back-button" src="assets/icons/back.svg" alt="Back" />
       بازگشت
     </a>
-    <a class="submit" (click)="saveChanges()">ثبت </a>
+    <a class="submit">ثبت </a>
   </div>
 
   <div class="profile-logo">
     <img
-      *ngIf="imageUrl; else defaultImage"
-      [src]="imageUrl"
-      alt="Profile Image"
+      *ngIf="imagePreviewUrl; else uploadedImage"
+      [src]="imagePreviewUrl"
+      alt="Preview Image"
+      style="max-width: 200px; max-height: 200px; border-radius: 50%"
     />
-    <ng-template #defaultImage>
-      <img src="assets/default-profile-image.png" alt="Default Profile Image" />
+    <ng-template #uploadedImage>
+      <img
+        [src]="imageUrl"
+        alt="Profile Image"
+        style="max-width: 200px; max-height: 200px; border-radius: 50%"
+      />
     </ng-template>
   </div>
 
@@ -27,29 +32,20 @@
 
   <mat-form-field class="edit-input" appearance="outline">
     <mat-label>نام</mat-label>
-    <input matInput [(ngModel)]="fullName" #fullNameInput="ngModel" required />
-    <mat-error *ngIf="fullNameInput.invalid && fullNameInput.touched">
-      وارد کردن نام الزامی است.
-    </mat-error>
+    <input matInput [(ngModel)]="fullName" required />
   </mat-form-field>
 
   <mat-form-field class="edit-input" appearance="outline">
     <mat-label>نام کاربری</mat-label>
-    <input matInput [(ngModel)]="userName" #userNameInput="ngModel" />
+    <input matInput [(ngModel)]="userName" />
   </mat-form-field>
 
   <mat-form-field class="edit-input" appearance="outline">
     <mat-label>درباره من</mat-label>
-    <input
-      matInput
-      [(ngModel)]="profileDescription"
-      #profileDescriptionInput="ngModel"
-    />
+    <input matInput [(ngModel)]="profileDescription" />
   </mat-form-field>
 
   <hr class="divider" />
 
-  <button class="delete-account" (click)="deleteAccount()">
-    خروج از حساب کاربری
-  </button>
+  <button class="delete-account">خروج از حساب کاربری</button>
 </div>
