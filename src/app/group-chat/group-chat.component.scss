@@ -1,7 +1,9 @@
 @media only screen and (min-width: 390px) and (max-width: 390px) and (min-height: 844px) and (max-height: 844px) {
-
+    .chat {
+        height: 35%;
+    }
     .header {
-        height: 131px;
+        height: calc(100% - 10rem);
         width: 100%;
         color: #333;
         display: flex;

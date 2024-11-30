@@ -42,7 +42,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  private loginApiUrl = 'https://api.becheen.ir:7001/api/User/Login';
+  private loginApiUrl = 'https://api.becheen.ir:6001/api/User/Login';
 
   ngOnInit(): void {
     this.navVisibilityService.hide()

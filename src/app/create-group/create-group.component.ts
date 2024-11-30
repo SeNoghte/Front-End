@@ -1,0 +1,113 @@
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { NewGroupInfoService } from '../services/new-group-info.service';
+import { ToastrService } from 'ngx-toastr';
+
+
+
+@Component({
+  selector: 'app-create-group',
+  standalone: true,
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  templateUrl: './create-group.component.html',
+  styleUrl: './create-group.component.scss'
+})
+export class CreateGroupComponent {
+  selectedFile: File | null = null;
+  imagePath = '';
+  groupId = '';
+  newGroupInfo = new FormGroup({
+    name: new FormControl<string>(''),
+    description: new FormControl<string>(''),
+    imageUrl: new FormControl<string>(''),
+    membersToAdd: new FormControl([]),
+  });
+  onSubmit() {
+    console.log(this.newGroupInfo);
+  }
+  data = {
+    image: "",
+  }
+
+  constructor(
+    private http: HttpClient,
+    private Router: Router,
+    private newGroupInfoService: NewGroupInfoService,
+    private toastr: ToastrService,
+
+  ) { }
+
+  redirectMemberList() {
+    this.Router.navigate(['add-member']);
+  }
+
+  onFileSelected(event: any): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+
+      this.selectedFile = event.target.files[0] as File;
+      console.log(this.selectedFile);
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePath = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+
+      const profileApiUrl = 'https://api.becheen.ir:7001/api/Image/Upload';
+      const formData = new FormData;
+      if (this.selectedFile != null) {
+        formData.append('Image', this.selectedFile);
+      }
+      formData.append('type', "group-photo");
+      this.http.post<ApiResponse>(profileApiUrl, formData).subscribe(
+        (response: ApiResponse) => {
+          this.newGroupInfo.controls.imageUrl.setValue(response.imageId);
+        },
+        error => {
+          console.error('خطا در سرویس:', error);
+        }
+      );
+    }
+  };
+
+  nextStep() {
+    const createApiUrl = 'https://api.becheen.ir:7001/api/Group/Create';
+    this.http.post<CreateApiResponse>(createApiUrl, this.newGroupInfo.value).subscribe(
+      (response: CreateApiResponse) => {
+        this.groupId = response.groupId;
+        if (this.groupId != "") {
+          this.Router.navigate(['add-member'],{ queryParams: { groupId: this.groupId} });
+        }
+        this.toastr.success('گروه با موفقیت ایجاد شد.');
+      },
+      error => {
+        console.error('خطا در سرویس:', error);
+      }
+    );
+    
+  }
+
+}
+
+interface ApiResponse {
+  errorCode: number;
+  imageId: string;
+  message: string | null;
+  success: boolean;
+}
+
+interface CreateApiResponse {
+
+  "groupId": string,
+  "success": boolean,
+  "message": string,
+  "errorCode": number
+}
+
+
+

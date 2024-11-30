@@ -1,0 +1,113 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 1rem;
+
+    .next-button {
+        color: var(--primary);
+    }
+
+    .back {
+        display: flex;
+
+        .back-button {
+            height: 25px;
+        }
+    }
+
+    .header-name {
+        color: var(--gray-5);
+    }
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 5px;
+    margin: 1rem auto;
+    width: 95%;
+
+
+    .search-field {
+        width: 100%;
+        border-radius: 5px;
+        .mat-form-field-flex {
+            border: none;
+            border-radius: 5px;
+        }
+
+        input {
+            padding: 0 8px;
+            font-size: 1rem;
+            color: #666;
+            text-align: right;
+            font-family: inherit;
+        }
+
+        .search-icon-button {
+            background: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+            outline: none;
+
+            .search-icon {
+                width: 30px;
+                height: 30px;
+                opacity: 0.6;
+                margin-left: 23px;
+                margin-top: 8px;
+            }
+        }
+    }
+}
+
+.background-image {
+    background-color: var(--gray-2);
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline-end: 8px;
+
+
+    .default-image {
+        position: absolute;
+        height: 30px;
+        width: 30px;
+    }
+
+    .has-image {
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+    }
+
+    span {
+        margin-inline-start: 0.75rem;
+        margin-top: 0.5rem;
+    }
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4rem;
+    padding: 0.5rem 1rem;
+
+    .user-item {
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 1px solid var(--gray-3);
+        padding: 10px;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--gray-2);
+    }
+}

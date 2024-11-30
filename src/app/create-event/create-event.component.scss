@@ -1,0 +1,133 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 1rem;
+
+    .next-button {
+        color: var(--primary);
+    }
+
+    .back {
+        display: flex;
+
+        .back-button {
+            height: 25px;
+        }
+    }
+
+    .header-name {
+        color: var(--gray-5);
+    }
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .image-part {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .input-file {
+            display: none;
+        }
+
+        .background-image {
+            background-color: var(--gray-2);
+            border-radius: 8px;
+            height: 195px;
+            width: 348px;
+            margin-top: 60px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .default-image {
+                position: absolute;
+                height: 142px;
+                width: 142px;
+            }
+
+            .has-image {
+                height: 142px;
+                width: 142px;
+            }
+        }
+
+        .set-photo {
+            color: var(--primary);
+            text-align: center;
+        }
+    }
+
+    .form-field {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+        margin-top: calc(100vh - 90vh);
+
+        .field {
+            width: 100%;
+        }
+
+        .detail {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            color: var(--gray-5);
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+
+
+        }
+    }
+}
+
+::ng-deep .custom-cancel-button {
+    color: var(--gray-5);
+    background-color: rgb(252, 252, 252);
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 16px;
+    margin-right: 8px;
+    text-transform: none;
+    border: 1px solid var(--gray-4);
+    box-shadow: none;
+    outline: none;
+    margin-left: 6px;
+}
+
+::ng-deep .custom-apply-button {
+    color: var(--base);
+    background-color: var(--primary-light);
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 16px;
+    text-transform: none;
+    border: 1px solid var(--gray-4);
+    box-shadow: none;
+    outline: none;
+}

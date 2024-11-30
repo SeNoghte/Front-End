@@ -1,0 +1,42 @@
+<div>
+  <div class="header">
+    <div class="back" (click)="redirectCreateGroup()">
+      <img class="back-button" src="assets/icons/back.svg">
+      <p class="back_title">بازگشت</p>
+    </div>
+    <h4 class="header-name">افزودن عضو</h4>
+    <a class="next-button" (click)="onSubmit()">ثبت</a>
+  </div>
+  <div class="search-bar">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>جستجو</mat-label>
+      <input matInput type="text" placeholder="جستجو" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()" />
+      <button mat-icon-button matSuffix class="search-icon-button">
+        <img class="search-icon" src="assets/icons/search-box.svg" />
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="body">
+    @if(usersList){
+      @for(user of usersList; track usersList){
+        <div class="user-item">
+          <mat-checkbox [(ngModel)]="user.isChecked"></mat-checkbox>
+          <div class="background-image">
+            <img [class.has-image]="user.image != null"
+              [class.default-image]="user.image == null"
+              [src]="user.image != null ? user.image : '/assets/icons/group-default-photo.svg'" />
+          </div>
+          <ng-template #defaultImage>
+            <img src="assets/icons/group-default-photo.svg" alt="Default Image" class="user-image" />
+          </ng-template>
+          <span class="user-username">{{ user.name }}</span>
+         
+        </div>
+      }
+    }
+    
+    <ng-template #noData>
+      <p>هیچ داده‌ای برای نمایش وجود ندارد.</p>
+    </ng-template>
+  </div>
+</div>
