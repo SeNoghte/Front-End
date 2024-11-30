@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NewGroupInfoService } from '../services/new-group-info.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -16,43 +19,95 @@ import { Router } from '@angular/router';
 export class CreateGroupComponent {
   selectedFile: File | null = null;
   imagePath = '';
-  signUpForm = new FormGroup({});
+  groupId = '';
+  newGroupInfo = new FormGroup({
+    name: new FormControl<string>(''),
+    description: new FormControl<string>(''),
+    imageUrl: new FormControl<string>(''),
+    membersToAdd: new FormControl([]),
+  });
   onSubmit() {
-    console.log(this.signUpForm);
+    console.log(this.newGroupInfo);
   }
   data = {
     image: "",
   }
 
-
-
-  private profileApiUrl = 'https://api.becheen.ir:7001/api/User/Profile';
-
   constructor(
     private http: HttpClient,
     private Router: Router,
+    private newGroupInfoService: NewGroupInfoService,
+    private toastr: ToastrService,
+
   ) { }
 
   redirectMemberList() {
     this.Router.navigate(['add-member']);
   }
 
-  onFileSelected(event: Event): void {
+  onFileSelected(event: any): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
-      const file = input.files[0];
+
+      this.selectedFile = event.target.files[0] as File;
+      console.log(this.selectedFile);
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePath = reader.result as string;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
 
-      this.http.post(this.profileApiUrl, this.imagePath).subscribe((res) => {
-        this.imagePath = "";
-      })
-
+      const profileApiUrl = 'https://api.becheen.ir:7001/api/Image/Upload';
+      const formData = new FormData;
+      if (this.selectedFile != null) {
+        formData.append('Image', this.selectedFile);
+      }
+      formData.append('type', "group-photo");
+      this.http.post<ApiResponse>(profileApiUrl, formData).subscribe(
+        (response: ApiResponse) => {
+          this.newGroupInfo.controls.imageUrl.setValue(response.imageId);
+        },
+        error => {
+          console.error('خطا در سرویس:', error);
+        }
+      );
     }
+  };
+
+  nextStep() {
+    const createApiUrl = 'https://api.becheen.ir:7001/api/Group/Create';
+    this.http.post<CreateApiResponse>(createApiUrl, this.newGroupInfo.value).subscribe(
+      (response: CreateApiResponse) => {
+        this.groupId = response.groupId;
+        if (this.groupId != "") {
+          this.Router.navigate(['add-member'],{ queryParams: { groupId: this.groupId} });
+        }
+        this.toastr.success('گروه با موفقیت ایجاد شد.');
+      },
+      error => {
+        console.error('خطا در سرویس:', error);
+      }
+    );
+    
   }
 
 }
+
+interface ApiResponse {
+  errorCode: number;
+  imageId: string;
+  message: string | null;
+  success: boolean;
+}
+
+interface CreateApiResponse {
+
+  "groupId": string,
+  "success": boolean,
+  "message": string,
+  "errorCode": number
+}
+
+
+

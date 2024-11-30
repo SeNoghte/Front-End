@@ -13,6 +13,8 @@ import { RecoveryPassCodeComponent } from './recovery-pass-code/recovery-pass-co
 import { RecoveryPassNewPassComponent } from './recovery-pass-new-pass/recovery-pass-new-pass.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { AddGroupMemberComponent } from './add-group-member/add-group-member.component';
+import { CreateEventComponent } from './create-event/create-event.component';
+import { CreateDetailEventComponent } from './create-detail-event/create-detail-event.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -28,5 +30,7 @@ export const routes: Routes = [
   { path: 'recovery-pass-code', component: RecoveryPassCodeComponent },
   { path: 'recovery-pass-new-pass', component: RecoveryPassNewPassComponent },
   { path: 'create-group', component: CreateGroupComponent },
-  { path: 'add-member',  component: AddGroupMemberComponent}
+  { path: 'add-member',  component: AddGroupMemberComponent},
+  { path: 'create-event', component: CreateEventComponent},
+  { path: 'event-detail', component: CreateDetailEventComponent}
 ];

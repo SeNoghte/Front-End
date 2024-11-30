@@ -1,0 +1,24 @@
+<div>
+    <div class="header">
+        <div class="back" (click)="redirectMainEvent()">
+            <img class="back-button" src="assets/icons/back.svg">
+            <p class="back_title">بازگشت</p>
+        </div>
+        <h4 class="header-name">جزئیات برنامه جدید</h4>
+        <a class="next-button">ثبت</a>
+    </div>
+    <div class="body">
+        <div class="row">
+            <h3 class="topic">ساعت</h3>
+            <mat-slide-toggle [(ngModel)]="showTimeField" labelPosition="before"></mat-slide-toggle>
+        </div>
+        <div class="row">
+            <h3 class="topic">مکان</h3>
+            <mat-slide-toggle labelPosition="before"></mat-slide-toggle>
+        </div>
+        <div class="row">
+            <h3 class="topic">تسک ها</h3>
+            <mat-slide-toggle labelPosition="before"></mat-slide-toggle>
+        </div>
+    </div>
+</div>
