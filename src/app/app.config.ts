@@ -14,9 +14,9 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideClientHydration(), 
+    provideClientHydration(),
     provideAnimationsAsync(),
-    provideToastr(), 
+    provideToastr(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
