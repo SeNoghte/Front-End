@@ -4,7 +4,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { NewGroupInfoService } from '../services/new-group-info.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -32,7 +31,6 @@ export class CreateGroupComponent {
   constructor(
     private http: HttpClient,
     private Router: Router,
-    private newGroupInfoService: NewGroupInfoService,
     private toastr: ToastrService,
 
   ) { }

@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NewGroupInfoService } from '../services/new-group-info.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -32,7 +31,6 @@ export class AddGroupMemberComponent {
   constructor(
     private http: HttpClient,
     private Router: Router,
-    private newGroupInfoService: NewGroupInfoService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
 
