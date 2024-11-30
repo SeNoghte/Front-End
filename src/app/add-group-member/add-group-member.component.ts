@@ -9,6 +9,8 @@ import { NewGroupInfoService } from '../services/new-group-info.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-search-add-member',
@@ -31,7 +33,9 @@ export class AddGroupMemberComponent {
     private http: HttpClient,
     private Router: Router,
     private newGroupInfoService: NewGroupInfoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+
   ) { 
     this.usersList = this.usersList.map(user => ({
       ...user,
@@ -42,11 +46,7 @@ export class AddGroupMemberComponent {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        console.log(params); // { order: "popular" }
-
         this.groupId = params['groupId'];
-
-        console.log(this.groupId); // popular
       }
     );
     this.newGroupInfo.controls.groupId.setValue(this.groupId);
@@ -56,8 +56,8 @@ export class AddGroupMemberComponent {
   redirectCreateGroup() {
     this.Router.navigate(['create-group']);
   }
+
   onSearch() {
-    console.log(this.searchTerm);
     this.searchSubject.next(this.searchTerm);
     const getUsersApiUrl = 'https://api.becheen.ir:7001/api/User/GetUsers';
     const payload = {
@@ -65,16 +65,10 @@ export class AddGroupMemberComponent {
       pageIndex: 10,
       pageSize: 10000,
     };
-
     this.http.post(getUsersApiUrl, payload ).subscribe(
       (res: any) => {
-        console.log('Upload successful', res);
         this.usersList = res.filteredUsers;
-        
       },
-      (err) => {
-        console.error('Upload failed', err);
-      }
     );
   }
 
@@ -84,14 +78,11 @@ export class AddGroupMemberComponent {
     this.newGroupInfo.controls.usersToAdd.setValue(selectedUsers.map((item)=>item.userId));
     this.http.post(addMemberApiUrl, this.newGroupInfo.value ).subscribe(
       (res: any) => {
-        console.log('Upload successful', res);
-        // this.usersList = res.filteredUsers;
-        
+        this.toastr.success('گروه با موفقیت ایجاد شد.');       
       },
       (err) => {
-        console.error('Upload failed', err);
+        this.toastr.error('خطا در ثبت!');
       }
     );
-    console.log(selectedUsers);
   }
 }

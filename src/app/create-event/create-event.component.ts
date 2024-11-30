@@ -9,7 +9,6 @@ import { DateAdapter } from "@angular/material/core";
 import jalaliMoment from 'jalali-moment';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 
-
 export const PERSIAN_DATE_FORMATS = {
   parse: {
       dateInput: "jYYYY/jMM/jDD"

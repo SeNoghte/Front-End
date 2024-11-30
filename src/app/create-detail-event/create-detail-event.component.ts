@@ -1,14 +1,10 @@
-import { routes } from './../app.routes';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { routes } from './../app.routes';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
-
-
-
-
 
 @Component({
   selector: 'app-create-detail-event',
@@ -19,8 +15,7 @@ import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 })
 export class CreateDetailEventComponent {
   showTimeField = false;
-  // time = "";
-
+  
   constructor(
     private Router: Router,) {
 
@@ -30,9 +25,5 @@ export class CreateDetailEventComponent {
     this.Router.navigate(['create-event']);
   }
 
-  // CalculateTime(date: Date) {
-  //   return this.datePipe.transform(date, 'HH:mm');
-
-  // }
 }
 
