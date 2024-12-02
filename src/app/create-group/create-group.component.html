@@ -24,18 +24,22 @@
         <a class="set-photo">ویرایش تصویر</a>
         }
       </div>
-      <div class="form">
-        <mat-form-field appearance="outline" class="field" style="width: 40vh;">
-          <mat-label>نام</mat-label>
-          <input class="form-input" matInput type="text" required formControlName="name"/>
-          <mat-error *ngIf="">
-            نام گروه را وارد کنید!
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="field" style="width: 40vh;">
-          <mat-label>توضیحات</mat-label>
-          <input matInput type="text" formControlName="description"/>
-        </mat-form-field>
+      <div>
+        <div class="form">
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>نام</mat-label>
+            <input class="form-input" matInput type="text" required formControlName="name"/>
+            <mat-error *ngIf="">
+              نام گروه را وارد کنید!
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form">
+          <mat-form-field appearance="outline" class="field">
+            <mat-label>توضیحات</mat-label>
+            <input matInput type="text" formControlName="description"/>
+          </mat-form-field>
+        </div>
       </div>
     </form>
   </div>
