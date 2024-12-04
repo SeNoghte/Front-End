@@ -78,18 +78,16 @@ export class RecoveryPassNewPassComponent {
     if (this.signUpForm.valid && this.email && this.verificationCodeId) {
 
       const payload = {
-        name: this.signUpForm.get('name')?.value,
-        username: this.signUpForm.get('username')?.value,
-        password: this.signUpForm.get('password')?.value,
-        email: this.email,
+        newPassword: this.signUpForm.get('password')?.value,
+        newPasswordAgain: this.signUpForm.get('repeatPass')?.value,
         verificationCodeId: this.verificationCodeId
       };
 
       this.http.post<SignUp>(this.signUpApiUrl, payload).subscribe({
         next: (response) => {
           if (response.success) {
-            this.router.navigate(['/login']); // Replace `/welcome` with your target route
-            this.toastr.success('ثبت نام با موفقیت انجام شد');
+            this.router.navigate(['/login']); 
+            this.toastr.success('تغییر رمز با موفقیت انجام شد');
           }
           else {
             this.toastr.error(response.message);
