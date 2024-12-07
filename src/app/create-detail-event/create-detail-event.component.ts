@@ -120,9 +120,9 @@ export class CreateDetailEventComponent implements OnInit {
   }
 
   onCityChange(event: MatAutocompleteSelectedEvent): void {
-    const selectedCity = event.option.value;
+    const selectedCityName = event.option.value;
 
-    this.selectedCity = this.cities.find(c => c.cityId === selectedCity);
+    this.selectedCity = this.cities.find(c => c.name == selectedCityName);
     this.selectedCityName = this.selectedCity?.name;
 
     if (this.selectedCity && this.map) {

@@ -25,7 +25,7 @@
                     (ngModelChange)="SearchCities($event)">
 
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCityChange($event)">
-                    <mat-option *ngFor="let city of filteredCities" [value]="city.cityId">{{city.name}}</mat-option>
+                    <mat-option *ngFor="let city of filteredCities" [value]="city.name">{{city.name}}</mat-option>
                 </mat-autocomplete>
 
             </mat-form-field>
