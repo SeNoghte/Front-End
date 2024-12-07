@@ -36,4 +36,24 @@
         }
 
     }
+
+    .content
+    {
+        padding: 10px;
+        .input-field
+        {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .textarea-field
+        {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    }
 }
+#map {
+    width: 100%;
+    height: 500px;
+  }
+  
