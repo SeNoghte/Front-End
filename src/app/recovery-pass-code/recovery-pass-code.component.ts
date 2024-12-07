@@ -36,7 +36,7 @@ interface VerificationCode {
   styleUrl: './recovery-pass-code.component.scss'
 })
 export class RecoveryPassCodeComponent {
-  private verifyApiUrl = 'https://api.becheen.ir:7001/api/User/VerifyVerificationCode';
+  private verifyApiUrl = 'https://api.becheen.ir:6001/api/User/VerifyVerificationCode';
   verificationCodeId: string | null = null;
   email: string | null = null;
 

@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
+    const apiUrl = 'https://api.becheen.ir:7001/api/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success) {

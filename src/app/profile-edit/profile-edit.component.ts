@@ -39,7 +39,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
+    const apiUrl = 'https://api.becheen.ir:7001/api/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success) {
@@ -86,7 +86,7 @@ export class ProfileEditComponent implements OnInit {
     formData.append('Image', this.selectedImage, this.selectedImage.name);
     formData.append('Type', this.selectedImage.type);
 
-    const apiUrl = 'https://api.becheen.ir:6001/api/Image/Upload';
+    const apiUrl = 'https://api.becheen.ir:7001/api/Image/Upload';
 
     this.http.post<{ success: boolean, imageUrl?: string }>(apiUrl, formData).subscribe(
       (response) => {

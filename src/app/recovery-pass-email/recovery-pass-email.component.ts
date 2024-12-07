@@ -37,7 +37,7 @@ interface VerificationResponse {
   styleUrl: './recovery-pass-email.component.scss'
 })
 export class RecoveryPassEmailComponent {
-  private apiUrl = 'https://api.becheen.ir:7001/api/User/SendVerificationCode';
+  private apiUrl = 'https://api.becheen.ir:6001/api/User/SendVerificationCode';
 
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
