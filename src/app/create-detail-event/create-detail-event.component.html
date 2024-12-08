@@ -14,8 +14,31 @@
         </div>
         <div class="row">
             <h3 class="topic">مکان</h3>
-            <mat-slide-toggle labelPosition="before"></mat-slide-toggle>
+            <mat-slide-toggle [checked]="eventDetails.saveAddress" (toggleChange)="ToggleLoactionDisplay()"
+                labelPosition="before"></mat-slide-toggle>
         </div>
+        <div class="content" [style.display]="eventDetails.saveAddress ? 'block':'none'">
+            <mat-form-field class="input-field" appearance="outline">
+
+                <mat-label>شهر</mat-label>
+                <input matInput [matAutocomplete]="auto" [(ngModel)]="selectedCityName"
+                    (ngModelChange)="SearchCities($event)">
+
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCityChange($event)">
+                    <mat-option *ngFor="let city of filteredCities" [value]="city.name">{{city.name}}</mat-option>
+                </mat-autocomplete>
+
+            </mat-form-field>
+
+            <mat-form-field class="textarea-field" appearance="outline">
+                <mat-label>آدرس</mat-label>
+                <textarea matInput [value]="eventDetails.address"></textarea>
+            </mat-form-field>
+            
+            <div id="map" style="height: 15rem; margin-top: 1.5rem;"></div>
+        </div>
+
+
         <div class="row">
             <h3 class="topic">تسک ها</h3>
             <mat-slide-toggle labelPosition="before"></mat-slide-toggle>
