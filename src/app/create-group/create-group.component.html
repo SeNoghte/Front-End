@@ -16,7 +16,7 @@
             [src]="imagePath && imagePath.length>0 ? imagePath : '/assets/icons/group-default-photo.svg'" />
         </div>
         <input class="input-file" type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput >
-        @if(imagePath.length != null){
+        @if(!imagePath.length){
         <a class="set-photo">افزودن تصویر</a>
         }
         @else{
