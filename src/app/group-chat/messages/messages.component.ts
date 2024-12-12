@@ -19,8 +19,8 @@ export class MessagesComponent {
   userId = "5b0e8556-70a7-4754-a548-4e246cd84bb5";
   sendingMessage: string = '';
 
-  
-  
+
+
   messages: Message[] = [
 
     {
@@ -143,7 +143,7 @@ export class MessagesComponent {
       text: this.sendingMessage,
       groupId: this.selectedGroup,
     }
-    this.http.post(`https://api.becheen.ir:7001/api/Group/SendMessageToGroup`, data, {headers}).subscribe((res) => {
+    this.http.post(`https://api.becheen.ir:6001/api/Group/SendMessageToGroup`, data, {headers}).subscribe((res) => {
       this.sendingMessage = '';
     });
   }

@@ -34,7 +34,7 @@ export class AddGroupMemberComponent {
     private route: ActivatedRoute,
     private toastr: ToastrService,
 
-  ) { 
+  ) {
     this.usersList = this.usersList.map(user => ({
       ...user,
       isChecked: false,
@@ -57,7 +57,7 @@ export class AddGroupMemberComponent {
 
   onSearch() {
     this.searchSubject.next(this.searchTerm);
-    const getUsersApiUrl = 'https://api.becheen.ir:7001/api/User/GetUsers';
+    const getUsersApiUrl = 'https://api.becheen.ir:6001/api/User/GetUsers';
     const payload = {
       filter: this.searchTerm,
       pageIndex: 10,
@@ -72,11 +72,11 @@ export class AddGroupMemberComponent {
 
   onSubmit() {
     const selectedUsers = this.usersList.filter(user => user.isChecked);
-    const addMemberApiUrl = 'https://api.becheen.ir:7001/api/Group/AddMember';
+    const addMemberApiUrl = 'https://api.becheen.ir:6001/api/Group/AddMember';
     this.newGroupInfo.controls.usersToAdd.setValue(selectedUsers.map((item)=>item.userId));
     this.http.post(addMemberApiUrl, this.newGroupInfo.value ).subscribe(
       (res: any) => {
-        this.toastr.success('گروه با موفقیت ایجاد شد.');       
+        this.toastr.success('گروه با موفقیت ایجاد شد.');
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');

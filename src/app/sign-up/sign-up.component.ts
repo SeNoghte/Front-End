@@ -53,7 +53,7 @@ export class SignUpComponent {
   ) {
   }
 
-  ngOnInit() : void { 
+  ngOnInit() : void {
     this.navVisibilityService.hide()
   }
 
@@ -62,15 +62,15 @@ export class SignUpComponent {
       const email = this.signUpForm.value.email;
 
       this.http.post<VerificationResponse>(this.apiUrl, { email }).subscribe({
-        next: (response) => { 
-          var verificationCodeId = '';  
+        next: (response) => {
+          var verificationCodeId = '';
           if(response.success){
             verificationCodeId = response['verificationCodeId'];
             this.toastr.success('کد تایید ارسال شد!');
-            
+
             if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
               this.router.navigate(['/sign-up-auth'], { queryParams: { email,verificationCodeId  } });
-          }       
+          }
           else{
             this.toastr.error(response.message);
           }

@@ -2,7 +2,14 @@
   <div class="header">
     <button *ngIf="!isOwner" class="back-button">بازگشت</button>
     <h1 *ngIf="isOwner" class="profile-title">پروفایل</h1>
-    <button *ngIf="isOwner" class="edit-button" [routerLink]="'/profile-edit'" (click)="editProfile()">ویرایش</button>
+    <button
+      *ngIf="isOwner"
+      class="edit-button"
+      [routerLink]="'/profile-edit'"
+      (click)="editProfile()"
+    >
+      ویرایش
+    </button>
   </div>
 
   <div class="profile-info">
@@ -10,7 +17,7 @@
       <img [src]="userProfile.imageUrl" alt="Profile Picture" />
     </div>
     <h2 class="name">{{ userProfile.name }}</h2>
-    <p class="username">&#64;{{ userProfile.username }}</p>
+    <p class="username">{{ userProfile.username }}&#64;</p>
 
     <div class="status-section white-card">
       <p class="status">{{ userProfile.status }}</p>
@@ -25,24 +32,35 @@
   </div>
 
   <div class="tabs">
-    <button
-      [class.active]="activeTab === 'teams'"
-      (click)="switchTab('teams')"
-    >
-      <span>{{ isOwner ? 'اکیپ‌ها' : 'اکیپ‌های مشترک' }}</span>
+    <button [class.active]="activeTab === 'teams'" (click)="switchTab('teams')">
+      <span>{{ isOwner ? "اکیپ‌ها" : "اکیپ‌های مشترک" }}</span>
     </button>
     <button
       [class.active]="activeTab === 'programs'"
       (click)="switchTab('programs')"
     >
-      <span>{{ isOwner ? 'برنامه‌ها' : 'برنامه‌های مشترک' }}</span>
+      <span>{{ isOwner ? "برنامه‌ها" : "برنامه‌های مشترک" }}</span>
     </button>
   </div>
 
   <div class="content white-bg">
     <div *ngIf="activeTab === 'teams'" class="teams">
       <div *ngFor="let team of teams" class="team">
-        <img [src]="team.icon" alt="Team Icon" />
+        <img
+          *ngIf="team.icon"
+          [src]="team.icon"
+          alt="Team Icon"
+          class="common-avatar"
+        />
+
+        <div
+          *ngIf="!team.icon"
+          class="avatar common-avatar"
+          [style.backgroundColor]="team.avatarColor"
+        >
+          {{ team.avatarLetter }}
+        </div>
+
         <span>{{ team.name }}</span>
       </div>
     </div>

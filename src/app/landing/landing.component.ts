@@ -29,7 +29,7 @@ export class LandingComponent {
 
   sendAuthorizationCode(authCode: String) {
     const authorizationCode = authCode;
-    const apiUrl = 'https://api.becheen.ir:7001/api/User/GoogleLogin';
+    const apiUrl = 'https://api.becheen.ir:6001/api/User/GoogleLogin';
 
     const requestBody = { authorizationCode };
 
