@@ -34,7 +34,7 @@ export class AddGroupMemberComponent {
     private route: ActivatedRoute,
     private toastr: ToastrService,
 
-  ) { 
+  ) {
     this.usersList = this.usersList.map(user => ({
       ...user,
       isChecked: false,

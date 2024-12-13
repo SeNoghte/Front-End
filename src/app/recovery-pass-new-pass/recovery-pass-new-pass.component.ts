@@ -54,7 +54,7 @@ export class RecoveryPassNewPassComponent {
 
   email: string | null = null;
   verificationCodeId: string | null = null;
-  private signUpApiUrl = 'https://api.becheen.ir:7001/api/User/SignUp';
+  private signUpApiUrl = 'https://api.becheen.ir:6001/api/User/SignUp';
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -65,7 +65,7 @@ export class RecoveryPassNewPassComponent {
 
   ngOnInit(): void {
     this.navVisibilityService.hide()
-  
+
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
       this.verificationCodeId = params['verificationCodeId'];

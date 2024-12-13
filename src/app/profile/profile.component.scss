@@ -19,6 +19,8 @@
     h1.profile-title {
       font-size: 16px;
       margin-top: 20px;
+      margin-inline-start: 150px;
+      color: var(--gray-4);
     }
   }
 
@@ -31,6 +33,8 @@
       width: 114px;
       height: 114px;
       margin: 0 auto 16px;
+      background-color: var(--gray-2);
+      border-radius: 50%;
 
       img {
         width: 100%;
@@ -52,7 +56,6 @@
       margin: -5px;
     }
 
-
     .status-section {
       background: var(--base);
       height: 68px;
@@ -66,10 +69,9 @@
         color: var(--base-opposite);
         line-height: 1.5;
         margin: 15px;
-        margin-right: -1px;
+        margin-inline-start: -1px;
       }
     }
-
 
     .last-updated-section {
       background: var(--base);
@@ -82,7 +84,7 @@
       p {
         font-size: 14px;
         margin: 7px;
-        margin-right: -1px;
+        margin-inline-start: -1px;
 
         .label {
           color: var(--gray-4);
@@ -95,7 +97,6 @@
       }
     }
   }
-
 
   .tabs {
     display: flex;
@@ -114,7 +115,6 @@
       text-align: center;
       cursor: pointer;
       position: relative;
-
 
       &::after {
         content: '';
@@ -142,38 +142,55 @@
     }
   }
 
-
   .content {
     background: var(--base);
     padding: 16px;
 
-    .teams,
-    .programs {
+    .teams {
+      display: flex;
+      flex-direction: column;
 
-      .team,
-      .program {
+      .team {
         display: flex;
         align-items: center;
-        padding: 8px 0;
+        padding: 12px 16px;
         border-bottom: 1px solid var(--gray-2);
 
-        // &:last-child {
-        //   // border-bottom: none;
-        // }
+        &:last-child {
+          border-bottom: none;
+        }
 
-        img {
+        .common-avatar {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          margin-inline-end: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          font-weight: bold;
+          margin-inline-end: 12px;
+          overflow: hidden;
+        }
+
+        img.common-avatar {
+          object-fit: cover;
+        }
+
+        .avatar {
+          text-transform: uppercase;
+          color: var(--base);
         }
 
         span {
-          font-size: 14px;
+          font-size: 16px;
           color: var(--base-opposite);
+          flex: 1;
         }
       }
+    }
 
+    .programs {
       p {
         font-size: 14px;
         text-align: center;

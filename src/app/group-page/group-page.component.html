@@ -9,7 +9,16 @@
   </div>
   <div class="group-list">
     <div class="group-item" *ngFor="let group of groups">
-      <img [src]="group.image" alt="Group Image" />
+      <img *ngIf="group.image" [src]="group.image" alt="Group Image" />
+
+      <div
+        *ngIf="!group.image"
+        class="avatar"
+        [style.backgroundColor]="group.avatarColor"
+      >
+        {{ group.avatarLetter }}
+      </div>
+
       <span>{{ group.name }}</span>
     </div>
   </div>
@@ -39,14 +48,25 @@
       </button>
     </mat-form-field>
   </div>
+
   <div class="group-list">
     <div class="group-item" *ngFor="let group of searchResults">
-      <img [src]="group.image" alt="Group Image" />
+      <img *ngIf="group.image" [src]="group.image" alt="Group Image" />
+      <div
+        *ngIf="!group.image"
+        class="avatar"
+        [style.backgroundColor]="group.avatarColor"
+      >
+        {{ group.avatarLetter }}
+      </div>
       <span>{{ group.name }}</span>
     </div>
-    <div class="no-results-message" *ngIf="searchResults.length === 0">
+
+    <div
+      *ngIf="searchResults.length === 0 && searchTerm.trim() !== ''"
+      class="no-results-message"
+    >
       هیچ گروهی مطابق با جستجوی شما یافت نشد.
     </div>
   </div>
 </div>
-

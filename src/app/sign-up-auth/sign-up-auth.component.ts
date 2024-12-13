@@ -62,7 +62,7 @@ export class SignUpAuthComponent {
       this.verificationCodeId = params['verificationCodeId'];
 
       if (this.email) {
-        this.signUpForm.get('email')?.setValue(this.email); 
+        this.signUpForm.get('email')?.setValue(this.email);
       }
     });
   }
@@ -90,7 +90,7 @@ export class SignUpAuthComponent {
           this.toastr.error(error);
         }
       })
-    } 
+    }
     else {
     }
   }
