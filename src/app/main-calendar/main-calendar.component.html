@@ -1,0 +1,36 @@
+<div class="day-box">
+    <div class="calendar-container">
+      @for(month of weeksByMonth; track $index){
+        <h3 class="month-title">{{ month.month.name }} ماه {{ convertToPersianDigits(this.CurrentYear)  }}</h3>
+        <table>
+          <thead class="day-ofweek-section">
+            <tr>
+              @for(day of daysOfWeek; track $index){
+                <th class="day-name">{{ day }}</th>
+              }
+            </tr>
+          </thead>
+          <span class="margin-span"></span>
+          <tbody class="day-ofmonth-section">
+            @for(week of month.weeks; track $index){
+              {{ getModel(week) }}
+              <tr>
+                @for(day of week; track $index){
+                  <td class="day-ofmonth-section" [class.not-in-month]="day.notInMonth">
+                    <div>
+                      <span class="jalali fully-center" [class.active]="day.active"
+                        [class.bg-theme-danger]="day.active && day.isHoliday"
+                        [class.text-danger]="day.isHoliday && !day.active" (click)="changeDay(day);">
+                        {{ convertToPersianDigits(day.dayInSolarHijri) }}
+                      </span>
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+        <hr class="divider" />
+      }
+    </div>
+  </div>

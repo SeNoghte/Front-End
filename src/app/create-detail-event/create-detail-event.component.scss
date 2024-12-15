@@ -24,6 +24,7 @@
 .body {
     padding: 5%;
     padding-top: 10%;
+
     .row {
         display: flex;
         align-items: center;
@@ -31,29 +32,30 @@
         direction: rtl;
         padding: 10px;
         border-bottom: 1px solid var(--gray-3);
-        .topic{
+
+        .topic {
             color: var(--gray-4);
         }
 
     }
 
-    .content
-    {
+    .content {
         padding: 10px;
-        .input-field
-        {
+
+        .input-field {
             width: 100%;
             margin-top: 1.5rem;
         }
-        .textarea-field
-        {
+
+        .textarea-field {
             width: 100%;
             margin-top: 0.5rem;
         }
     }
 }
+
 #map {
     width: 100%;
     height: 500px;
-  }
-  
+}
+
