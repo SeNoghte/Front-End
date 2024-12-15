@@ -1,15 +1,15 @@
-<div class="chat">
+<div *ngIf="!isLoading" class="chat">
     <div class="header">
         <div class="back">
             <img class="back-button" src="assets/icons/back.svg">
             <p class="back_title">بازگشت</p>
         </div>
-        <h3>گروه تست</h3>
-        <img class="profile-group" src="download (2).jpg">
+        <h3>{{group.name}}</h3>
+        <img class="profile-group" [src]="group.image" >
     </div>
     <mat-tab-group>
         <mat-tab label="پیام ها">
-            <app-messages />
+            <app-messages [group]="group"></app-messages>
         </mat-tab>
         <mat-tab label="برنامه ها">
             <app-events />
