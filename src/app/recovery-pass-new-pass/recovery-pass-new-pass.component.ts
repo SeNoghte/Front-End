@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../environment';
 
 interface SignUp {
   success: boolean;
@@ -54,7 +55,7 @@ export class RecoveryPassNewPassComponent {
 
   email: string | null = null;
   verificationCodeId: string | null = null;
-  private signUpApiUrl = 'https://api.becheen.ir:6001/api/User/SignUp';
+  private signUpApiUrl = environment.apiBaseUrl +'/User/SignUp';
 
   constructor(private route: ActivatedRoute,
     private router: Router,

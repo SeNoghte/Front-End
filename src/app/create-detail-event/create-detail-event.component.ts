@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { routes } from './../app.routes';
@@ -13,16 +13,75 @@ import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/ma
 import { MatInputModule } from '@angular/material/input';
 import { log } from 'console';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-create-detail-event',
   standalone: true,
-  imports: [MatSlideToggleModule, FormsModule, NgxMatTimepickerModule, CommonModule,
-    MatFormFieldModule, MatAutocompleteModule, MatInputModule, HttpClientModule],
+  imports: [
+    MatSlideToggleModule,
+    FormsModule,
+    NgxMatTimepickerModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    HttpClientModule,
+    MatChipsModule,
+    MatIconModule],
   templateUrl: './create-detail-event.component.html',
   styleUrl: './create-detail-event.component.scss'
 })
 export class CreateDetailEventComponent implements OnInit {
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly currentTask = signal('');
+  readonly tasks = signal<string[]>([]);
+  readonly allTasks: string[] = ['Meeting', 'Shopping', 'Exercise', 'Study', 'Cleaning'];
+  readonly filteredTasks = computed(() => {
+    const currentTask = this.currentTask().toLowerCase();
+    return currentTask
+      ? this.allTasks.filter(task => task.toLowerCase().includes(currentTask))
+      : this.allTasks.slice();
+  });
+
+
+  readonly announcer = inject(LiveAnnouncer);
+
+  addTask(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.tasks.update(tasks => [...tasks, value]);
+    }
+
+
+    this.currentTask.set('');
+    if (event.input) {
+      event.input.value = '';
+    }
+  }
+
+  removeTask(task: string): void {
+    this.tasks.update(tasks => {
+      const index = tasks.indexOf(task);
+      if (index < 0) {
+        return tasks;
+      }
+
+      tasks.splice(index, 1);
+      this.announcer.announce(`Removed ${task}`);
+      return [...tasks];
+    });
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.tasks.update(tasks => [...tasks, event.option.viewValue]);
+    this.currentTask.set('');
+    event.option.deselect();
+  }
+
   showTimeField = false;
   eventDetails !: EventDetail;
   map: L.Map | undefined;
@@ -31,8 +90,15 @@ export class CreateDetailEventComponent implements OnInit {
   selectedCityName!: string | undefined;
 
   cities: City[] = [];
-
   filteredCities: City[] = []
+
+  isTaskBoxVisible: boolean = false;
+
+
+  toggleTaskBox(): void {
+    this.isTaskBoxVisible = !this.isTaskBoxVisible;
+  }
+
 
   constructor(private Router: Router, private http: HttpClient) {
 
@@ -59,12 +125,12 @@ export class CreateDetailEventComponent implements OnInit {
 
   InitCities() {
     this.http.get<City[]>('assets/cities.json').subscribe(data => {
-      this.cities = [...data]; 
+      this.cities = [...data];
       this.filteredCities = [...data];
       this.initMap();
     });
   }
-  
+
   private initMap(): void {
     if (this.eventDetails.saveAddress && this.eventDetails.cityId) {
       this.selectedCity = this.cities.find(x => x.cityId == this.eventDetails.cityId);
