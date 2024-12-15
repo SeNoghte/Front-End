@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import { SolarHijriMonthsList, Seasons } from './calendar';
 import { MonthsModel, dayInMonthModel, SeasonsModel, DateType } from './calendar.model';
 import { MomentService } from './moment.service';
+import { FormsModule, ReactiveFormsModule,FormGroup,FormControl } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-main-calendar',
@@ -37,7 +41,9 @@ export class MainCalendarComponent {
   weeksByMonth: { month: MonthsModel; weeks: dayInMonthModel[][] }[] = [];
 
   constructor(
-    public readonly momentService: MomentService,
+    public readonly momentService: MomentService,    private http: HttpClient,    private toastr: ToastrService,
+
+
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +51,15 @@ export class MainCalendarComponent {
       this.goToday();
     })
     this.yearList = this.momentService.getYearList()
+    const GetEventsApiUrl = 'https://api.becheen.ir:6001/api/Group/GetGroup';
+    const payload = {
+      groupId: "e2d6c371-7632-4def-b01c-f41cf57722c7",
+    };
+    this.http.post(GetEventsApiUrl, payload ).subscribe(
+      (res: any) => {
+        console.log(res.events)
+      },
+    );
   }
 
   ngOnDestroy() {
@@ -185,4 +200,6 @@ export class MainCalendarComponent {
       .toString()
       .replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);
   }
+
+  
 }

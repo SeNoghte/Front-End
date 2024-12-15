@@ -196,7 +196,7 @@ export class CreateEventComponent {
     selectedFile: File | null = null;
     imagePath = '';
     date = "";
-    groupId: string = '9155085b-a6ca-4ad3-b1d0-c28b25970c6f';
+    groupId: string = 'e2d6c371-7632-4def-b01c-f41cf57722c7';
 
     createEventForm = new FormGroup({
         title: new FormControl<string>(''),
