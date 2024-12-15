@@ -1,59 +1,82 @@
 .header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 1rem;
+
+  .next-button {
+    color: var(--primary);
+  }
+
+  .back {
     display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-    padding: 1rem;
 
-    .next-button {
-        color: var(--primary);
+    .back-button {
+      height: 25px;
     }
+  }
 
-    .back {
-        display: flex;
-
-        .back-button {
-            height: 25px;
-        }
-    }
-
-    .header-name {
-        color: var(--gray-5);
-    }
+  .header-name {
+    color: var(--gray-5);
+  }
 }
 
 .body {
-    padding: 5%;
-    padding-top: 10%;
-    .row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        direction: rtl;
-        padding: 10px;
-        border-bottom: 1px solid var(--gray-3);
-        .topic{
-            color: var(--gray-4);
-        }
+  padding: 5%;
+  padding-top: 10%;
 
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    direction: rtl;
+    padding: 10px;
+    border-bottom: 1px solid var(--gray-3);
+
+    .topic {
+      color: var(--gray-4);
     }
 
-    .content
-    {
-        padding: 10px;
-        .input-field
-        {
-            width: 100%;
-            margin-top: 1.5rem;
-        }
-        .textarea-field
-        {
-            width: 100%;
-            margin-top: 0.5rem;
-        }
-    }
-}
-#map {
-    width: 100%;
-    height: 500px;
   }
-  
+
+  .content {
+    padding: 10px;
+
+    .input-field {
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+
+    .textarea-field {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+#map {
+  width: 100%;
+  height: 500px;
+}
+
+.chip-container {
+  margin-top: 2rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  direction: rtl;
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-3);
+
+  .topic {
+    color: var(--gray-4);
+  }
+
+
+  .mat-slide-toggle {
+    color: var(--primary);
+  }
+}

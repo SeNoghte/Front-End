@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-profile-edit',
@@ -39,7 +40,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
+    const apiUrl = environment.apiBaseUrl +'/User/Profile';
     this.http.post<any>(apiUrl, {})
       .subscribe(
         (response) => {
@@ -87,7 +88,7 @@ export class ProfileEditComponent implements OnInit {
     formData.append('Image', this.selectedImage, this.selectedImage.name);
     formData.append('Type', this.selectedImage.type);
 
-    const apiUrl = 'https://api.becheen.ir:6001/api/Image/Upload';
+    const apiUrl = environment.apiBaseUrl +'/Image/Upload';
 
     this.http.post<{ success: boolean, imageUrl?: string }>(apiUrl, formData)
       .subscribe(
@@ -116,33 +117,33 @@ export class ProfileEditComponent implements OnInit {
   }
 
   saveChanges(): void {
-    // const apiUrl = 'https://api.becheen.ir:6001/api/User/EditProfile';
+    const apiUrl = environment.apiBaseUrl +'/User/EditProfile';
 
-    // const requestBody: any = {
-    //   name: this.fullName,
-    //   username: this.userName,
-    //   image: this.imageUrl,
-    // };
+    const requestBody: any = {
+      name: this.fullName,
+      username: this.userName,
+      image: this.imageUrl,
+    };
 
-    // if (this.profileDescription) {
-    //   requestBody.profileDescription = this.profileDescription;
-    // }
+    if (this.profileDescription) {
+      requestBody.profileDescription = this.profileDescription;
+    }
 
-    // this.http.post<any>(apiUrl, requestBody)
-    //   .subscribe(
-    //     (response) => {
-    //       if (response.success) {
-    //         alert('پروفایل با موفقیت به‌روزرسانی شد!');
-    //         this.fetchUserProfile();
-    //       } else {
-    //         alert('خطا در به‌روزرسانی پروفایل.');
-    //       }
-    //     },
-    //     (error) => {
-    //       console.error('خطا در ذخیره تغییرات:', error);
-    //       alert('خطا در ذخیره تغییرات. لطفاً دوباره تلاش کنید.');
-    //     }
-    //   );
+    this.http.post<any>(apiUrl, requestBody)
+      .subscribe(
+        (response) => {
+          if (response.success) {
+            alert('پروفایل با موفقیت به‌روزرسانی شد!');
+            this.fetchUserProfile();
+          } else {
+            alert('خطا در به‌روزرسانی پروفایل.');
+          }
+        },
+        (error) => {
+          console.error('خطا در ذخیره تغییرات:', error);
+          alert('خطا در ذخیره تغییرات. لطفاً دوباره تلاش کنید.');
+        }
+      );
   }
 
 

@@ -1,47 +1,91 @@
 <div>
-    <div class="header">
-        <div class="back" (click)="redirectMainEvent()">
-            <img class="back-button" src="assets/icons/back.svg">
-            <p class="back_title">بازگشت</p>
-        </div>
-        <h4 class="header-name">جزئیات برنامه جدید</h4>
-        <a class="next-button">ثبت</a>
+  <div class="header">
+    <div class="back" (click)="redirectMainEvent()">
+      <img class="back-button" src="assets/icons/back.svg" />
+      <p class="back_title">بازگشت</p>
     </div>
-    <div class="body">
-        <div class="row">
-            <h3 class="topic">ساعت</h3>
-            <mat-slide-toggle [(ngModel)]="showTimeField" labelPosition="before"></mat-slide-toggle>
-        </div>
-        <div class="row">
-            <h3 class="topic">مکان</h3>
-            <mat-slide-toggle [checked]="eventDetails.saveAddress" (toggleChange)="ToggleLoactionDisplay()"
-                labelPosition="before"></mat-slide-toggle>
-        </div>
-        <div class="content" [style.display]="eventDetails.saveAddress ? 'block':'none'">
-            <mat-form-field class="input-field" appearance="outline">
-
-                <mat-label>شهر</mat-label>
-                <input matInput [matAutocomplete]="auto" [(ngModel)]="selectedCityName"
-                    (ngModelChange)="SearchCities($event)">
-
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCityChange($event)">
-                    <mat-option *ngFor="let city of filteredCities" [value]="city.name">{{city.name}}</mat-option>
-                </mat-autocomplete>
-
-            </mat-form-field>
-
-            <mat-form-field class="textarea-field" appearance="outline">
-                <mat-label>آدرس</mat-label>
-                <textarea matInput [value]="eventDetails.address"></textarea>
-            </mat-form-field>
-            
-            <div id="map" style="height: 15rem; margin-top: 1.5rem;"></div>
-        </div>
-
-
-        <div class="row">
-            <h3 class="topic">تسک ها</h3>
-            <mat-slide-toggle labelPosition="before"></mat-slide-toggle>
-        </div>
+    <h4 class="header-name">جزئیات برنامه جدید</h4>
+    <a class="next-button">ثبت</a>
+  </div>
+  <div class="body">
+    <div class="row">
+      <h3 class="topic">ساعت</h3>
+      <mat-slide-toggle
+        [(ngModel)]="showTimeField"
+        labelPosition="before"
+      ></mat-slide-toggle>
     </div>
+    <div class="row">
+      <h3 class="topic">مکان</h3>
+      <mat-slide-toggle
+        [checked]="eventDetails.saveAddress"
+        (toggleChange)="ToggleLoactionDisplay()"
+        labelPosition="before"
+      ></mat-slide-toggle>
+    </div>
+    <div
+      class="content"
+      [style.display]="eventDetails.saveAddress ? 'block' : 'none'"
+    >
+      <mat-form-field class="input-field" appearance="outline">
+        <mat-label>شهر</mat-label>
+        <input
+          matInput
+          [matAutocomplete]="auto"
+          [(ngModel)]="selectedCityName"
+          (ngModelChange)="SearchCities($event)"
+        />
+
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="onCityChange($event)"
+        >
+          <mat-option *ngFor="let city of filteredCities" [value]="city.name">{{
+            city.name
+          }}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="textarea-field" appearance="outline">
+        <mat-label>آدرس</mat-label>
+        <textarea matInput [value]="eventDetails.address"></textarea>
+      </mat-form-field>
+
+      <div id="map" style="height: 15rem; margin-top: 1.5rem"></div>
+    </div>
+
+    <div class="row">
+      <h3 class="topic">تسک‌ها</h3>
+      <mat-slide-toggle
+        labelPosition="before"
+        (change)="toggleTaskBox()"
+      ></mat-slide-toggle>
+    </div>
+
+    <div class="chip-container" *ngIf="isTaskBoxVisible">
+      <mat-form-field appearance="outline" class="example-chip-list">
+        <mat-label>افزودن کار...</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Task selection">
+          <mat-chip-row
+            *ngFor="let task of tasks(); let i = index"
+            (removed)="removeTask(task)"
+          >
+            {{ task }}
+            <button matChipRemove [attr.aria-label]="'Remove ' + task">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+        <input
+          name="currentTask"
+          placeholder="کار جدید..."
+          #taskInput
+          [(ngModel)]="currentTask"
+          [matChipInputFor]="chipGrid"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="addTask($event)"
+        />
+      </mat-form-field>
+    </div>
+  </div>
 </div>

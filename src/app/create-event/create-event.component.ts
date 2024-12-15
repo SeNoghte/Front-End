@@ -12,6 +12,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { environment } from '../environment';
 
 export const PERSIAN_DATE_FORMATS = {
     parse: {
@@ -188,7 +189,7 @@ export class MaterialPersianDateAdapter extends DateAdapter<jalaliMoment.Moment>
     templateUrl: './create-event.component.html',
     styleUrl: './create-event.component.scss',
     providers: [
-        { provide: DateAdapter, useClass: MaterialPersianDateAdapter }, 
+        { provide: DateAdapter, useClass: MaterialPersianDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: PERSIAN_DATE_FORMATS },
     ],
 })
@@ -202,7 +203,7 @@ export class CreateEventComponent {
         title: new FormControl<string>(''),
         description: new FormControl<string>(''),
         date: new FormControl<string>(''),
-        groupId: new FormControl<string>(''),        
+        groupId: new FormControl<string>(''),
         imagePath: new FormControl<string>(''),
     });
 
@@ -240,7 +241,7 @@ export class CreateEventComponent {
             };
             reader.readAsDataURL(this.selectedFile);
 
-            const profileApiUrl = 'https://api.becheen.ir:6001/api/Image/Upload';
+            const profileApiUrl = environment.apiBaseUrl +'/Image/Upload';
             const formData = new FormData;
             if (this.selectedFile != null) {
                 formData.append('Image', this.selectedFile);
@@ -261,8 +262,8 @@ export class CreateEventComponent {
         if(this.createEventForm.controls.date){
             this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
         }
-        
-        const createEventApiUrl = 'https://api.becheen.ir:6001/api/Event/Create';
+
+        const createEventApiUrl = environment.apiBaseUrl +'/Event/Create';
         this.http.post<CreateEventApiResponse>(createEventApiUrl, this.createEventForm.value).subscribe(
             (res: any) => {
                 this.toastr.success('رویداد با موفقیت ایجاد شد.');

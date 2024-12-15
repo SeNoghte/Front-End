@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-create-group',
@@ -52,7 +53,7 @@ export class CreateGroupComponent {
       };
       reader.readAsDataURL(this.selectedFile);
 
-      const profileApiUrl = 'https://api.becheen.ir:6001/api/Image/Upload';
+      const profileApiUrl = environment.apiBaseUrl +'/Image/Upload';
       const formData = new FormData;
       if (this.selectedFile != null) {
         formData.append('Image', this.selectedFile);
@@ -70,7 +71,7 @@ export class CreateGroupComponent {
   };
 
   nextStep() {
-    const createApiUrl = 'https://api.becheen.ir:6001/api/Group/Create';
+    const createApiUrl = environment.apiBaseUrl +'/Group/Create';
     this.http.post<CreateApiResponse>(createApiUrl, this.newGroupInfo.value).subscribe(
       (response: CreateApiResponse) => {
         this.groupId = response.groupId;

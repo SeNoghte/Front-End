@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import moment from 'moment-jalaali';
+import { environment } from '../environment';
 
 
 
@@ -47,7 +48,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
+    const apiUrl = environment.apiBaseUrl +'/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success) {
@@ -76,7 +77,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserTeams(): void {
-    const apiUrl = 'https://api.becheen.ir:6001/api/User/Profile';
+    const apiUrl = environment.apiBaseUrl +'/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success && response.myGroups) {
