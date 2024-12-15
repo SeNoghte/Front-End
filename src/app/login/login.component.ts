@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
 
 interface Login {
   success: boolean;
@@ -43,7 +43,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  private loginApiUrl = environment.apiBaseUrl + '/Login';
+  private loginApiUrl = environment.apiBaseUrl + '/User/Login';
 
   ngOnInit(): void {
     this.navVisibilityService.hide()

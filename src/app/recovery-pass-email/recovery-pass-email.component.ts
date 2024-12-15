@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
 
 interface VerificationResponse {
   verificationCodeId: string;
@@ -38,7 +38,7 @@ interface VerificationResponse {
   styleUrl: './recovery-pass-email.component.scss'
 })
 export class RecoveryPassEmailComponent {
-  private apiUrl = environment.apiBaseUrl + '/SendVerificationCode';
+  private apiUrl = environment.apiBaseUrl + '/User/SendVerificationCode';
 
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])

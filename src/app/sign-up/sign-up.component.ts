@@ -9,7 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
 
 
 interface VerificationResponse {
@@ -40,7 +40,7 @@ interface VerificationResponse {
 })
 
 export class SignUpComponent {
-  private apiUrl = environment.apiBaseUrl + '/SendVerificationCode';
+  private apiUrl = environment.apiBaseUrl + '/User/SendVerificationCode';
 
   signUpForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
