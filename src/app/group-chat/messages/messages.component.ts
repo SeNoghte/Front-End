@@ -3,6 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import *as signalR from '@microsoft/signalr';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environment';
 
 @Component({
   selector: 'app-messages',
@@ -143,7 +144,7 @@ export class MessagesComponent {
       text: this.sendingMessage,
       groupId: this.selectedGroup,
     }
-    this.http.post(`https://api.becheen.ir:7001/api/Group/SendMessageToGroup`, data, {headers}).subscribe((res) => {
+    this.http.post(environment.apiBaseUrl+`/SendMessageToGroup`, data, {headers}).subscribe((res) => {
       this.sendingMessage = '';
     });
   }

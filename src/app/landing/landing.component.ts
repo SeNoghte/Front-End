@@ -2,6 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../environment';
 
 @Component({
   selector: 'app-landing',
@@ -29,7 +30,7 @@ export class LandingComponent {
 
   sendAuthorizationCode(authCode: String) {
     const authorizationCode = authCode;
-    const apiUrl = 'https://api.becheen.ir:7001/api/User/GoogleLogin';
+    const apiUrl = environment.apiBaseUrl + '/GoogleLogin';
 
     const requestBody = { authorizationCode };
 
