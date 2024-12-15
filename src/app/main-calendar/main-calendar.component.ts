@@ -12,11 +12,6 @@ import { Subject } from 'rxjs';
   styleUrl: './main-calendar.component.scss'
 })
 export class MainCalendarComponent {
-  irstLoadPage: boolean = true;
-
-  startPosition: number = 0;
-
-  initState: boolean = true;
   monthList: MonthsModel[] = SolarHijriMonthsList;
   dayList: dayInMonthModel[] = [];
   yearList: number[] = [];
@@ -44,10 +39,6 @@ export class MainCalendarComponent {
   constructor(
     public readonly momentService: MomentService,
   ) { }
-
-  getModel(a: any) {    
-    JSON.stringify(a);
-  }
 
   ngOnInit(): void {
     this.momentService.timeSynced.subscribe(() => {
@@ -107,8 +98,6 @@ export class MainCalendarComponent {
         this.weeks[i] = [];
       }
 
-
-
       var _day = 0;
       // Filling the first week
       if (daysInMonth[0].dayInWeek != this._daysOfWeek[0]) {
@@ -161,9 +150,6 @@ export class MainCalendarComponent {
       }
       this.weeksByMonth.push({ month, weeks });
     });
-    console.log(this.weeksByMonth)
-
-
     this.yearMonthChanged.next(true);
   }
 
