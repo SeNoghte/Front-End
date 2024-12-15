@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { routes } from './../app.routes';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import * as L from 'leaflet';
 import { BrowserModule } from '@angular/platform-browser';
@@ -56,7 +56,6 @@ export class CreateDetailEventComponent implements OnInit {
       this.tasks.update(tasks => [...tasks, value]);
     }
 
-
     this.currentTask.set('');
     if (event.input) {
       event.input.value = '';
@@ -94,13 +93,16 @@ export class CreateDetailEventComponent implements OnInit {
 
   isTaskBoxVisible: boolean = false;
 
-
+  eventData: any;
   toggleTaskBox(): void {
     this.isTaskBoxVisible = !this.isTaskBoxVisible;
   }
 
 
-  constructor(private Router: Router, private http: HttpClient) {
+  constructor(
+    private Router: Router,
+    private router: ActivatedRoute,
+    private http: HttpClient) {
 
   }
   ngOnInit(): void {
@@ -117,6 +119,11 @@ export class CreateDetailEventComponent implements OnInit {
 
     this.InitCities();
 
+    this.router.queryParams.subscribe((params) => {
+      console.log(params);
+      this.eventData = params;
+      console.log(this.eventData); // Form data from the previous component
+    });
   }
 
   redirectMainEvent() {
@@ -129,6 +136,23 @@ export class CreateDetailEventComponent implements OnInit {
       this.filteredCities = [...data];
       this.initMap();
     });
+  }
+
+  onSubmit() {
+    console.log(this.eventData); // Form data from the previous component
+    console.log(this.tasks()); // Form data from the previous component
+
+    const tasks = this.tasks();
+
+    // {
+    //   title: this.createEventForm.value.title,
+    //   description: this.createEventForm.value.description,
+    //   date: this.createEventForm.value.date,
+    //   groupId: this.createEventForm.value.groupId,
+    //   imagePath: this.createEventForm.value.imagePath,
+    //   tasks : tasks
+    // }
+
   }
 
   private initMap(): void {

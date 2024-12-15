@@ -21,7 +21,7 @@
     height: 114px;
     margin: 20px auto;
     border-radius: 50%;
-    background-color: var(--gray-1);
+    background-color: var(--gray-2);
     position: relative;
 
     img {
@@ -76,6 +76,19 @@
       color: var(--error);
     }
   }
+
+  .email-input {
+    pointer-events: none;
+
+    input {
+      pointer-events: none;
+      outline: none;
+      text-align: left;
+      direction: ltr;
+      color: var(--gray-3);
+    }
+  }
+
 
   .divider {
     width: 90%;

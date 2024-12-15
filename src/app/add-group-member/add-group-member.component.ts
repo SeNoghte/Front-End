@@ -9,7 +9,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
+
 
 
 @Component({
@@ -19,6 +20,7 @@ import { environment } from '../environment';
   templateUrl: './add-group-member.component.html',
   styleUrl: './add-group-member.component.scss'
 })
+
 export class AddGroupMemberComponent {
   private searchSubject: Subject<string> = new Subject<string>();
   searchTerm: string = '';
@@ -58,7 +60,7 @@ export class AddGroupMemberComponent {
 
   onSearch() {
     this.searchSubject.next(this.searchTerm);
-    const getUsersApiUrl = environment.apiBaseUrl + '/User/GetUsers';
+    const getUsersApiUrl = environment.apiUrl + '/User/GetUsers';
     const payload = {
       filter: this.searchTerm,
       pageIndex: 10,
@@ -73,7 +75,7 @@ export class AddGroupMemberComponent {
 
   onSubmit() {
     const selectedUsers = this.usersList.filter(user => user.isChecked);
-    const addMemberApiUrl = environment.apiBaseUrl +'/Group/AddMember';
+    const addMemberApiUrl = environment.apiUrl +'/Group/AddMember';
     this.newGroupInfo.controls.usersToAdd.setValue(selectedUsers.map((item)=>item.userId));
     this.http.post(addMemberApiUrl, this.newGroupInfo.value ).subscribe(
       (res: any) => {

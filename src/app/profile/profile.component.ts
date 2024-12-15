@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import moment from 'moment-jalaali';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
 
 
 
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    const apiUrl = environment.apiBaseUrl +'/User/Profile';
+    const apiUrl = environment.apiUrl +'/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success) {
@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
             name: response.user.name,
             username: response.user.username,
             email: response.user.email,
-            status: 'درباره من',
+            status: response.user.aboutMe,
             lastUpdated: jalaliDate,
             imageUrl: response.user.image || 'assets/icons/default-profile-image.svg',
           };
@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserTeams(): void {
-    const apiUrl = environment.apiBaseUrl +'/User/Profile';
+    const apiUrl = environment.apiUrl +'/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success && response.myGroups) {

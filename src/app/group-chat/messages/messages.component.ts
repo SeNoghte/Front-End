@@ -5,7 +5,8 @@ import *as signalR from '@microsoft/signalr';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GetGroupMessageListRequest, GetGroupMessageListResult, Group, Message, SendMessageToGroupRequest } from '../../shared/models/group-model-type';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../environment';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-messages',
@@ -73,7 +74,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
     this.hubConnection.on('ReceiveMessage', (message) => {
       console.log(message);
-      
+
       message.isMe = message.userId == this.currentUserId;
       this.messages.unshift(message);
     });
@@ -113,7 +114,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
     let data: SendMessageToGroupRequest = { groupId: this.group.id, text: this.sendingMessage };
 
-    this.http.post<any>(environment.apiBaseUrl + `/Group/SendMessageToGroup`, data).subscribe({
+    this.http.post<any>(environment.apiUrl + `/Group/SendMessageToGroup`, data).subscribe({
       next: res => {
         if (res.success) {
           this.sendingMessage = '';
