@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { SolarHijriMonthsList, Seasons } from './calendar';
 import { MonthsModel, dayInMonthModel, SeasonsModel, DateType } from './calendar.model';
 import { MomentService } from './moment.service';
-import { FormsModule, ReactiveFormsModule,FormGroup,FormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import moment from 'jalali-moment';
 
 
 @Component({
@@ -19,14 +20,21 @@ export class MainCalendarComponent {
   monthList: MonthsModel[] = SolarHijriMonthsList;
   dayList: dayInMonthModel[] = [];
   yearList: number[] = [];
+  eventList: Event[] = [];
 
   CurrentUnix: number = 0;
   CurrentYear: number = 0;
   CurrentMonth: number = 0;
   CurrentDay: number = 0;
 
+
   Seasons: SeasonsModel[] = Seasons;
   Season: SeasonsModel = this.Seasons[0];
+
+  dateEvent: { [key: string]: any[] } = {};
+  dayDate: number = 0;
+  MonthDate: number = 0;
+  YearDate: number = 0;
 
   public get DateType() {
     return DateType;
@@ -41,7 +49,7 @@ export class MainCalendarComponent {
   weeksByMonth: { month: MonthsModel; weeks: dayInMonthModel[][] }[] = [];
 
   constructor(
-    public readonly momentService: MomentService,    private http: HttpClient,    private toastr: ToastrService,
+    public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService,
 
 
   ) { }
@@ -53,11 +61,26 @@ export class MainCalendarComponent {
     this.yearList = this.momentService.getYearList()
     const GetEventsApiUrl = 'https://api.becheen.ir:6001/api/Group/GetGroup';
     const payload = {
-      groupId: "e2d6c371-7632-4def-b01c-f41cf57722c7",
+      groupId: "9155085b-a6ca-4ad3-b1d0-c28b25970c6f",
     };
-    this.http.post(GetEventsApiUrl, payload ).subscribe(
+    this.http.post(GetEventsApiUrl, payload).subscribe(
       (res: any) => {
-        console.log(res.events)
+        this.eventList = res.events;
+
+        for (const event of this.eventList) {
+          const date = event.date.split(' ')[0];
+          const jalaliDate = moment(date).locale('fa').format('YYYY/M/D');
+          // this.dayDate = Number(jalaliDate.split('/')[2]);
+          // this.MonthDate = Number(jalaliDate.split('/')[1]);
+          // this.YearDate = Number(jalaliDate.split('/')[0]);
+
+          if (!this.dateEvent[jalaliDate]) {
+            this.dateEvent[jalaliDate] = [];
+          }
+          this.dateEvent[jalaliDate].push(event);
+        }
+        console.log(this.dateEvent)
+
       },
     );
   }
@@ -98,12 +121,12 @@ export class MainCalendarComponent {
     this.monthList.forEach((month) => {
       const monthId = month.id;
       this.changeSeason();
-      
-      const daysInMonth: dayInMonthModel[] = this.momentService.daysInMonth( this.momentService.toUnix(this.CurrentYear, monthId, 1, DateType.SolarHijri));
+
+      const daysInMonth: dayInMonthModel[] = this.momentService.daysInMonth(this.momentService.toUnix(this.CurrentYear, monthId, 1, DateType.SolarHijri));
       daysInMonth.forEach(f => {
         f.active = +f.dayInSolarHijri == this.CurrentDay;
       });
-      
+
       const previousDays = this._daysOfWeek.indexOf(daysInMonth[0].dayInWeek) + 1;
       const nextDays = this.daysOfWeek.length - this._daysOfWeek.indexOf(daysInMonth.at(-1)?.dayInWeek ?? '') - 1;
       const weeksCount = Math.floor((previousDays + nextDays + daysInMonth.length) / 7);
@@ -201,5 +224,25 @@ export class MainCalendarComponent {
       .replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);
   }
 
-  
+  // isTargetDate(day: any): boolean {
+  //   return this.eventList.some(
+  //     target => 
+  //       target.day === day.dayInSolarHijri &&
+  //       target.month === day.monthInSolarHijri &&
+  //       target.year === this.CurrentYear
+  //   );
+  // }
+
+}
+
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  groupId: string;
+  imagePath: string;
+  members: any | null;
+  owner: any;
+  time: string | null;
 }
