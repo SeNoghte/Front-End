@@ -7,7 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
+
 
 
 interface Group {
@@ -83,7 +84,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
 
 
   fetchGroups(): void {
-    const apiUrl = environment.apiBaseUrl +'/Group/GetGroups';
+    const apiUrl = environment.apiUrl +'/Group/GetGroups';
     const requestBody = {
       filter: '',
       pageIndex: 1,

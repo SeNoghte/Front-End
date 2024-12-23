@@ -13,7 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
+
 
 interface SignUp {
   success: boolean;
@@ -51,7 +52,7 @@ export class SignUpEndComponent {
 
   email: string | null = null;
   verificationCodeId: string | null = null;
-  private signUpApiUrl = environment.apiBaseUrl +'/User/SignUp';
+  private signUpApiUrl = environment.apiUrl +'/User/SignUp';
 
   constructor(private route: ActivatedRoute,
     private router: Router,

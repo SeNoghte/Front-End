@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../environment';
+import { environment } from '../../environments/environment';
+
 
 interface VerificationCode {
   success: boolean;
@@ -37,7 +38,7 @@ interface VerificationCode {
   styleUrl: './recovery-pass-code.component.scss'
 })
 export class RecoveryPassCodeComponent {
-  private verifyApiUrl = environment.apiBaseUrl +'/User/VerifyVerificationCode';
+  private verifyApiUrl = environment.apiUrl +'/User/VerifyVerificationCode';
   verificationCodeId: string | null = null;
   email: string | null = null;
 

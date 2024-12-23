@@ -17,7 +17,9 @@
       <img [src]="userProfile.imageUrl" alt="Profile Picture" />
     </div>
     <h2 class="name">{{ userProfile.name }}</h2>
-    <p class="username">{{ userProfile.username }}&#64;</p>
+    <p class="username" *ngIf="userProfile.username">
+      {{ userProfile.username }}&#64;
+    </p>
 
     <div class="status-section white-card">
       <p class="status">{{ userProfile.status }}</p>
