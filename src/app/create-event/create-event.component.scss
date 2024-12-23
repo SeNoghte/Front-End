@@ -6,12 +6,10 @@
 
     .next-button {
         color: var(--primary);
-        flex-shrink: 0;
     }
 
     .back {
         display: flex;
-        flex-shrink: 0;
 
         .back-button {
             height: 25px;
@@ -20,15 +18,15 @@
 
     .header-name {
         color: var(--gray-5);
-        transform: translateX(-50%);
     }
 }
 
 .body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
 
     .image-part {
         display: flex;
@@ -71,31 +69,11 @@
         }
     }
 
-    .form-field {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        padding: 1rem;
-    }
-
-    .form {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        padding: 1rem;
-        width: 100% !important;
-        margin-top: calc(100vh - 90vh);
+    .main-form {
+        padding-top: 3rem;
         width: 80%;
-
-        .field {
-            width: 100%;
-            box-sizing: border-box;
-            .mat-form-field-flex {
-                border: none;
-                border-radius: 5px;
-            }
-        }
-
+        justify-content: center;
+    
         .detail {
             display: flex;
             align-items: center;
@@ -112,8 +90,12 @@
             position: relative;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
+    
+    
+        }
 
-
+        .field{
+            width: 100%;
         }
     }
 }

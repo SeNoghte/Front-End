@@ -22,16 +22,16 @@
                 <a class="set-photo">ویرایش تصویر</a>
                 }
             </div>
-            <div class="form">
-                <mat-form-field appearance="outline" class="field">
+            <div class="main-form">
+                <mat-form-field class="field" appearance="outline">
                     <mat-label>عنوان</mat-label>
                     <input matInput type="text" formControlName="title"/>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="field">
+                <mat-form-field class="field" appearance="outline">
                     <mat-label>توضیحات</mat-label>
                     <input matInput type="text" formControlName="description"/>
                 </mat-form-field>
-                <mat-form-field class="date-picker" appearance="outline" hideRequiredMarker style="width: 100%;">
+                <mat-form-field class="field" appearance="outline" hideRequiredMarker>
                     <mat-label>تاریخ</mat-label>
                     <input style="margin-top: 0.25rem; width: 100px;" matInput [matDatepicker]="datepicker" formControlName="date" />
                     <mat-datepicker-toggle [disableRipple]="true" matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
