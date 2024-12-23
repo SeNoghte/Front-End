@@ -21,17 +21,15 @@ export class MainCalendarComponent {
   dayList: dayInMonthModel[] = [];
   yearList: number[] = [];
   eventList: Event[] = [];
+  Seasons: SeasonsModel[] = Seasons;
+  Season: SeasonsModel = this.Seasons[0];
+  dateEvent: DateEventGroup[] = [];
 
   CurrentUnix: number = 0;
   CurrentYear: number = 0;
   CurrentMonth: number = 0;
   CurrentDay: number = 0;
-
-
-  Seasons: SeasonsModel[] = Seasons;
-  Season: SeasonsModel = this.Seasons[0];
-
-  dateEvent: { [key: string]: any[] } = {};
+  eventWithImage: string = "";
   dayDate: number = 0;
   MonthDate: number = 0;
   YearDate: number = 0;
@@ -50,8 +48,6 @@ export class MainCalendarComponent {
 
   constructor(
     public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService,
-
-
   ) { }
 
   ngOnInit(): void {
@@ -63,26 +59,61 @@ export class MainCalendarComponent {
     const payload = {
       groupId: "9155085b-a6ca-4ad3-b1d0-c28b25970c6f",
     };
-    this.http.post(GetEventsApiUrl, payload).subscribe(
-      (res: any) => {
-        this.eventList = res.events;
+    this.http.post(GetEventsApiUrl, payload).subscribe((res: any) => {
+      this.eventList = res.events;
 
-        for (const event of this.eventList) {
-          const date = event.date.split(' ')[0];
-          const jalaliDate = moment(date).locale('fa').format('YYYY/M/D');
-          // this.dayDate = Number(jalaliDate.split('/')[2]);
-          // this.MonthDate = Number(jalaliDate.split('/')[1]);
-          // this.YearDate = Number(jalaliDate.split('/')[0]);
+      const groupedEvents: { yearEvent: number; monthEvent: number; dayEvent: number; events: any[] }[] = [];
 
-          if (!this.dateEvent[jalaliDate]) {
-            this.dateEvent[jalaliDate] = [];
-          }
-          this.dateEvent[jalaliDate].push(event);
+      for (const event of this.eventList) {
+        const date = event.date.split(' ')[0];
+        const jalaliDate = moment(date).locale('fa').format('YYYY/M/D');
+        const [year, month, day] = jalaliDate.split('/').map(Number);
+
+        let group = groupedEvents.find(
+          (g) => g.yearEvent === year && g.monthEvent === month && g.dayEvent === day
+        );
+
+        if (!group) {
+          group = { yearEvent: year, monthEvent: month, dayEvent: day, events: [] };
+          groupedEvents.push(group);
         }
-        console.log(this.dateEvent)
 
-      },
+        group.events.push({
+          ...event,
+          yearEvent: year,
+          monthEvent: month,
+          dayEvent: day,
+        });
+      }
+      this.dateEvent = groupedEvents;
+    });
+  }
+
+  hasEventForDay(monthId: number, day: string): { hasEvent: boolean; count: number } {
+    const eventsForDay = this.dateEvent.filter(event =>
+      event.monthEvent === monthId && event.dayEvent.toString() === day
     );
+    const count = eventsForDay.reduce((total, event) => {
+      return total + (Array.isArray(event.events) ? event.events.length : 0);
+    }, 0);
+    return {
+      hasEvent: count > 0,
+      count: count
+    };
+  }
+
+  getBackgroundImage(monthId: number, day: string): string | null {
+    const dateEventGroup = this.dateEvent.find(
+      (group: DateEventGroup) => group.monthEvent === monthId && group.dayEvent.toString() === day
+    );
+
+    if (dateEventGroup && dateEventGroup.events.length > 0) {
+      const eventWithImage = dateEventGroup.events.find(
+        (event: Event) => event.imagePath
+      );
+      return eventWithImage ? eventWithImage.imagePath : null;
+    }
+    return null;
   }
 
   ngOnDestroy() {
@@ -224,25 +255,36 @@ export class MainCalendarComponent {
       .replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);
   }
 
-  // isTargetDate(day: any): boolean {
-  //   return this.eventList.some(
-  //     target => 
-  //       target.day === day.dayInSolarHijri &&
-  //       target.month === day.monthInSolarHijri &&
-  //       target.year === this.CurrentYear
-  //   );
-  // }
+}
 
+interface User {
+  userId: string;
+  name: string;
+  username: string;
+  email: string;
+  joinedDate: string;
+  image: string;
+  aboutMe: string;
 }
 
 interface Event {
   id: string;
   title: string;
   description: string;
+  owner: User;
   date: string;
+  time: string;
   groupId: string;
   imagePath: string;
-  members: any | null;
-  owner: any;
-  time: string | null;
+  members: User[];
+  yearEvent: number;
+  monthEvent: number;
+  dayEvent: number;
+}
+
+interface DateEventGroup {
+  yearEvent: number;
+  monthEvent: number;
+  dayEvent: number;
+  events: Event[];
 }

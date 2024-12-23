@@ -1,35 +1,52 @@
 <div class="day-box">
-    <div class="calendar-container">
-      @for(month of weeksByMonth; track $index){
-        <h3 class="month-title">{{ month.month.name }} ماه {{ convertToPersianDigits(this.CurrentYear)  }}</h3>
-        <table>
-          <thead class="day-ofweek-section">
-            <tr>
-              @for(day of daysOfWeek; track $index){
-                <th class="day-name">{{ day }}</th>
+  <div class="calendar-container">
+    @for(month of weeksByMonth; track $index){
+    <h3 class="month-title">{{ month.month.name }} ماه {{ convertToPersianDigits(this.CurrentYear) }}</h3>
+    <table>
+      <thead class="day-ofweek-section">
+        <tr>
+          @for(day of daysOfWeek; track $index){
+          <th class="day-name">{{ day }}</th>
+          }
+        </tr>
+      </thead>
+      <span class="margin-span"></span>
+      <tbody class="day-ofmonth-section">
+        @for(week of month.weeks; track $index){
+        <tr>
+          @for(day of week; track $index){
+          <td class="day-ofmonth-section" [class.not-in-month]="day.notInMonth">
+            <div class="day-wrapper">
+              @if(hasEventForDay(month.month.id, day.dayInSolarHijri).hasEvent){
+              @if(getBackgroundImage(month.month.id, day.dayInSolarHijri)){
+              <img class="event-background" [src]="getBackgroundImage(month.month.id, day.dayInSolarHijri)" />
               }
-            </tr>
-          </thead>
-          <span class="margin-span"></span>
-          <tbody class="day-ofmonth-section">
-            @for(week of month.weeks; track $index){
-              <tr>
-                @for(day of week; track $index){
-                  <td class="day-ofmonth-section" [class.not-in-month]="day.notInMonth">
-                    <div>
-                      <span class="jalali fully-center" [class.active]="day.active"
-                        [class.bg-theme-danger]="day.active && day.isHoliday"
-                        [class.text-danger]="day.isHoliday && !day.active" (click)="changeDay(day);">
-                        {{ convertToPersianDigits(day.dayInSolarHijri) }}
-                      </span>
-                    </div>
-                  </td>
-                }
-              </tr>
-            }
-          </tbody>
-        </table>
-        <hr class="divider" />
-      }
-    </div>
+              @if(getBackgroundImage(month.month.id, day.dayInSolarHijri) === null){
+              <div class="event-background-no-image"></div>
+              }
+              <span class="jalali" [class.event-day]="getBackgroundImage(month.month.id, day.dayInSolarHijri) || getBackgroundImage(month.month.id, day.dayInSolarHijri) === null"
+                (click)="changeDay(day);">
+                {{ convertToPersianDigits(day.dayInSolarHijri) }}
+                <div class="dots-container">
+                  @for(dot of [].constructor(hasEventForDay(month.month.id, day.dayInSolarHijri).count); track $index){
+                    <span class="dot"></span>
+                  }
+                </div>
+              </span>
+              }
+              @else{
+              <span class="jalali fully-center" (click)="changeDay(day);">
+                {{ convertToPersianDigits(day.dayInSolarHijri) }}
+              </span>
+              }
+            </div>
+          </td>
+          }
+        </tr>
+        }
+      </tbody>
+    </table>
+    <hr class="divider" />
+    }
   </div>
+</div>
