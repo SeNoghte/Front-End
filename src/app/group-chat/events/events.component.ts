@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { MainCalendarComponent } from '../../main-calendar/main-calendar.component';
 
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [],
+  imports: [MainCalendarComponent],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
 })
