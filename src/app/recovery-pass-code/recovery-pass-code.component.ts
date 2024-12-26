@@ -12,7 +12,6 @@ import { NavigationVisibilityService } from '../services/navigation-visibility.s
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
 
-
 interface VerificationCode {
   success: boolean;
   message: string | undefined;
@@ -70,33 +69,33 @@ export class RecoveryPassCodeComponent {
   }
 
   onSubmit() {
-    this.router.navigate(['/recovery-pass-new-pass'], { queryParams: { email: 'dfdj@f.com', verificationCodeId: 123456 } });
+    // this.router.navigate(['/recovery-pass-new-pass'], { queryParams: { email: 'dfdj@f.com', verificationCodeId: 123456 } });
 
-    // if (this.signUpForm.valid) {
-    //   const code = this.signUpForm.get('confirmationCode')?.value;
+    if (this.signUpForm.valid) {
+      const code = this.signUpForm.get('confirmationCode')?.value;
 
-    //   const payload = {
-    //     code: code,
-    //     verificationCodeId: this.verificationCodeId
-    //   }
+      const payload = {
+        code: code,
+        verificationCodeId: this.verificationCodeId
+      }
 
-    //   this.http.post<VerificationCode>(this.verifyApiUrl, payload).subscribe({
-    //     next: (response) => {
-    //       if (response.success) {
-    //         this.toastr.success('کد تایید شد!');
-    //         this.router.navigate(['/sign-up-end'], { queryParams: { email: this.email, verificationCodeId: this.verificationCodeId } });
-    //       }
-    //       else {
-    //         this.toastr.error(response.message);
-    //       }
-    //     },
-    //     error: (error) => {
-    //       this.toastr.error(error);
-    //     }
-    //   })
-    // }
-    // else {
-    // }
+      this.http.post<VerificationCode>(this.verifyApiUrl, payload).subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.toastr.success('کد تایید شد!');
+            this.router.navigate(['/recovery-pass-new-pass'], { queryParams: { email: this.email, verificationCodeId: this.verificationCodeId } });
+          }
+          else {
+            this.toastr.error(response.message);
+          }
+        },
+        error: (error) => {
+          this.toastr.error(error);
+        }
+      })
+    }
+    else {
+    }
   }
 
   navToRecoveryEmail() {

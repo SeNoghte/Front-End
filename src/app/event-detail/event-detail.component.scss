@@ -1,0 +1,124 @@
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4rem 1rem 0 1rem;
+}
+
+.toggle-btn-container {
+  width: fit-content;
+  position: fixed;
+  inset-inline-end: 1rem;
+  inset-block-end: 1rem;
+}
+
+.event-card {
+  border-radius: 0.8rem;
+  margin: 1rem;
+  margin-bottom: 3rem;
+}
+
+.event-header.becheener {
+  display: block !important;
+  height: fit-content;
+  padding-top: 0.05rem;
+  padding-left: 1rem;
+}
+
+.event-header {
+  padding-top: 0.11rem;
+  margin-top: 1rem;
+  margin-inline-end: 0.5rem;
+  display: inline-block !important;
+  width: fit-content;
+  border-radius: 2rem;
+  inset-inline-start: 0.5rem;
+  bottom: 1rem;
+  background-color: var(--gray-2);
+  opacity: 74%;
+  height: 2.25rem;
+  padding-inline-end: 0.5rem;
+  padding-inline-start: 0.1rem;
+
+  span {
+    margin-inline-start: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+img.profile-image {
+  width: 2rem;
+  border-radius: 50%;
+  height: 2rem;
+}
+
+.becheener .profile-image {
+  width: 3rem;
+  height: 3rem;
+  margin: 0.09rem;
+  margin-inline-end: 0.5rem;
+}
+
+img.event-image {
+  width: -webkit-fill-available;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+
+.event-info {
+  padding-inline-start: 0.75rem;
+  padding-inline-end: 0.75rem;
+  font-size: 0.75rem;
+
+  .event-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--gray-5);
+  }
+}
+
+.role {
+  font-size: 0.625rem;
+  color: var(--gray-4);
+}
+
+.event-date {
+  text-align: start;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.event-description {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* تعداد خطوط قابل نمایش */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal;
+  // max-height: 3rem; /* محدود کردن ارتفاع به دو خط */
+}
+
+.divider {
+  border-bottom: 1px solid var(--gray-2);
+  margin: 1rem 0;
+}
+
+.submit-container {
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--gray-2);
+  display: flex;
+  background-color: var(--gray-1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

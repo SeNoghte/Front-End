@@ -11,8 +11,6 @@ import { NavigationVisibilityService } from '../services/navigation-visibility.s
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
 
-
-
 interface VerificationResponse {
   verificationCodeId: string;
   success: boolean;

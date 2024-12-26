@@ -15,7 +15,6 @@ import { NavigationVisibilityService } from '../services/navigation-visibility.s
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
 
-
 interface SignUp {
   success: boolean;
   message: string | undefined;

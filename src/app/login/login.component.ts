@@ -11,7 +11,6 @@ import { NavigationVisibilityService } from '../services/navigation-visibility.s
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
 
-
 interface Login {
   success: boolean;
   message: string | undefined;
@@ -70,6 +69,7 @@ export class LoginComponent {
             localStorage.setItem('JWTtoken', response.token);
             console.log('Saved JWT Token:', localStorage.getItem('JWTtoken'));
             this.toastr.success('Login successful!');
+            this.router.navigate(['/landing']);
           }
           else {
             this.toastr.error(response.message);

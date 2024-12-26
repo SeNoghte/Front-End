@@ -22,3 +22,13 @@ button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.m
 .mdc-button__label {
   display: flex !important;
 }
+
+.mat-mdc-unelevated-button, .mat-mdc-unelevated-button .mdc-button__ripple {
+  border-radius: 0.25rem;
+}
+
+.default-header{
+  .mat-mdc-button{
+    font-size: 1rem !important;
+  }
+}

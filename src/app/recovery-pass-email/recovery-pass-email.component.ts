@@ -12,7 +12,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
 
-
 interface VerificationResponse {
   verificationCodeId: string;
   success: boolean;
@@ -56,12 +55,37 @@ export class RecoveryPassEmailComponent {
     private toastr: ToastrService,
   ) { }
 
-  backToLogin(){
+  backToLogin() {
     this.router.navigate(['/login']);
   }
 
-
   onSubmit() {
-    this.router.navigate(['/recovery-pass-code'], { queryParams: { email : 'dafdkj@gm.com', verificationCodeId : 12345 } });
+    if (this.signUpForm.valid) {
+      const email = this.signUpForm.value.email;
+
+      this.http.post<VerificationResponse>(this.apiUrl, { email : email, isForPasswordRecovery : true }).subscribe({
+        next: (response) => {
+          var verificationCodeId = '';
+          if (response.success) {
+            verificationCodeId = response['verificationCodeId'];
+            this.toastr.success('کد تایید ارسال شد!');
+
+            if (!this.signUpForm.controls.email?.hasError('email') && !this.signUpForm.get('email')?.hasError('required'))
+              this.router.navigate(['/recovery-pass-code'], { queryParams: { email, verificationCodeId } });
+          }
+          else {
+            this.toastr.error(response.message);
+          }
+        },
+        error: (error) => {
+        }
+      })
+    } else {
+    }
   }
+
+
+  // onSubmit() {
+  //   this.router.navigate(['/recovery-pass-code'], { queryParams: { email: 'dafdkj@gm.com', verificationCodeId: 12345 } });
+  // }
 }

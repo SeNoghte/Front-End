@@ -7,7 +7,6 @@ import { GetGroupMessageListRequest, GetGroupMessageListResult, Group, Message, 
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
 
-
 @Component({
   selector: 'app-messages',
   standalone: true,
@@ -111,7 +110,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   sendMessage() {
-
     let data: SendMessageToGroupRequest = { groupId: this.group.id, text: this.sendingMessage };
 
     this.http.post<any>(environment.apiUrl + `/Group/SendMessageToGroup`, data).subscribe({

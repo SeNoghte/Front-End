@@ -31,7 +31,6 @@ export class LandingComponent {
   sendAuthorizationCode(authCode: String) {
     const authorizationCode = authCode;
     const apiUrl = environment.apiUrl +'/User/GoogleLogin';
-
     const requestBody = { authorizationCode };
 
     this.http.post(apiUrl, requestBody).subscribe(

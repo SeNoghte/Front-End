@@ -1,0 +1,81 @@
+.toggle-btn-container {
+  width: fit-content;
+  position: fixed;
+  inset-inline-end: 1rem;
+  inset-block-end: 1rem;
+}
+
+.events-list {
+  padding: 1.5rem;
+}
+
+.event-card {
+  border-radius: 0.8rem;
+  border: 1px solid var(--gray-2);
+  margin-bottom: 0.5rem;
+}
+
+.images-container {
+  position: relative;
+
+  .event-header {
+    border-radius: 2rem;
+    border: 1px solid var(--gray-2);
+    inset-inline-start: 0.5rem;
+    position: absolute;
+    bottom: 1rem;
+    background-color: white;
+    opacity: 74%;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline-end: 0.5rem;
+    padding-inline-start: 0.1rem;
+
+    span {
+      margin-inline-start: 0.5rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+img.profile-image {
+  width: 2rem;
+  border-radius: 50%;
+  height: 2rem;
+}
+
+img.event-image {
+  width: -webkit-fill-available;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+
+.event-info {
+    padding-inline-start: 0.75rem;
+    padding-inline-end: 0.75rem;
+    font-size: 0.75rem;
+
+    .event-title{
+        font-weight: 800;
+        color: var(--gray-5);
+    }
+}
+
+.event-date {
+    text-align: end;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.625rem;
+}
+
+.event-description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* تعداد خطوط قابل نمایش */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+    // max-height: 3rem; /* محدود کردن ارتفاع به دو خط */
+  }
