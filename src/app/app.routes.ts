@@ -39,5 +39,5 @@ export const routes: Routes = [
   { path: 'add-member',  component: AddGroupMemberComponent},
   { path: 'create-event', component: CreateEventComponent},
   { path: 'event-detail', component: CreateDetailEventComponent},
-  { path: 'event-detail', component: EventDetailComponent },
+  { path: 'show-event-detail', component: EventDetailComponent },
 ];

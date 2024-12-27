@@ -14,7 +14,10 @@
 .mat-mdc-button:not(:disabled) {
   color: black !important;
 }
-
+.btn2-container .mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled),
+.btn2-container .mat-mdc-button:not(:disabled) {
+  color: purple !important;
+}
 button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.mat-mdc-button-base {
   border-radius: 0.25rem;
 }
@@ -23,12 +26,13 @@ button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.m
   display: flex !important;
 }
 
-.mat-mdc-unelevated-button, .mat-mdc-unelevated-button .mdc-button__ripple {
+.mat-mdc-unelevated-button,
+.mat-mdc-unelevated-button .mdc-button__ripple {
   border-radius: 0.25rem;
 }
 
-.default-header{
-  .mat-mdc-button{
+.default-header {
+  .mat-mdc-button {
     font-size: 1rem !important;
   }
 }

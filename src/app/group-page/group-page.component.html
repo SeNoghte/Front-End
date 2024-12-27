@@ -1,12 +1,19 @@
 <div class="group-page" *ngIf="!searchMode">
-  <div class="header">
-    <a (click)="toggleSearch()" class="search">
-      <img class="search-button" src="assets/icons/search-icon.svg" />
-      جستجو
-    </a>
-    <h2>اکیپ ها</h2>
-    <a (click)="toggleEdit()" class="edit">ویرایش</a>
+  <div class="default-header">
+    <div class="btn1-container">
+      <button (click)="toggleSearch()" mat-button>
+        <img class="search-button" src="assets/icons/search-icon.svg" />
+        جستجو
+      </button>
+    </div>
+
+    <span class="mid-span"> اکیپ ها </span>
+
+    <div class="btn2-container">
+      <button (click)="toggleEdit()" mat-button>ویرایش</button>
+    </div>
   </div>
+  
   <div class="group-list">
     <div class="group-item" *ngFor="let group of groups">
       <img *ngIf="group.image" [src]="group.image" alt="Group Image" />

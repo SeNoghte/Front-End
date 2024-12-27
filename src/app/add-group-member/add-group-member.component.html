@@ -1,12 +1,19 @@
 <div>
-  <div class="header">
-    <div class="back" (click)="redirectCreateGroup()">
-      <img class="back-button" src="assets/icons/back.svg">
-      <p class="back_title">بازگشت</p>
+  <div class="default-header">
+    <div class="btn1-container">
+      <button (click)="redirectCreateGroup()" mat-button>
+        <img class="back-button" src="assets/icons/back.svg" />
+        بازگشت
+      </button>
     </div>
-    <h4 class="header-name">افزودن عضو</h4>
-    <a class="next-button" (click)="onSubmit()">ثبت</a>
+
+    <span class="mid-span">افزودن عضو</span>
+
+    <div class="btn2-container">
+      <button (click)="onSubmit()" mat-button>ثبت</button>
+    </div>
   </div>
+
   <div class="search-bar">
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>جستجو</mat-label>

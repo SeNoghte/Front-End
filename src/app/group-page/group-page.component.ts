@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -21,7 +22,13 @@ interface Group {
 @Component({
   selector: 'app-group-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    HttpClientModule,
+    MatButtonModule],
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss'],
 })
@@ -84,7 +91,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
 
 
   fetchGroups(): void {
-    const apiUrl = environment.apiUrl +'/Group/GetGroups';
+    const apiUrl = environment.apiUrl + '/Group/GetGroups';
     const requestBody = {
       filter: '',
       pageIndex: 1,

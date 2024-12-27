@@ -1,11 +1,19 @@
 <div class="group-info">
   <div class="header">
-    <div class="header-up">
-      <a class="back">
-        <img class="back" src="assets/icons/back.svg" />
-        بازگشت
-      </a>
-      <a [routerLink]="'/group-edit'" class="edit">ویرایش</a>
+
+    <div class="default-header">
+      <div class="btn1-container">
+        <button mat-button>
+          <img class="back-button" src="assets/icons/back.svg" />
+          بازگشت
+        </button>
+      </div>
+  
+      <!-- <span class="mid-span"> اکیپ ها </span> -->
+  
+      <div class="btn2-container">
+        <button [routerLink]="'/group-edit'" mat-button>ویرایش</button>
+      </div>
     </div>
 
     <div class="group-logo">

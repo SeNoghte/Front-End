@@ -1,27 +1,6 @@
 .profile-container {
-  .header {
+  .default-header {
     background: var(--gray-1);
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .back-button,
-    .edit-button {
-      background: none;
-      border: none;
-      color: var(--primary);
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    h1.profile-title {
-      font-size: 16px;
-      margin-top: 20px;
-      margin-inline-start: 150px;
-      color: var(--gray-4);
-    }
   }
 
   .profile-info {
@@ -117,7 +96,7 @@
       position: relative;
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 0;

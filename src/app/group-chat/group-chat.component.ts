@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { GetGroupMessageListRequest, GetGroupMessageListResult, GetGroupResponse, Group, Message } from '../shared/models/group-model-type';
 import * as signalR from '@microsoft/signalr';
 import { CommonModule } from '@angular/common';
+import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 
 @Component({
     selector: 'app-group-chat',
@@ -22,10 +23,13 @@ export class GroupChatComponent implements OnInit {
 
     messages: Message[] = [];
     group!: Group;
-    isLoading:boolean = true;
+    isLoading: boolean = true;
 
-    constructor(private route: ActivatedRoute, private http: HttpClient,
-        private toastrService: ToastrService
+    constructor(private route: ActivatedRoute,
+        private http: HttpClient,
+        private toastrService: ToastrService,
+        private navVisibilityService: NavigationVisibilityService,
+
     ) { }
 
     ngOnInit(): void {
@@ -59,6 +63,15 @@ export class GroupChatComponent implements OnInit {
         });
     }
 
-
+    onTabChange(event: any): void {
+        // `event.index` gives the index of the selected tab
+        if (event.index === 0) {
+            // Show the navigation bar for Option 1
+            this.navVisibilityService.show();
+        } else if (event.index === 1) {
+            // Hide the navigation bar for Option 2
+            this.navVisibilityService.hide();
+        }
+    }
 }
 

@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-group-info',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatButtonModule],
   templateUrl: './group-info.component.html',
   styleUrls: ['./group-info.component.scss']
 })
@@ -27,7 +31,7 @@ export class GroupInfoComponent {
     private navVisibilityService: NavigationVisibilityService,
   ) {
   }
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.navVisibilityService.hide()
   }
 
