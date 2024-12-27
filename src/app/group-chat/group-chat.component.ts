@@ -11,67 +11,78 @@ import { GetGroupMessageListRequest, GetGroupMessageListResult, GetGroupResponse
 import * as signalR from '@microsoft/signalr';
 import { CommonModule } from '@angular/common';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-group-chat',
-    standalone: true,
-    imports: [MatToolbarModule, MatIconModule, MatTabsModule, EventsComponent, MessagesComponent, HttpClientModule, CommonModule],
-    templateUrl: './group-chat.component.html',
-    styleUrl: './group-chat.component.scss'
+  selector: 'app-group-chat',
+  standalone: true,
+  imports: [MatToolbarModule, MatIconModule, MatTabsModule, EventsComponent, MessagesComponent, HttpClientModule, CommonModule],
+  templateUrl: './group-chat.component.html',
+  styleUrl: './group-chat.component.scss'
 })
 export class GroupChatComponent implements OnInit {
 
-    messages: Message[] = [];
-    group!: Group;
-    isLoading: boolean = true;
+  messages: Message[] = [];
+  group!: Group;
+  isLoading: boolean = true;
 
-    constructor(private route: ActivatedRoute,
-        private http: HttpClient,
-        private toastrService: ToastrService,
-        private navVisibilityService: NavigationVisibilityService,
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastrService: ToastrService,
+    private navVisibilityService: NavigationVisibilityService,
+    private router: Router,
 
-    ) { }
+  ) { }
 
-    ngOnInit(): void {
-        this.GetGroupInfo();
+  ngOnInit(): void {
+    this.GetGroupInfo();
+  }
+
+
+  GetGroupInfo(): void {
+    const groupId = this.route.snapshot.paramMap.get('id');
+    if (!groupId) {
+      this.toastrService.error('شناسه گروه یافت نشد.');
+      return;
     }
 
-    GetGroupInfo() {
-        this.route.queryParams.subscribe((params) => {
-            let groupId = params['id'];
+    const apiUrl = `https://api.becheen.ir:6001/api/Group/GetGroup`;
+    const model = { groupId: groupId };
 
-            const apiUrl = 'https://api.becheen.ir:6001/api/Group/GetGroup';
-            let model = { groupId: groupId };
-
-            this.http.post<GetGroupResponse>(apiUrl, model)
-                .subscribe(
-                    {
-                        next: response => {
-                            if (response.success) {
-                                this.group = response.group;
-                            } else {
-                                this.toastrService.error(response.message);
-                            }
-                            this.isLoading = false;
-                        },
-                        error: error => {
-                            this.toastrService.error('مشکلی پیش آمد');
-                        }
-                    }
-                );
-
-        });
-    }
-
-    onTabChange(event: any): void {
-        // `event.index` gives the index of the selected tab
-        if (event.index === 0) {
-            // Show the navigation bar for Option 1
-            this.navVisibilityService.show();
-        } else if (event.index === 1) {
-            // Hide the navigation bar for Option 2
-            this.navVisibilityService.hide();
+    this.http.post<GetGroupResponse>(apiUrl, model).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.group = response.group;
+        } else {
+          this.toastrService.error(response.message);
         }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.toastrService.error('مشکلی پیش آمد');
+        console.error(error);
+      },
+    });
+  }
+
+  navigateToGroupInfo(): void {
+    if (!this.group?.id) {
+      this.toastrService.error('شناسه گروه موجود نیست.');
+      return;
     }
+
+    this.router.navigate(['/group-info', this.group.id]);
+  }
+
+  onTabChange(event: any): void {
+    // `event.index` gives the index of the selected tab
+    if (event.index === 0) {
+      // Show the navigation bar for Option 1
+      this.navVisibilityService.show();
+    } else if (event.index === 1) {
+      // Hide the navigation bar for Option 2
+      this.navVisibilityService.hide();
+    }
+  }
 }
 

@@ -9,14 +9,16 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
 import { MatButtonModule } from '@angular/material/button';
-
+import { Router, RouterModule } from '@angular/router';
 
 
 interface Group {
+  id: string;
   name: string;
   image: string | null;
   avatarLetter: string;
   avatarColor: string;
+  isPrivate: boolean;
 }
 
 @Component({
@@ -28,7 +30,9 @@ interface Group {
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
-    MatButtonModule],
+    MatButtonModule,
+    RouterModule,
+  ],
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss'],
 })
@@ -43,7 +47,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
   searchResults: Group[] = [];
 
 
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit() {
     this.searchSubscription = this.searchSubject.pipe(debounceTime(300)).subscribe((searchTerm) => {
@@ -109,6 +113,8 @@ export class GroupPageComponent implements OnInit, OnDestroy {
               image: group.image || null,
               avatarLetter: letter,
               avatarColor: color,
+              isPrivate: group.isPrivate || false,
+              id: group.id,
             };
           });
           this.searchResults = this.groups;
@@ -135,5 +141,9 @@ export class GroupPageComponent implements OnInit, OnDestroy {
     const letter = name.charAt(0).toUpperCase();
     const color = colors[name.charCodeAt(0) % colors.length];
     return { letter, color };
+  }
+
+  navigateToGroupChat(groupId: string): void {
+    this.router.navigate(['/chat-group', groupId]);
   }
 }

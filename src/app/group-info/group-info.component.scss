@@ -25,6 +25,7 @@
       font-size: 16px;
       margin-inline-end: 12px;
       margin-inline-start: 16px;
+      border: none;
     }
 
     .back {
@@ -47,6 +48,22 @@
     height: 114px;
     margin: 50px auto 10px auto;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gray-2);
+
+    .avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--base);
+      font-size: 32px;
+      font-weight: bold;
+    }
   }
 
   .group-name {
@@ -99,11 +116,17 @@
       font-size: 14px;
       text-decoration: none;
       padding-bottom: 10px;
+      border: none;
+      background-color: var(--base);
       border-bottom: 1px solid var(--gray-2);
 
       img {
         margin-inline-start: 10px;
         margin-inline-end: 8px;
+      }
+
+      &:hover {
+        border-bottom: 1px solid var(--primary);
       }
     }
 
@@ -119,16 +142,45 @@
         border-bottom: none;
       }
 
-      .name {
-        font-size: 14px;
-        color: var(--gray-5);
-      }
+      .member-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+        transition: background-color 0.3s ease;
 
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
+        &:hover {
+          background-color: var(--gray-1);
+          border-radius: 5px;
+          padding: 5px;
+        }
+
+
+        .avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .avatar-placeholder {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: var(--gray-2);
+          color: var(--base);
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .name {
+          font-size: 14px;
+          color: var(--gray-5);
+        }
       }
     }
 
@@ -138,6 +190,71 @@
       color: var(--gray-4);
     }
   }
+
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
+    .modal-content {
+      background: var(--base);
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      text-align: center;
+      position: relative;
+
+      h3 {
+        margin-bottom: 15px;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        input {
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+
+        button {
+          padding: 8px 16px;
+          background: var(--primary);
+          color: var(--base);
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+
+          &:hover {
+            background: var(--primary);
+          }
+        }
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .add-member-message {
+        margin-top: 10px;
+        color: var(--error);
+      }
+    }
+  }
+
 
   .leave-group {
     width: calc(100% - 48px);
