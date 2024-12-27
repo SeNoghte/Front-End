@@ -3,12 +3,19 @@
   justify-content: space-between;
   padding: 0 1rem;
   font-size: 1rem;
-}
+  align-items: center;
+  margin-top: 4rem;
 
-.default-header button:last-child {
-  color: purple !important;
-}
-
-.default-header :nth-child(2) {
-  font-weight: bold;
+  .btn1-container {
+    // color: black !important;
+  }
+  .mid-span {
+    font-weight: bold;
+  }
+  .btn2-container {
+    .mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled),
+    .mat-mdc-button:not(:disabled) {
+      color: purple !important;
+    }
+  }
 }
