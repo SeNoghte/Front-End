@@ -30,6 +30,12 @@ export class ExploreComponent {
     { id: 3, label: 'وای', isSelected: false },
   ];
 
+  suggested_groups = [
+    {name : 'علی علوی'},
+    {name : 'محمدحسین'},
+    {name : 'سپهر'},
+  ]
+
   toggleSelection(chip: any): void {
     chip.isSelected = !chip.isSelected;
 

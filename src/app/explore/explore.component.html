@@ -22,3 +22,19 @@
     {{ chip.label }}
   </div>
 </div>
+
+<div class="suggested-groups-container">
+    <span class="suggested-groups-title">
+        گروه های پیشنهادی
+    </span>
+
+    <div matRipple class="group-preview"  *ngFor="let group of suggested_groups">
+        <div class="image-pic">
+
+        </div>
+
+        <span>
+            {{group.name}}
+        </span>
+    </div>
+</div>

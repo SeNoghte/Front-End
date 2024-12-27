@@ -23,3 +23,34 @@
   border-color: var(--primary);
   color: var(--primary);
 }
+
+.suggested-groups-container {
+  background-color: var(--gray-2);
+  margin: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+
+  .suggested-groups-title {
+    font-size: 0.625rem;
+    color: var(--gray-4);
+  }
+
+  .group-preview {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray-3);
+  }
+
+  .group-preview:last-child {
+    border-bottom: none;
+  }
+
+  .image-pic {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--primary);
+    margin-left: 1rem;
+    border-radius: 50%;
+  }
+}
