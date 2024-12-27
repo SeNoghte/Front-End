@@ -4,7 +4,7 @@
   padding: 0 1rem;
   font-size: 1rem;
   align-items: center;
-  margin-top: 4rem;
+  padding-top: 4rem;
 
   .btn1-container {
     // color: black !important;
@@ -15,7 +15,14 @@
   .btn2-container {
     .mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled),
     .mat-mdc-button:not(:disabled) {
-      color: purple !important;
+      color: var(--primary) !important;
     }
+  }
+}
+
+.group-page .btn1-container {
+  .mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled),
+  .mat-mdc-button:not(:disabled) {
+    color: var(--primary) !important;
   }
 }

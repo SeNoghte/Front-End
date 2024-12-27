@@ -6,13 +6,18 @@ import { RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import moment from 'moment-jalaali';
 import { environment } from '../../environments/environment';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    RouterModule,
+    MatButtonModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
@@ -48,7 +53,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    const apiUrl = environment.apiUrl +'/User/Profile';
+    const apiUrl = environment.apiUrl + '/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success) {
@@ -77,7 +82,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserTeams(): void {
-    const apiUrl = environment.apiUrl +'/User/Profile';
+    const apiUrl = environment.apiUrl + '/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success && response.myGroups) {

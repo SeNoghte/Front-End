@@ -1,16 +1,28 @@
 <div class="profile-container">
-  <div class="header">
-    <button *ngIf="!isOwner" class="back-button">بازگشت</button>
-    <h1 *ngIf="isOwner" class="profile-title">پروفایل</h1>
-    <button
+
+  <div class="default-header">
+    <div class="btn1-container">
+      <button
+       [disabled]="isOwner"
+       mat-button>
+        <img src="../../assets/icons/back.svg" />
+        بازگشت
+      </button>
+    </div>
+  
+    <span *ngIf="isOwner" class="mid-span">پروفایل</span>
+  
+    <div class="btn2-container">
+      <button 
+      mat-button
       *ngIf="isOwner"
       class="edit-button"
       [routerLink]="'/profile-edit'"
       (click)="editProfile()"
-    >
-      ویرایش
-    </button>
+      >ویرایش</button>
+    </div>
   </div>
+
 
   <div class="profile-info">
     <div class="profile-picture">
