@@ -1,0 +1,25 @@
+.chips-container {
+  margin-top: 1.75rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  padding-right: 1rem;
+}
+.chip-item {
+  display: inline-block;
+  padding: 0 0.5rem;
+  border: 1px solid var(--gray-2);
+  border-radius: 1.5rem;
+  margin-left: 0.5rem;
+  height: 1.5rem;
+  font-size: 0.75rem;
+}
+.chip-item:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.chip-item.selected {
+  border-color: var(--primary);
+  color: var(--primary);
+}

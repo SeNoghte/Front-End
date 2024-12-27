@@ -18,6 +18,7 @@ import { AddGroupMemberComponent } from './add-group-member/add-group-member.com
 import { CreateEventComponent } from './create-event/create-event.component';
 import { CreateDetailEventComponent } from './create-detail-event/create-detail-event.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
+import { ExploreComponent } from './explore/explore.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' },
@@ -40,4 +41,5 @@ export const routes: Routes = [
   { path: 'create-event', component: CreateEventComponent},
   { path: 'event-detail', component: CreateDetailEventComponent},
   { path: 'show-event-detail', component: EventDetailComponent },
+  { path: 'explore', component: ExploreComponent },
 ];

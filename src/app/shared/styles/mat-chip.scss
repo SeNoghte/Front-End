@@ -1,0 +1,16 @@
+.explore-chips-container {
+    .horizontal-scroll {
+        display: flex; /* Aligns chips in a row */
+        flex-wrap: nowrap; /* Prevents wrapping to a new line */
+        overflow-x: auto; /* Enables horizontal scrolling */
+        white-space: nowrap; /* Ensures content remains in a single line */
+        gap: 8px; /* Adds spacing between chips */
+        padding: 8px; /* Optional padding for aesthetics */
+      }
+      
+      mat-chip-option {
+        flex: 0 0 auto; /* Ensures each chip maintains its size */
+        cursor: pointer;
+      }
+      
+}

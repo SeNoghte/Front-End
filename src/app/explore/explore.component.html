@@ -1,0 +1,24 @@
+<div class="default-header explore">
+  <div class="btn1-container search">
+    <button mat-button>
+      <img class="search-button" src="assets/icons/search-icon.svg" />
+      جستوجو
+    </button>
+  </div>
+
+  <span class="mid-span"> پیشنهاد بچین </span>
+
+  <button class="unvisible"></button>
+</div>
+
+<div class="chips-container">
+  <div
+    matRipple
+    class="chip-item"
+    [class.selected]="chip.isSelected"
+    (click)="toggleSelection(chip)"
+    *ngFor="let chip of chips"
+  >
+    {{ chip.label }}
+  </div>
+</div>
