@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group-edit',
@@ -20,6 +21,7 @@ export class GroupEditComponent {
 
   constructor(
     private navVisibilityService: NavigationVisibilityService,
+    private Router : Router
   ) {
   }
   ngOnInit() : void {
@@ -44,5 +46,9 @@ export class GroupEditComponent {
   deleteGroup() {
 
     console.log("Group deleted");
+  }
+
+  navigateToGroupInfo(){
+    this.Router.navigate(['group-info']);
   }
 }
