@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ExploreComponent {
   selectedChips: any[] = []; // Array to hold selected chips
+  hideSingleSelectionIndicator = signal(true);
 
   chips = [
     { id: 1, label: 'کوهنوردی', isSelected: false },
@@ -48,5 +49,30 @@ export class ExploreComponent {
     }
 
     console.log(this.selectedChips)
+  }
+
+  events = [
+    {
+      image: 'https://via.placeholder.com/100',
+      profileImage: 'https://via.placeholder.com/40',
+      name: 'محمد حسین',
+      title: 'فتح قله دماوند',
+      description:
+        'برنامه صعود به دماوند یکی از بلندترین قله‌های ایران. سه روز هیجان و تجربه بی‌نظیر!',
+      date: 'یکشنبه ۱۴۰۲/۰۹/۱۲ ساعت ۱۲:۳۰'
+    },
+    {
+      image: 'https://via.placeholder.com/100',
+      profileImage: 'https://via.placeholder.com/40',
+      name: 'محمد حسین',
+      title: 'کوهنوردی در البرز',
+      description:
+        'برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.',
+      date: 'پنجشنبه ۱۴۰۲/۰۹/۱۰ ساعت ۰۸:۰۰'
+    }
+  ];
+
+  toggleSingleSelectionIndicator() {
+    this.hideSingleSelectionIndicator.update(value => !value);
   }
 }

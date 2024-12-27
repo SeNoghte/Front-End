@@ -38,3 +38,29 @@
         </span>
     </div>
 </div>
+
+<div>
+    <div class="events-list">
+  
+      <div class="event-card" *ngFor="let event of events">
+  
+        <div class="images-container">
+          <img src="../../../assets/icons/image.png" alt="Event Image" class="event-image" />
+  
+          <div class="event-header">
+            <img src="../../../assets/icons/image.png" alt="Profile" class="profile-image" />
+            <span class="profile-name">{{ event.name }}</span>
+          </div>
+        </div>
+  
+        <div class="event-info">
+          <h3 class="event-title">{{ event.title }}</h3>
+          <p class="event-description">{{ event.description }}</p>
+          <div class="event-date">{{ event.date }}</div>
+        </div>
+  
+      </div>
+  
+    </div>
+  </div>
+  

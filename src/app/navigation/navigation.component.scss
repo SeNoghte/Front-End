@@ -1,23 +1,25 @@
 .nav-container {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-top: 1px solid var(--gray-2);
-  }
-  
-  button {
-    background: none;
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  
-  button img {
-    width: 1.875rem;
-    height: 1.875rem;
-  }
+  background-color: white;
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid var(--gray-2);
+}
 
-  
+button {
+  background: none;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+button img {
+  width: 1.875rem;
+  height: 1.875rem;
+}
