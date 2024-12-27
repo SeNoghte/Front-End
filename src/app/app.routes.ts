@@ -19,6 +19,7 @@ import { CreateEventComponent } from './create-event/create-event.component';
 import { CreateDetailEventComponent } from './create-detail-event/create-detail-event.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { ExploreComponent } from './explore/explore.component';
+import { ExploreSearchComponent } from './explore-search/explore-search.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'sign-up', pathMatch: 'full' },
@@ -42,4 +43,5 @@ export const routes: Routes = [
   { path: 'event-detail', component: CreateDetailEventComponent},
   { path: 'show-event-detail', component: EventDetailComponent },
   { path: 'explore', component: ExploreComponent },
+  { path: 'explore-search', component: ExploreSearchComponent },
 ];

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-explore',
@@ -22,6 +23,10 @@ import { MatIconModule } from '@angular/material/icon';
 export class ExploreComponent {
   selectedChips: any[] = []; // Array to hold selected chips
   hideSingleSelectionIndicator = signal(true);
+
+  constructor(private Router : Router){
+
+  }
 
   chips = [
     { id: 1, label: 'کوهنوردی', isSelected: false },
@@ -74,5 +79,9 @@ export class ExploreComponent {
 
   toggleSingleSelectionIndicator() {
     this.hideSingleSelectionIndicator.update(value => !value);
+  }
+
+  navigateToSearchExplore(){
+    this.Router.navigate(['explore-search'])
   }
 }
