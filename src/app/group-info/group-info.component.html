@@ -1,43 +1,98 @@
-<div class="group-info">
+<div class="group-info" *ngIf="group">
   <div class="header">
     <div class="header-up">
-      <a class="back">
-        <img class="back" src="assets/icons/back.svg" />
+      <a class="back" routerLink="/groups">
+        <img class="back" src="assets/icons/back.svg" alt="بازگشت" />
         بازگشت
       </a>
-      <a [routerLink]="'/group-edit'" class="edit">ویرایش</a>
+      <button class="edit" [routerLink]="'/group-edit'" (click)="editGroup()">
+        ویرایش
+      </button>
     </div>
 
     <div class="group-logo">
-      <img class="back-button" src="assets/icons/group-profile.svg" />
+      <ng-container *ngIf="group.imageUrl; else defaultAvatar">
+        <img [src]="group.imageUrl" alt="Group Logo" />
+      </ng-container>
+      <ng-template #defaultAvatar>
+        <div
+          class="avatar-placeholder"
+          [style.background-color]="generateAvatar(group.name).color"
+        >
+          {{ generateAvatar(group.name).letter }}
+        </div>
+      </ng-template>
     </div>
 
     <h2 class="group-name">{{ group.name }}</h2>
 
-    <p class="group-description">{{ group.description }}</p>
+    <p
+      class="group-description"
+      *ngIf="group.description && group.description.trim()"
+    >
+      {{ group.description }}
+    </p>
 
     <p class="creation-date">
-      ایجاد شده در <span class="date">{{ group.creationDate }}</span>
+      ایجاد شده در <span class="date">{{ group.createdDate }}</span>
     </p>
 
     <div class="members">
-      <a href="#" class="add-member">
-        <img class="back-button" src="assets/icons/add-icon.svg" />
+      <button class="add-member" (click)="toggleAddMemberModal()">
+        <img
+          class="back-button"
+          src="assets/icons/add-icon.svg"
+          alt="افزودن عضو"
+        />
         افزودن عضو
-      </a>
+      </button>
 
       <ng-container
         *ngIf="group.members && group.members.length > 0; else noMembers"
       >
-        <div *ngFor="let member of group.members || []" class="member">
-          <img [src]="member.avatar" alt="{{ member.name }}" class="avatar" />
-          <span class="name">{{ member.name }}</span>
+        <div *ngFor="let member of group.members" class="member">
+          <a [routerLink]="'/profile/' + member.userId" class="member-link">
+            <ng-container *ngIf="member.image; else defaultMemberAvatar">
+              <img
+                [src]="member.image"
+                alt="{{ member.name }}"
+                class="avatar"
+              />
+            </ng-container>
+            <ng-template #defaultMemberAvatar>
+              <div
+                class="avatar-placeholder"
+                [style.background-color]="generateAvatar(member.name).color"
+              >
+                {{ generateAvatar(member.name).letter }}
+              </div>
+            </ng-template>
+            <span class="name">{{ member.name }}</span>
+          </a>
         </div>
       </ng-container>
 
       <ng-template #noMembers>
         <p class="no-members-message">هیچ عضوی یافت نشد</p>
       </ng-template>
+    </div>
+
+    <div class="modal" *ngIf="isAddMemberModalVisible">
+      <div class="modal-content">
+        <span class="close" (click)="toggleAddMemberModal()">&times;</span>
+        <h3>افزودن عضو جدید</h3>
+        <div class="form">
+          <input
+            type="text"
+            placeholder="ایمیل یا شناسه عضو جدید"
+            [(ngModel)]="newMemberEmail"
+          />
+          <button (click)="addMember()">افزودن</button>
+        </div>
+        <p *ngIf="addMemberMessage" class="add-member-message">
+          {{ addMemberMessage }}
+        </p>
+      </div>
     </div>
 
     <button class="leave-group">خروج از اکیپ</button>

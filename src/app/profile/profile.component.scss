@@ -185,7 +185,12 @@
         span {
           font-size: 16px;
           color: var(--base-opposite);
-          flex: 1;
+        }
+
+        .private-icon {
+          width: 24px;
+          height: 24px;
+          margin-inline-start: 8px;
         }
       }
     }

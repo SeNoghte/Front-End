@@ -21,8 +21,13 @@
       {{ userProfile.username }}&#64;
     </p>
 
-    <div class="status-section white-card">
-      <p class="status">{{ userProfile.status }}</p>
+    <div
+      class="status-section white-card"
+      *ngIf="userProfile.status && userProfile.status.trim()"
+    >
+      <p class="status">
+        {{ userProfile.status }}
+      </p>
     </div>
 
     <div class="last-updated-section white-card">
@@ -64,6 +69,12 @@
         </div>
 
         <span>{{ team.name }}</span>
+        <img
+          *ngIf="!isOwner && team.isPrivate"
+          src="assets/icons/private-groups.svg"
+          alt="Private Group Icon"
+          class="private-icon"
+        />
       </div>
     </div>
 

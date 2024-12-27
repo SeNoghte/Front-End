@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     imageUrl: ''
   };
 
-  teams: { name: string; icon: string | null; avatarLetter: string; avatarColor: string }[] = [];
+  teams: { name: string; icon: string | null; avatarLetter: string; avatarColor: string; isPrivate: boolean }[] = [];
 
 
 
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserProfile(): void {
-    const apiUrl = environment.apiUrl +'/User/Profile';
+    const apiUrl = environment.apiUrl + '/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success) {
@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserTeams(): void {
-    const apiUrl = environment.apiUrl +'/User/Profile';
+    const apiUrl = environment.apiUrl + '/User/Profile';
     this.http.post<any>(apiUrl, {}).subscribe(
       (response) => {
         if (response.success && response.myGroups) {
@@ -88,6 +88,7 @@ export class ProfileComponent implements OnInit {
               icon: group.image || null,
               avatarLetter: letter,
               avatarColor: color,
+              isPrivate: group.isPrivate || false,
             };
           });
         } else {

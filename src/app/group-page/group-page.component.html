@@ -7,8 +7,13 @@
     <h2>اکیپ ها</h2>
     <a (click)="toggleEdit()" class="edit">ویرایش</a>
   </div>
+
   <div class="group-list">
-    <div class="group-item" *ngFor="let group of groups">
+    <div
+      class="group-item"
+      *ngFor="let group of groups"
+      (click)="navigateToGroupChat(group.id)"
+    >
       <img *ngIf="group.image" [src]="group.image" alt="Group Image" />
 
       <div
@@ -20,6 +25,12 @@
       </div>
 
       <span>{{ group.name }}</span>
+      <img
+        *ngIf="group.isPrivate"
+        src="assets/icons/private-groups.svg"
+        alt="Private Group Icon"
+        class="private-icon"
+      />
     </div>
   </div>
 </div>
@@ -33,6 +44,7 @@
     <h2>جستجو اکیپ ها</h2>
     <a (click)="toggleEdit()" class="edit">ویرایش</a>
   </div>
+
   <div class="search-bar">
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>جستجو</mat-label>
@@ -50,7 +62,11 @@
   </div>
 
   <div class="group-list">
-    <div class="group-item" *ngFor="let group of searchResults">
+    <div
+      class="group-item"
+      *ngFor="let group of searchResults"
+      (click)="navigateToGroupChat(group.id)"
+    >
       <img *ngIf="group.image" [src]="group.image" alt="Group Image" />
       <div
         *ngIf="!group.image"
@@ -60,6 +76,12 @@
         {{ group.avatarLetter }}
       </div>
       <span>{{ group.name }}</span>
+      <img
+        *ngIf="group.isPrivate"
+        src="assets/icons/private-groups.svg"
+        alt="Private Group Icon"
+        class="private-icon"
+      />
     </div>
 
     <div

@@ -8,20 +8,22 @@ import { MatInputModule } from '@angular/material/input';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../environments/environment';
-
+import { Router, RouterModule } from '@angular/router';
 
 
 interface Group {
+  id: string;
   name: string;
   image: string | null;
   avatarLetter: string;
   avatarColor: string;
+  isPrivate: boolean;
 }
 
 @Component({
   selector: 'app-group-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, HttpClientModule, RouterModule],
   templateUrl: './group-page.component.html',
   styleUrls: ['./group-page.component.scss'],
 })
@@ -36,7 +38,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
   searchResults: Group[] = [];
 
 
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
 
   ngOnInit() {
     this.searchSubscription = this.searchSubject.pipe(debounceTime(300)).subscribe((searchTerm) => {
@@ -84,7 +86,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
 
 
   fetchGroups(): void {
-    const apiUrl = environment.apiUrl +'/Group/GetGroups';
+    const apiUrl = environment.apiUrl + '/Group/GetGroups';
     const requestBody = {
       filter: '',
       pageIndex: 1,
@@ -102,6 +104,8 @@ export class GroupPageComponent implements OnInit, OnDestroy {
               image: group.image || null,
               avatarLetter: letter,
               avatarColor: color,
+              isPrivate: group.isPrivate || false,
+              id: group.id,
             };
           });
           this.searchResults = this.groups;
@@ -128,5 +132,9 @@ export class GroupPageComponent implements OnInit, OnDestroy {
     const letter = name.charAt(0).toUpperCase();
     const color = colors[name.charCodeAt(0) % colors.length];
     return { letter, color };
+  }
+
+  navigateToGroupChat(groupId: string): void {
+    this.router.navigate(['/chat-group', groupId]);
   }
 }
