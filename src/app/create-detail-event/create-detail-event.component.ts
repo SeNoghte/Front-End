@@ -81,7 +81,9 @@ export class CreateDetailEventComponent implements OnInit {
     event.option.deselect();
   }
 
+  numberValue: number | null = null;
   showTimeField = false;
+  showCapacityField = false;
   eventDetails !: EventDetail;
   map: L.Map | undefined;
   marker: L.Marker | undefined;
@@ -92,8 +94,9 @@ export class CreateDetailEventComponent implements OnInit {
   filteredCities: City[] = []
 
   isTaskBoxVisible: boolean = false;
-
+  isCapacityBoxVisible : boolean = false;
   eventData: any;
+
   toggleTaskBox(): void {
     this.isTaskBoxVisible = !this.isTaskBoxVisible;
   }
@@ -228,5 +231,8 @@ export class CreateDetailEventComponent implements OnInit {
     this.eventDetails.saveAddress = !this.eventDetails.saveAddress;
   }
 
+  toggleCapacityBox(){
+    this.isCapacityBoxVisible = !this.isCapacityBoxVisible;
+  }
 }
 

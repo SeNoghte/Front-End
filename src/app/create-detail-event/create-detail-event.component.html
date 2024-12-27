@@ -8,14 +8,14 @@
     <a class="next-button"  (click)="onSubmit()">ثبت</a>
   </div>
   <div class="body">
-    <div class="row">
+    <div class="row" [ngClass]="{ 'border-unvisible': showTimeField }">
       <h3 class="topic">ساعت</h3>
       <mat-slide-toggle
         [(ngModel)]="showTimeField"
         labelPosition="before"
       ></mat-slide-toggle>
     </div>
-    <div class="row">
+    <div class="row" [ngClass]="{ 'border-unvisible': eventDetails.saveAddress }">
       <h3 class="topic">مکان</h3>
       <mat-slide-toggle
         [checked]="eventDetails.saveAddress"
@@ -54,7 +54,7 @@
       <div id="map" style="height: 15rem; margin-top: 1.5rem"></div>
     </div>
 
-    <div class="row">
+    <div class="row" [ngClass]="{ 'border-unvisible': isTaskBoxVisible }">
       <h3 class="topic">تسک‌ها</h3>
       <mat-slide-toggle
         labelPosition="before"
@@ -85,6 +85,21 @@
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="addTask($event)"
         />
+      </mat-form-field>
+    </div>
+
+    <div class="row" [ngClass]="{ 'border-unvisible': isCapacityBoxVisible }">
+      <h3 class="topic">ظرفیت</h3>
+      <mat-slide-toggle
+        labelPosition="before"
+        (change)="toggleCapacityBox()"
+      ></mat-slide-toggle>
+    </div>
+
+    <div class="capacity-input-container">
+      <mat-form-field *ngIf="isCapacityBoxVisible" appearance="outline" class="example-chip-list">
+        <mat-label>افزودن ظرفیت...</mat-label>
+        <input matInput type="number" [(ngModel)]="numberValue" placeholder="e.g. 123" />
       </mat-form-field>
     </div>
   </div>
