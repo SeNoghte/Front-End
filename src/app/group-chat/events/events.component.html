@@ -1,5 +1,5 @@
 <div>
-  <div class="events-list">
+  <div class="events-list" *ngIf="viewMode === 'headline_view'">
 
     <div class="event-card" *ngFor="let event of events">
 
@@ -17,10 +17,10 @@
         <p class="event-description">{{ event.description }}</p>
         <div class="event-date">{{ event.date }}</div>
       </div>
-
     </div>
+  </div> 
 
-  </div>
+  <app-main-calendar *ngIf="viewMode === 'calendar_view'"></app-main-calendar>
 
   <div class="toggle-btn-container">
     <section>
@@ -29,12 +29,13 @@
         aria-label="Favorite Color"
         [hideSingleSelectionIndicator]="hideSingleSelectionIndicator()"
         value="headline_view"
+        (change)="onToggleChange($event.value)"
       >
         <mat-button-toggle value="calendar_view">
           <img src="../../../assets/icons/view_calendar.svg" />
         </mat-button-toggle>
         <mat-button-toggle value="headline_view">
-          <img src="../../../assets/icons/view_headline.svg" />
+          <img src="../../../assets/icons/view_headline.svg"/>
         </mat-button-toggle>
       </mat-button-toggle-group>
     </section>
