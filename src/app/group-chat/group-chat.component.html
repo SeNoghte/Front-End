@@ -1,18 +1,26 @@
-<div *ngIf="!isLoading" class="chat">
-  <div class="header">
-    <div class="back">
+<div class="default-header">
+  <div class="btn1-container search">
+    <button mat-button>
       <img class="back-button" src="assets/icons/back.svg" />
-      <p class="back_title">بازگشت</p>
-    </div>
-    <h3 (click)="navigateToGroupInfo()">{{ group.name }}</h3>
-    <img class="profile-group" [src]="group.image" />
+      بازگشت
+    </button>
   </div>
+
+  <span class="mid-span"> صخره نوردی ستاک </span>
+
+  <div class="btn2-container image">
+      <img class="img" [src]=group.image />
+  </div>
+</div>
+
+
+<div *ngIf="!isLoading" class="chat">
   <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="پیام ها">
       <app-messages [group]="group"></app-messages>
     </mat-tab>
     <mat-tab label="برنامه ها">
-      <app-events></app-events>
+      <app-events [GropEvents]="GropEvents"></app-events>
     </mat-tab>
   </mat-tab-group>
 </div>

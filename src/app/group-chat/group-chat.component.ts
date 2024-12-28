@@ -7,16 +7,24 @@ import { EventsComponent } from "./events/events.component";
 import { MessagesComponent } from './messages/messages.component';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { GetGroupMessageListRequest, GetGroupMessageListResult, GetGroupResponse, Group, Message } from '../shared/models/group-model-type';
+import { ApiResponse, GetGroupMessageListRequest, GetGroupMessageListResult, Group, GroupEvent, Message } from '../shared/models/group-model-type';
 import * as signalR from '@microsoft/signalr';
 import { CommonModule } from '@angular/common';
 import { NavigationVisibilityService } from '../services/navigation-visibility.service';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-group-chat',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatTabsModule, EventsComponent, MessagesComponent, HttpClientModule, CommonModule],
+  imports: [MatToolbarModule,
+    MatIconModule,
+    MatTabsModule,
+    EventsComponent,
+    MessagesComponent,
+    HttpClientModule,
+    CommonModule,
+    MatButtonModule],
   templateUrl: './group-chat.component.html',
   styleUrl: './group-chat.component.scss'
 })
@@ -24,6 +32,7 @@ export class GroupChatComponent implements OnInit {
 
   messages: Message[] = [];
   group!: Group;
+  GropEvents!: GroupEvent[];
   isLoading: boolean = true;
 
   constructor(private route: ActivatedRoute,
@@ -49,10 +58,12 @@ export class GroupChatComponent implements OnInit {
     const apiUrl = `https://api.becheen.ir:6001/api/Group/GetGroup`;
     const model = { groupId: groupId };
 
-    this.http.post<GetGroupResponse>(apiUrl, model).subscribe({
+    this.http.post<ApiResponse>(apiUrl, model).subscribe({
       next: (response) => {
         if (response.success) {
           this.group = response.group;
+          this.GropEvents = response.events as unknown as GroupEvent[];
+          console.log(this.GropEvents)
         } else {
           this.toastrService.error(response.message);
         }
@@ -76,10 +87,10 @@ export class GroupChatComponent implements OnInit {
 
   onTabChange(event: any): void {
     // `event.index` gives the index of the selected tab
-    if (event.index === 0) {
+    if (event.index === 1) {
       // Show the navigation bar for Option 1
       this.navVisibilityService.show();
-    } else if (event.index === 1) {
+    } else if (event.index === 0) {
       // Hide the navigation bar for Option 2
       this.navVisibilityService.hide();
     }

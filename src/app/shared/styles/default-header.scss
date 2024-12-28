@@ -27,7 +27,15 @@
     .mat-mdc-button:not(:disabled) {
       color: var(--primary) !important;
     }
+
+    .img {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      margin-left: 1rem;
+    }
   }
+
   button.unvisible {
     opacity: 0;
     width: 5rem;
