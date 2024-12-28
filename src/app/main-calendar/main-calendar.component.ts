@@ -2,17 +2,22 @@ import { Component } from '@angular/core';
 import { SolarHijriMonthsList, Seasons } from './calendar';
 import { MonthsModel, dayInMonthModel, SeasonsModel, DateType } from './calendar.model';
 import { MomentService } from './moment.service';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { pipe, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import moment from 'jalali-moment';
-
+import { ActivatedRoute } from '@angular/router';
+import { NgModel } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-main-calendar',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule,
+    HttpClientModule,
+
+  ],
   templateUrl: './main-calendar.component.html',
   styleUrl: './main-calendar.component.scss'
 })
@@ -33,6 +38,12 @@ export class MainCalendarComponent {
   dayDate: number = 0;
   MonthDate: number = 0;
   YearDate: number = 0;
+  groupId: string = "";
+
+  constructor(
+    public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute,
+  ) { }
+
 
   public get DateType() {
     return DateType;
@@ -46,18 +57,17 @@ export class MainCalendarComponent {
 
   weeksByMonth: { month: MonthsModel; weeks: dayInMonthModel[][] }[] = [];
 
-  constructor(
-    public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService,
-  ) { }
+
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
     this.momentService.timeSynced.subscribe(() => {
       this.goToday();
     })
     this.yearList = this.momentService.getYearList()
     const GetEventsApiUrl = 'https://api.becheen.ir:6001/api/Group/GetGroup';
     const payload = {
-      groupId: "9155085b-a6ca-4ad3-b1d0-c28b25970c6f",
+      groupId: id,
     };
     this.http.post(GetEventsApiUrl, payload).subscribe((res: any) => {
       this.eventList = res.events;

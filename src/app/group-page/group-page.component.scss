@@ -59,7 +59,6 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-
       }
 
       .avatar {
@@ -80,6 +79,13 @@
         color: var(--gray-5);
         margin-inline-start: 0.75rem;
         margin-top: 0.5rem;
+      }
+
+      .private-icon {
+        width: 24px;
+        height: 24px;
+        margin-inline-start: 8px;
+        margin-top: 5px;
       }
     }
 

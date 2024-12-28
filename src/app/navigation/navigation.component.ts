@@ -35,4 +35,8 @@ export class NavigationComponent {
       this.Router.navigate(['explore']);
     }
   }
+
+  goGroupList(){
+    this.Router.navigate(['group-page']);
+  }
 }

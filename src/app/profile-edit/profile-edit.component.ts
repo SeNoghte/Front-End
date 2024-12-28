@@ -173,7 +173,7 @@ export class ProfileEditComponent implements OnInit {
     const requestBody: any = {
       name: this.fullName,
       username: this.userName,
-      image: this.uploadedImageId ? this.uploadedImageId : this.imageUrl, // ارسال imageId اگر آپلود شده باشد
+      image: this.uploadedImageId ? this.uploadedImageId : this.imageUrl,
       aboutMe: this.profileDescription,
     };
 
@@ -199,4 +199,15 @@ export class ProfileEditComponent implements OnInit {
 
   updateOtherPages(user: any): void {
   }
+
+  logout(): void {
+    localStorage.clear();
+    sessionStorage.clear();
+
+    this.toastr.success('با موفقیت از حساب کاربری خارج شدید.', 'عملیات موفق');
+
+
+    window.location.href = '/login';
+  }
+
 }
