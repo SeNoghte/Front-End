@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { environment } from '../../environments/environment';
 import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 interface Member {
   userId: string;
@@ -39,8 +40,8 @@ interface Group {
     CommonModule,
     RouterModule,
     MatButtonModule,
-    HttpClientModule, 
-    FormsModule
+    HttpClientModule,
+    FormsModule,
   ],
   templateUrl: './group-info.component.html',
   styleUrls: ['./group-info.component.scss'],
@@ -50,12 +51,15 @@ export class GroupInfoComponent implements OnInit {
   newMemberEmail: string = '';
   addMemberMessage: string = '';
   isAddMemberModalVisible: boolean = false;
+  isAdmin: boolean = false;
+  isFollowing: boolean = false;
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private navVisibilityService: NavigationVisibilityService,
-    private location: Location
+    private location: Location,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -63,23 +67,11 @@ export class GroupInfoComponent implements OnInit {
     this.fetchGroupInfo();
   }
 
-  generateAvatar(name: string): { letter: string; color: string } {
-    const colors = [
-      '#F44336', '#E91E63', '#9C27B0', '#673AB7',
-      '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
-      '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
-      '#FFEB3B', '#FFC107', '#FF9800', '#FF5722',
-    ];
-
-    const letter = name.charAt(0).toUpperCase();
-    const color = colors[name.charCodeAt(0) % colors.length];
-    return { letter, color };
-  }
 
   fetchGroupInfo(): void {
     const groupId = this.route.snapshot.paramMap.get('id');
     if (!groupId) {
-      console.error('Group ID not provided in the route.');
+      this.toastr.error('Group ID is not provided in the route.', 'Error');
       return;
     }
 
@@ -89,25 +81,36 @@ export class GroupInfoComponent implements OnInit {
     this.http.post<any>(apiUrl, requestBody).subscribe(
       (response) => {
         if (response.success) {
+          const groupData = response.group;
+
           this.group = {
-            id: response.group.id,
-            name: response.group.name,
-            isPrivate: response.group.isPrivate,
-            description: response.group.description,
-            createdDate: new Date(response.group.createdDate).toLocaleDateString('fa-IR'),
-            owner: response.group.owner,
-            members: response.group.members || [],
-            imageUrl: response.group.image || null,
+            id: groupData.id,
+            name: groupData.name,
+            isPrivate: groupData.isPrivate,
+            description: groupData.description,
+            createdDate: new Date(groupData.createdDate).toLocaleDateString('fa-IR'),
+            imageUrl: groupData.image || null,
+            owner: groupData.owner,
+            members: groupData.members || [],
           };
+
+          this.isAdmin = groupData.isAdmin;
+          this.isFollowing = groupData.isMember;
+
+          console.log('Group Data:', this.group);
+          console.log('Is Admin:', this.isAdmin);
+          console.log('Is Following:', this.isFollowing);
         } else {
-          console.error('Failed to fetch group info:', response.message);
+          this.toastr.error(response.message || 'Failed to fetch group info.', 'Error');
         }
       },
       (error) => {
+        this.toastr.error('An error occurred while fetching group info.', 'Error');
         console.error('Error fetching group info:', error);
       }
     );
   }
+
 
   toggleAddMemberModal(): void {
     this.isAddMemberModalVisible = !this.isAddMemberModalVisible;
@@ -149,6 +152,76 @@ export class GroupInfoComponent implements OnInit {
       }
     );
   }
+
+  joinGroup(): void {
+    if (!this.group) {
+      this.toastr.error('اطلاعات گروه موجود نیست.', 'خطا');
+      return;
+    }
+
+    const apiUrl = `${environment.apiUrl}/Group/Join`;
+    const requestBody = { groupId: this.group.id };
+
+    this.http.post<any>(apiUrl, requestBody).subscribe(
+      (response) => {
+        if (response.success) {
+          this.isFollowing = true;
+          this.fetchGroupInfo();
+          this.toastr.success('شما با موفقیت به گروه پیوستید.', 'موفقیت');
+        } else {
+          this.toastr.error(response.message || 'پیوند به گروه انجام نشد.', 'خطا');
+        }
+      },
+      (error) => {
+        this.toastr.error('در پیوند به گروه مشکلی پیش آمد.', 'خطا');
+        console.error('Error joining group:', error);
+      }
+    );
+  }
+
+
+  leaveGroup(): void {
+    if (!this.group) {
+      this.toastr.error('اطلاعات گروه موجود نیست.', 'خطا');
+      return;
+    }
+
+    const apiUrl = `${environment.apiUrl}/Group/Leave`;
+    const requestBody = { groupId: this.group.id };
+
+    this.http.post<any>(apiUrl, requestBody).subscribe(
+      (response) => {
+        if (response.success) {
+          this.isFollowing = false; // Update the state to reflect that the user is no longer following the group
+          this.fetchGroupInfo(); // Refresh the group info
+          this.toastr.success('شما با موفقیت از گروه خارج شدید.', 'موفقیت');
+        } else {
+          this.toastr.error(response.message || 'خروج از گروه انجام نشد.', 'خطا');
+        }
+      },
+      (error) => {
+        this.toastr.error('در خروج از گروه مشکلی پیش آمد.', 'خطا');
+        console.error('Error leaving the group:', error);
+      }
+    );
+  }
+
+
+
+  generateAvatar(name: string): { letter: string; color: string } {
+    const colors = [
+      '#F44336', '#E91E63', '#9C27B0', '#673AB7',
+      '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
+      '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+      '#FFEB3B', '#FFC107', '#FF9800', '#FF5722',
+    ];
+
+    const letter = name.charAt(0).toUpperCase();
+    const color = colors[name.charCodeAt(0) % colors.length];
+    return { letter, color };
+  }
+
+
   goBack(): void {
     this.location.back();
   }

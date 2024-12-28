@@ -46,12 +46,23 @@
   .group-logo {
     width: 114px;
     height: 114px;
-    margin: 50px auto 10px auto;
+    margin-bottom: 20px;
+    margin-right: 135px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--gray-2);
+
+
+    img {
+      width: 114px;
+      height: 114px;
+      object-fit: cover;
+      border-radius: 50%;
+
+  }
+
 
     .avatar-placeholder {
       width: 100%;
@@ -127,6 +138,10 @@
 
       &:hover {
         border-bottom: 1px solid var(--primary);
+      }
+
+      &.no-border {
+        border-bottom: none; /* حذف خط زیر دکمه */
       }
     }
 
@@ -269,4 +284,65 @@
     cursor: pointer;
     margin: 0 24px 20px;
   }
+
+  .follow-box {
+    width: calc(100% - 48px);
+    height: 70px;
+    padding: 15px;
+    background-color: var(--base);
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+
+    .follow-button {
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: var(--base);
+      color: var(--green);
+      border: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        background-color: var(--green);
+        color: var(--base);
+      }
+    }
+  }
+
+  .unfollow-box {
+    width: calc(100% - 48px);
+    height: 70px;
+    padding: 15px;
+    background-color: var(--base);
+    border: 1px solid var(--error);
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+
+    .unfollow-button {
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: var(--base);
+      color: var(--error);
+      border: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &:hover {
+        background-color: var(--error);
+        color: var(--base);
+      }
+    }
+  }
 }
+
