@@ -121,4 +121,19 @@ img.event-image {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 2;
+}
+
+.address-section
+{
+  .title
+  {
+    display: flex;
+    color: #6B6B6B;
+
+    mat-divider
+    {
+      margin: 0 0.5rem;
+    }
+  }
 }
