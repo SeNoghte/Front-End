@@ -2,6 +2,8 @@ import { MainCalendarComponent } from '../../main-calendar/main-calendar.compone
 import { CommonModule } from '@angular/common';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-events',
@@ -15,6 +17,16 @@ import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
   styleUrl: './events.component.scss'
 })
 export class EventsComponent {
+
+  viewMode: 'calendar_view' | 'headline_view' = 'calendar_view';
+
+  onToggleChange(value: 'calendar_view' | 'headline_view') {
+    this.viewMode = value;
+  }
+
+  constructor(
+      private Router: Router,  
+    ) { }
 
   events = [
     {
@@ -40,5 +52,9 @@ export class EventsComponent {
   hideSingleSelectionIndicator = signal(true);
   toggleSingleSelectionIndicator() {
     this.hideSingleSelectionIndicator.update(value => !value);
+  }
+  calendarView(){
+    this.Router.navigate(['add-member']);
+
   }
 }
