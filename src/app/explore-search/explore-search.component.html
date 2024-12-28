@@ -64,11 +64,13 @@
   </mat-tab>
   <mat-tab label="برنامه ها">
     <div class="suggested-groups-container">
-      <div matRipple class="group-preview" *ngFor="let group of groups">
-        <div class="image-pic"></div>
+      <div matRipple class="group-preview" *ngFor="let event of searchedEvents">
+        <div class="image-pic">
+          <img class="event-pic" *ngIf="event.imagePath" [src]=event.imagePath>
+        </div>
 
         <span>
-          {{ group.name }}
+          {{ event.title }}
         </span>
       </div>
     </div>

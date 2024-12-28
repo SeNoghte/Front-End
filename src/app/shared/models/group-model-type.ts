@@ -110,3 +110,21 @@ export interface User {
     filteredGroups: Group[];
   }
   
+  export interface SearchedEvents {
+    id: string;
+    title: string;
+    description: string;
+    ownerName: string;
+    ownerImage: string;
+    date: string;
+    time: string;
+    imagePath: string;
+  }
+  
+  export interface GetPublicEventListSearchApiResponse {
+    success: boolean;
+    message: string;
+    errorCode: number;
+    items: SearchedEvents[];
+  }
+  
