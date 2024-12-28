@@ -27,13 +27,21 @@
   <mat-tab label="گروه ها">
     <div>
       <div class="events-list">
-        <div class="event-card" *ngFor="let event of events">
+        <div class="event-card" *ngFor="let group of publicGroups">
           <div class="images-container">
             <img
-              src="../../../assets/icons/image.png"
+              *ngIf= group.image
+              [src]=group.image
               alt="Event Image"
               class="event-image"
             />
+
+            <div
+            *ngIf= !group.image
+            class="group-image-replacement"
+            >
+
+            </div>
 
             <div class="event-header">
               <img
@@ -41,14 +49,14 @@
                 alt="Profile"
                 class="profile-image"
               />
-              <span class="profile-name">{{ event.name }}</span>
+              <span class="profile-name">owner name</span>
             </div>
           </div>
 
           <div class="event-info">
-            <h3 class="event-title">{{ event.title }}</h3>
-            <p class="event-description">{{ event.description }}</p>
-            <div class="event-date">{{ event.date }}</div>
+            <h3 class="event-title">{{ group.name }}</h3>
+            <p class="event-description">{{ group.description }}</p>
+            <div class="event-date">{{ group.createdDate }}</div>
           </div>
         </div>
       </div>

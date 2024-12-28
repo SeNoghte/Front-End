@@ -77,3 +77,36 @@ export interface SendMessageToGroupRequest {
     text: string;
     groupId?: string;
 }
+
+export interface User {
+    userId: string;
+    name: string;
+    username: string;
+    email: string;
+    joinedDate: string;
+    image: string;
+    aboutMe: string;
+  }
+  
+  export interface Member extends User {}
+  
+  export interface Group {
+    id: string;
+    name: string;
+    isPrivate: boolean;
+    description: string;
+    createdDate: string;
+    image: string;
+    isAdmin: boolean;
+    isMember: boolean;
+    owner: User;
+    members: Member[];
+  }
+  
+  export interface ExploreGroupsApiResponse {
+    success: boolean;
+    message: string;
+    errorCode: number;
+    filteredGroups: Group[];
+  }
+  

@@ -12,6 +12,8 @@ import { environment } from '../../environments/environment';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { ExploreGroupsApiResponse, Group } from '../shared/models/group-model-type';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-explore-search',
@@ -36,13 +38,14 @@ export class ExploreSearchComponent {
   searchTerm: string = '';
   private searchSubject: Subject<string> = new Subject<string>();
   usersList: any[] = [];
+  publicGroups! : Group[] ; 
   groups = [
-    {name:'صخره نوردی ستاک'},
-    {name:'کافه بازی ونک'},
-    {name:'فوتبال دانشکده کامپیوتر'},
-    {name:'یوهو'},
-    {name:'املت'},
-    {name:'کوهنوردی'},
+    { name: 'صخره نوردی ستاک' },
+    { name: 'کافه بازی ونک' },
+    { name: 'فوتبال دانشکده کامپیوتر' },
+    { name: 'یوهو' },
+    { name: 'املت' },
+    { name: 'کوهنوردی' },
   ]
 
   events = [
@@ -66,9 +69,31 @@ export class ExploreSearchComponent {
     }
   ];
 
+  ngOnInit() {
+    const GetGroupsAPI = environment.apiUrl + '/Group/GetGroups';
+
+    const requestBody = {
+      filter: "",
+      isPrivate: false,
+      pageIndex: 1,
+      pageSize: 1000,
+    };
+
+    this.http.post<ExploreGroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
+      (res) => {
+        console.log(res);
+        this.publicGroups = res.filteredGroups
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
+  }
+
   constructor(
     private Router: Router,
     private http: HttpClient,
+    private toastr: ToastrService,
 
   ) { }
 
