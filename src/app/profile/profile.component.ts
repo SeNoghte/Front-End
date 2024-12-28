@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
 
   activeTab: string = 'teams';
 
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private http: HttpClient, private toastr: ToastrService,private Router: Router,) { }
 
   ngOnInit(): void {
     moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' });
@@ -130,5 +130,9 @@ export class ProfileComponent implements OnInit {
     const letter = validName.charAt(0).toUpperCase();
     const color = colors[validName.charCodeAt(0) % colors.length];
     return { letter, color };
+  }
+
+  redirectToLanding(){
+    this.Router.navigate(['landing']);
   }
 }

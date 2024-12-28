@@ -1,25 +1,18 @@
 <div class="profile-container">
 
   <div class="default-header">
-    <div class="btn1-container">
-      <button
-       [disabled]="isOwner"
-       mat-button>
+    <div class="btn1-container" (click)="redirectToLanding()">
+      <button mat-button>
         <img src="../../assets/icons/back.svg" />
         بازگشت
       </button>
     </div>
-  
+
     <span *ngIf="isOwner" class="mid-span">پروفایل</span>
-  
+
     <div class="btn2-container">
-      <button 
-      mat-button
-      *ngIf="isOwner"
-      class="edit-button"
-      [routerLink]="'/profile-edit'"
-      (click)="editProfile()"
-      >ویرایش</button>
+      <button mat-button *ngIf="isOwner" class="edit-button" [routerLink]="'/profile-edit'"
+        (click)="editProfile()">ویرایش</button>
     </div>
   </div>
 
@@ -33,10 +26,7 @@
       {{ userProfile.username }}&#64;
     </p>
 
-    <div
-      class="status-section white-card"
-      *ngIf="userProfile.status && userProfile.status.trim()"
-    >
+    <div class="status-section white-card" *ngIf="userProfile.status && userProfile.status.trim()">
       <p class="status">
         {{ userProfile.status }}
       </p>
@@ -54,10 +44,7 @@
     <button [class.active]="activeTab === 'teams'" (click)="switchTab('teams')">
       <span>{{ isOwner ? "اکیپ‌ها" : "اکیپ‌های مشترک" }}</span>
     </button>
-    <button
-      [class.active]="activeTab === 'programs'"
-      (click)="switchTab('programs')"
-    >
+    <button [class.active]="activeTab === 'programs'" (click)="switchTab('programs')">
       <span>{{ isOwner ? "برنامه‌ها" : "برنامه‌های مشترک" }}</span>
     </button>
   </div>
@@ -65,28 +52,15 @@
   <div class="content white-bg">
     <div *ngIf="activeTab === 'teams'" class="teams">
       <div *ngFor="let team of teams" class="team">
-        <img
-          *ngIf="team.icon"
-          [src]="team.icon"
-          alt="Team Icon"
-          class="common-avatar"
-        />
+        <img *ngIf="team.icon" [src]="team.icon" alt="Team Icon" class="common-avatar" />
 
-        <div
-          *ngIf="!team.icon"
-          class="avatar common-avatar"
-          [style.backgroundColor]="team.avatarColor"
-        >
+        <div *ngIf="!team.icon" class="avatar common-avatar" [style.backgroundColor]="team.avatarColor">
           {{ team.avatarLetter }}
         </div>
 
         <span>{{ team.name }}</span>
-        <img
-          *ngIf="!isOwner && team.isPrivate"
-          src="assets/icons/private-groups.svg"
-          alt="Private Group Icon"
-          class="private-icon"
-        />
+        <img *ngIf="!isOwner && team.isPrivate" src="assets/icons/private-groups.svg" alt="Private Group Icon"
+          class="private-icon" />
       </div>
     </div>
 

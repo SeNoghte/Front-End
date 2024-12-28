@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { environment } from '../../environments/environment';
 import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 interface Member {
   userId: string;
@@ -55,7 +57,8 @@ export class GroupInfoComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private navVisibilityService: NavigationVisibilityService,
-    private location: Location
+    private location: Location,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -155,5 +158,10 @@ export class GroupInfoComponent implements OnInit {
 
   editGroup(): void {
     console.log('Edit button clicked');
+  }
+
+  redirectToChatGroup(){
+    const groupId = this.route.snapshot.paramMap.get('id');
+    this.router.navigate(['/chat-group', groupId]);
   }
 }

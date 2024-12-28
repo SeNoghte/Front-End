@@ -88,6 +88,10 @@ export class CreateGroupComponent {
 
   }
 
+  redirectToGroupPage(){
+    this.Router.navigate(['group-page']);
+  }
+
 }
 
 interface ApiResponse {

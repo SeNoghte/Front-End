@@ -71,9 +71,8 @@ export class GroupPageComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  toggleEdit() {
-
+  redirectToCreateGroup() {
+    this.router.navigate(['create-group']);
   }
 
   onSearch() {

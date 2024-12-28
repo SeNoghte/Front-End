@@ -17,7 +17,7 @@ export class NavigationComponent {
   activeTab = 'home'
   isVisible = true;
 
-  constructor(private navVisibilityService: NavigationVisibilityService) {}
+  constructor(private navVisibilityService: NavigationVisibilityService,private Router: Router,) {}
 
   ngOnInit(): void {
     this.navVisibilityService.visibility$.subscribe(visible => {
@@ -26,6 +26,19 @@ export class NavigationComponent {
   }
 
   setActive(tab: string) {
+    if(tab=='groups'){
+      this.Router.navigate(['group-page']);
+    }
+    if(tab=='profile'){
+      this.Router.navigate(['profile']);
+    }
+    if(tab=='home'){
+      this.Router.navigate(['landing']);
+    }
     this.activeTab = tab;
   }
+
+  // redirectGroupList(){
+    
+  // }
 }
