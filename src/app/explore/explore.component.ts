@@ -6,7 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { GroupItem, GroupsApiResponse, TagsApiResponse } from '../shared/models/group-model-type';
+import { EventItem, EventsApiResponse, GroupItem, GroupsApiResponse, TagsApiResponse } from '../shared/models/group-model-type';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -30,8 +30,8 @@ export class ExploreComponent {
   selectedChips: any[] = []; // Array to hold selected chips
   hideSingleSelectionIndicator = signal(true);
   tags!: string[]
-  groups! : GroupItem[]
-
+  groups!: GroupItem[]
+  events!: EventItem[]
 
   ngOnInit() {
     const GetTagsAPI = environment.apiUrl + '/Event/GetMostUsedTagsList';
@@ -45,6 +45,9 @@ export class ExploreComponent {
         this.toastr.error('خطا در ثبت!');
       }
     );
+
+    this.fetchAllGroups();
+    this.fetchAllEvents();
   }
   constructor(private Router: Router,
     private http: HttpClient,
@@ -66,6 +69,7 @@ export class ExploreComponent {
 
     console.log(this.selectedChips)
     this.fetchGroups();
+    this.fetchEvents();
   }
 
 
@@ -75,7 +79,7 @@ export class ExploreComponent {
     const uniqueGroupIds = new Set<string>(); // Track unique group IDs
 
     if (this.selectedChips.length === 0) {
-      this.groups = []; // Clear the groups
+      this.fetchAllGroups()
       return;
     }
 
@@ -107,24 +111,106 @@ export class ExploreComponent {
     });
   }
 
+  fetchEvents(): void {
+    const GetEventsAPI = environment.apiUrl + '/Event/GetPublicTasksListByTag';
+
+    // If no tags are selected, clear the events and return
+    if (this.selectedChips.length === 0) {
+      this.fetchAllEvents()
+      return;
+    }
+
+    const uniqueEventIds = new Set<string>(); // Track unique event IDs
+    const newEvents: EventItem[] = []; // Temporary array to hold unique events
+
+    // Call the API for each selected tag and combine results
+    this.selectedChips.forEach((tag) => {
+      const requestBody = { tag };
+
+      this.http.post<EventsApiResponse>(GetEventsAPI, requestBody).subscribe(
+        (response) => {
+          if (response.success) {
+            response.items.forEach((event) => {
+              if (!uniqueEventIds.has(event.id)) {
+                uniqueEventIds.add(event.id); // Add ID to the set
+                newEvents.push(event); // Add the unique event to the array
+              }
+            });
+            this.events = newEvents; // Update events with unique events
+          } else {
+            this.toastr.error(`Error fetching events for tag: ${tag}`);
+          }
+        },
+        (error) => {
+          console.error(`Error calling API for tag: ${tag}`, error);
+          this.toastr.error(`Error fetching events for tag: ${tag}`);
+        }
+      );
+    });
+  }
+
+  fetchAllEvents(): void {
+    const GetEventsAPI = environment.apiUrl + '/Event/GetPublicTasksListByTag';
+    const uniqueEventIds = new Set<string>(); // Track unique event IDs
+    const newEvents: EventItem[] = []; // Temporary array to hold unique events
+
+    // Call the API for each selected tag and combine results
+    const requestBody = { tag: "" };
+
+    this.http.post<EventsApiResponse>(GetEventsAPI, requestBody).subscribe(
+      (response) => {
+        if (response.success) {
+          response.items.forEach((event) => {
+            if (!uniqueEventIds.has(event.id)) {
+              uniqueEventIds.add(event.id); // Add ID to the set
+              newEvents.push(event); // Add the unique event to the array
+            }
+          });
+          this.events = newEvents; // Update events with unique events
+        } else {
+          this.toastr.error(`Error fetching events`);
+        }
+      },
+      (error) => {
+        console.error(`Error calling API`, error);
+        this.toastr.error(`Error fetching events `);
+      }
+    );
+  }
+
+  fetchAllGroups() {
+    const GetGroupsAPI = environment.apiUrl + '/Group/GetPublicGroupsListByTag';
+    const newGroups: GroupItem[] = []; // Temporary array to hold unique groups
+    const uniqueGroupIds = new Set<string>(); // Track unique group IDs
+
+    const requestBody = { tag: "" };
+
+    this.http.post<GroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
+      (response) => {
+        console.log(response)
+
+        if (response.success) {
+          response.items.forEach((group) => {
+            if (!uniqueGroupIds.has(group.id)) {
+              uniqueGroupIds.add(group.id); // Add ID to the set
+              newGroups.push(group); // Add the unique group to the array
+            }
+          });
+          this.groups = newGroups;
+        } else {
+          this.toastr.error(`Error fetching groups`);
+        }
+      },
+      (error) => {
+        console.error(`Error calling API`, error);
+        this.toastr.error(`Error fetching groups`);
+      }
+    );
+  }
+
   isTagSelected(tag: string): boolean {
     return this.selectedChips.includes(tag);
   }
-
-
-  chips = [
-    { id: 1, label: 'کوهنوردی', isSelected: false },
-    { id: 2, label: 'ورزشی', isSelected: false },
-    { id: 3, label: 'هنر', isSelected: false },
-    { id: 3, label: 'پخش فوتبال', isSelected: false },
-    { id: 3, label: 'وای', isSelected: false },
-  ];
-
-  suggested_groups = [
-    { name: 'علی علوی' },
-    { name: 'محمدحسین' },
-    { name: 'سپهر' },
-  ]
 
   toggleSelection(chip: any): void {
     chip.isSelected = !chip.isSelected;
@@ -139,27 +225,6 @@ export class ExploreComponent {
 
     console.log(this.selectedChips)
   }
-
-  events = [
-    {
-      image: 'https://via.placeholder.com/100',
-      profileImage: 'https://via.placeholder.com/40',
-      name: 'محمد حسین',
-      title: 'فتح قله دماوند',
-      description:
-        'برنامه صعود به دماوند یکی از بلندترین قله‌های ایران. سه روز هیجان و تجربه بی‌نظیر!',
-      date: 'یکشنبه ۱۴۰۲/۰۹/۱۲ ساعت ۱۲:۳۰'
-    },
-    {
-      image: 'https://via.placeholder.com/100',
-      profileImage: 'https://via.placeholder.com/40',
-      name: 'محمد حسین',
-      title: 'کوهنوردی در البرز',
-      description:
-        'برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.برنامه کوهنوردی یک‌روزه در طبیعت زیبای البرز. به همراه تیم حرفه‌ای.',
-      date: 'پنجشنبه ۱۴۰۲/۰۹/۱۰ ساعت ۰۸:۰۰'
-    }
-  ];
 
   toggleSingleSelectionIndicator() {
     this.hideSingleSelectionIndicator.update(value => !value);

@@ -202,3 +202,21 @@ export interface GroupsApiResponse {
   errorCode: number;
   items: GroupItem[];
 }
+
+export interface EventItem {
+  id: string;
+  title: string;
+  description: string;
+  ownerName: string;
+  ownerImage: string;
+  date: string;
+  time: string;
+  imagePath: string;
+}
+
+export interface EventsApiResponse {
+  success: boolean;
+  message: string;
+  errorCode: number;
+  items: EventItem[];
+}
