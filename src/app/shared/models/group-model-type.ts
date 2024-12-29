@@ -4,7 +4,7 @@ export interface User {
     username: string;
     email: string;
     joinedDate: string;
-    image: string;
+    image?: string;
     aboutMe: string;
 }
 
@@ -14,7 +14,7 @@ export interface Group {
     isPrivate: boolean;
     description: string;
     createdDate: string;
-    image: string;
+    image?: string;
     isAdmin: boolean;
     isMember: boolean;
     owner: User;
@@ -84,7 +84,7 @@ export interface User {
     username: string;
     email: string;
     joinedDate: string;
-    image: string;
+    image?: string;
     aboutMe: string;
   }
   
@@ -96,7 +96,7 @@ export interface User {
     isPrivate: boolean;
     description: string;
     createdDate: string;
-    image: string;
+    image?: string;
     isAdmin: boolean;
     isMember: boolean;
     owner: User;
@@ -115,10 +115,10 @@ export interface User {
     title: string;
     description: string;
     ownerName: string;
-    ownerImage: string;
+    ownerImage?: string;
     date: string;
     time: string;
-    imagePath: string;
+    imagePath?: string;
   }
   
   export interface GetPublicEventListSearchApiResponse {
@@ -134,7 +134,7 @@ export interface User {
     username: string;
     email: string;
     joinedDate: string;
-    image: string;
+    image?: string;
     aboutMe: string;
   }
   
@@ -144,13 +144,13 @@ export interface User {
     id: string;
     title: string;
     description: string;
-    owner: User;
+    owner?: User;
     date: string;
     time: string;
     groupId: string;
-    imagePath: string;
+    imagePath?: string;
     isPrivate: boolean;
-    members: Member[];
+    members?: Member[];
   }
   
   export interface Task {
@@ -174,3 +174,10 @@ export interface User {
     tags: Tag[];
   }
   
+  export interface GetProfileApiResponse {
+    success: boolean;
+    message: string;
+    errorCode: number;
+    user: User;
+    myGroups: Group[];
+  }

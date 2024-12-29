@@ -85,6 +85,10 @@ export class GroupChatComponent implements OnInit {
     this.router.navigate(['/group-info', this.group.id]);
   }
 
+  navigateToGroupPage(){
+    this.router.navigate(['/group-page']);
+  }
+
   onTabChange(event: any): void {
     // `event.index` gives the index of the selected tab
     if (event.index === 1) {

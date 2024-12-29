@@ -20,6 +20,10 @@
       alt="Event Image"
       class="event-image"
     />
+
+    <div *ngIf="!event.imagePath"
+      class="event-image-replacement"
+    ></div>
   </div>
 
   <div class="event-info">
@@ -30,13 +34,13 @@
     <div class="event-header becheener">
       <div class="content">
         <img
-          src="../../../assets/icons/image.png"
-          alt="Profile"
+          [src]=event.owner?.image
+          alt="owner image"
           class="profile-image"
         />
         <div class="becheener-name-cotainer">
           <div class="role">برنامه بچین :</div>
-          <div class="becheener-name">محمد اصغر</div>
+          <div class="becheener-name">{{event.owner?.name}}</div>
         </div>
       </div>
     </div>
@@ -48,7 +52,7 @@
           alt="Profile"
           class="profile-image"
         />
-        <span class="profile-name">{{ member }}</span>
+        <span class="profile-name">{{ member.name }}</span>
       </div>
     </div>
 
@@ -62,8 +66,24 @@
   </div>
 </div>
 
-<div class="submit-container">
+<div *ngIf="!isPastEvent && isUserInMembers" class="submit-container">
+  <span> توهم تو برنامه ای.</span>
+
+  <button mat-flat-button>خارج شدن از برنامه</button>
+</div>
+
+<div *ngIf="isPastEvent && isUserInMembers" class="submit-container">
+  <span> برنامه تموم شد، چطور بود؟</span>
+
+  <button mat-flat-button>نظر دادن</button>
+</div>
+
+<div *ngIf="!isPastEvent && !isUserInMembers" class="submit-container">
   <span> می خوای تو هم تو این برنامه باشی؟ </span>
 
   <button mat-flat-button>منم هستم</button>
+</div>
+
+<div *ngIf="isPastEvent" class="submit-container">
+  <span > دیر رسیدی برنامه تموم شد</span>
 </div>
