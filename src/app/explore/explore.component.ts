@@ -6,7 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { TagsApiResponse } from '../shared/models/group-model-type';
+import { GroupItem, GroupsApiResponse, TagsApiResponse } from '../shared/models/group-model-type';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -30,7 +30,7 @@ export class ExploreComponent {
   selectedChips: any[] = []; // Array to hold selected chips
   hideSingleSelectionIndicator = signal(true);
   tags!: string[]
-  selectedTags: string[] = []; // Array to hold selected tags
+  groups! : GroupItem[]
 
 
   ngOnInit() {
@@ -63,6 +63,48 @@ export class ExploreComponent {
       // Tag already selected, remove it
       this.selectedChips.splice(index, 1);
     }
+
+    console.log(this.selectedChips)
+    this.fetchGroups();
+  }
+
+
+  fetchGroups(): void {
+    const GetGroupsAPI = environment.apiUrl + '/Group/GetPublicGroupsListByTag';
+    const newGroups: GroupItem[] = []; // Temporary array to hold unique groups
+    const uniqueGroupIds = new Set<string>(); // Track unique group IDs
+
+    if (this.selectedChips.length === 0) {
+      this.groups = []; // Clear the groups
+      return;
+    }
+
+    // Call the API for each selected tag and combine results
+    this.selectedChips.forEach((tag) => {
+      const requestBody = { tag };
+
+      this.http.post<GroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
+        (response) => {
+          console.log(response)
+
+          if (response.success) {
+            response.items.forEach((group) => {
+              if (!uniqueGroupIds.has(group.id)) {
+                uniqueGroupIds.add(group.id); // Add ID to the set
+                newGroups.push(group); // Add the unique group to the array
+              }
+            });
+            this.groups = newGroups;
+          } else {
+            this.toastr.error(`Error fetching groups for tag: ${tag}`);
+          }
+        },
+        (error) => {
+          console.error(`Error calling API for tag: ${tag}`, error);
+          this.toastr.error(`Error fetching groups for tag: ${tag}`);
+        }
+      );
+    });
   }
 
   isTagSelected(tag: string): boolean {
