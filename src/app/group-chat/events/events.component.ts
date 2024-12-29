@@ -61,4 +61,8 @@ export class EventsComponent {
   calendarView(){
     this.Router.navigate(['add-member']);
   }
+
+  navigateToShowEventDetail(id : string){
+    this.Router.navigate(['show-event-detail'], { queryParams: { id: id } });
+  }
 }

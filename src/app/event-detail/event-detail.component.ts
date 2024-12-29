@@ -5,6 +5,10 @@ import { NavigationVisibilityService } from '../services/navigation-visibility.s
 import { ToastrService } from 'ngx-toastr';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { EventDetails, GetEventApiResponse } from '../shared/models/group-model-type';
+import { environment } from '../../environments/environment';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-event-detail',
@@ -18,32 +22,40 @@ import { CommonModule } from '@angular/common';
   styleUrl: './event-detail.component.scss'
 })
 export class EventDetailComponent {
-
-  event = {
-    image: 'https://via.placeholder.com/100',
-    profileImage: 'https://via.placeholder.com/40',
-    name: 'محمد حسین',
-    title: 'کوهنوردی در البرز',
-    description:
-    'برنامه مهیج و جذاب فتح بلند ترین قله ایران سه روزه حرکت از تهران |‌ ناهار با تور برای شرکت در این برنامه حتما باید قبلا سابقه صعود به قله ادامه توضیحات توضیحات بیشتر',
-    date: 'پنجشنبه ۱۴۰۲/۰۹/۱۰ ساعت ۰۸:۰۰',
-    members : [
-      'امیرحسین',
-      'رضا سادیسمی',
-      'محمدرضا',
-      'عرفان میرزایی',
-      '56 نفر دیگه'
-    ]
-  }
-
-  ngOnInit(): void {
-    this.navVisibilityService.hide()
-  }
+  eventId !: number
+  event!: EventDetails
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private navVisibilityService: NavigationVisibilityService,
     private toastr: ToastrService,
+    private route: ActivatedRoute
   ) { }
+
+  ngOnInit() {
+    this.navVisibilityService.hide()
+
+    this.route.queryParams.subscribe((params) => {
+      this.eventId = params['id'];
+      console.log('Event ID:', this.eventId);
+    });
+
+
+    const GetEventAPI = environment.apiUrl + '/Event/GetEvent';
+
+    const requestBody = {
+      eventId: this.eventId,
+    };
+
+    this.http.post<GetEventApiResponse>(GetEventAPI, requestBody).subscribe(
+      (res) => {
+        this.event = res.event as unknown as EventDetails;
+        console.log(this.event)
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
+  }
 }

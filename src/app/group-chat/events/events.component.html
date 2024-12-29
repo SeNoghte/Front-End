@@ -2,7 +2,7 @@
 <div>
   <div class="events-list" *ngIf="viewMode === 'headline_view'">
 
-    <div class="event-card" *ngFor="let event of GropEvents">
+    <div class="event-card"  *ngFor="let event of GropEvents" (click)="navigateToShowEventDetail(event.id)">
 
       <div class="images-container">
         <img *ngIf="event.imagePath" [src]="event.imagePath" alt="Event Image" class="event-image" />

@@ -128,3 +128,49 @@ export interface User {
     items: SearchedEvents[];
   }
   
+  export interface User {
+    userId: string;
+    name: string;
+    username: string;
+    email: string;
+    joinedDate: string;
+    image: string;
+    aboutMe: string;
+  }
+  
+  export interface Member extends User {}
+  
+  export interface EventDetails {
+    id: string;
+    title: string;
+    description: string;
+    owner: User;
+    date: string;
+    time: string;
+    groupId: string;
+    imagePath: string;
+    isPrivate: boolean;
+    members: Member[];
+  }
+  
+  export interface Task {
+    id: string;
+    title: string;
+    assignedUserId: string;
+    assignedUserName: string;
+  }
+  
+  export interface Tag {
+    id: string;
+    tag: string;
+  }
+  
+  export interface GetEventApiResponse {
+    success: boolean;
+    message: string;
+    errorCode: number;
+    event: Event;
+    tasks: Task[];
+    tags: Tag[];
+  }
+  

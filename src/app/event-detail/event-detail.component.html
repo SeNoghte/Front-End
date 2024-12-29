@@ -14,9 +14,9 @@
 </div>
 
 <div class="event-card">
-  <div class="images-container">
-    <img
-      src="../../../assets/icons/image.png"
+  <div  class="images-container">
+    <img *ngIf="event.imagePath"
+      [src]=event.imagePath
       alt="Event Image"
       class="event-image"
     />
