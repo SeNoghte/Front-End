@@ -29,30 +29,31 @@ import * as L from 'leaflet';
 export class EventDetailComponent {
   eventId !: number;
   profile!: User;
+  event!: EventDetails
   isPastEvent: boolean = false;
   isUserInMembers : boolean = false;
 
-  event = {
-    image: 'https://via.placeholder.com/100',
-    profileImage: 'https://via.placeholder.com/40',
-    name: 'محمد حسین',
-    title: 'کوهنوردی در البرز',
-    description:
-      'برنامه مهیج و جذاب فتح بلند ترین قله ایران سه روزه حرکت از تهران |‌ ناهار با تور برای شرکت در این برنامه حتما باید قبلا سابقه صعود به قله ادامه توضیحات توضیحات بیشتر',
-    date: 'پنجشنبه ۱۴۰۲/۰۹/۱۰ ساعت ۰۸:۰۰',
-    members: [
-      'امیرحسین',
-      'رضا سادیسمی',
-      'محمدرضا',
-      'عرفان میرزایی',
-      '56 نفر دیگه'
-    ],
-    cityId: 1,
-    address: "علم و صنعت",
-    longitude: 51.338062,
-    latitude: 35.699768,
-    cityName: ''
-  }
+  // event = {
+  //   image: 'https://via.placeholder.com/100',
+  //   profileImage: 'https://via.placeholder.com/40',
+  //   name: 'محمد حسین',
+  //   title: 'کوهنوردی در البرز',
+  //   description:
+  //     'برنامه مهیج و جذاب فتح بلند ترین قله ایران سه روزه حرکت از تهران |‌ ناهار با تور برای شرکت در این برنامه حتما باید قبلا سابقه صعود به قله ادامه توضیحات توضیحات بیشتر',
+  //   date: 'پنجشنبه ۱۴۰۲/۰۹/۱۰ ساعت ۰۸:۰۰',
+  //   members: [
+  //     'امیرحسین',
+  //     'رضا سادیسمی',
+  //     'محمدرضا',
+  //     'عرفان میرزایی',
+  //     '56 نفر دیگه'
+  //   ],
+  //   cityId: 1,
+  //   address: "علم و صنعت",
+  //   longitude: 51.338062,
+  //   latitude: 35.699768,
+  //   cityName: ''
+  // }
 
   private map: L.Map | undefined;
 
@@ -131,18 +132,18 @@ export class EventDetailComponent {
   }
 
   InitCityName() {
-    if (this.event.cityId)
+    if (1)
       this.http.get<City[]>('assets/cities.json').subscribe(data => {
-        let city:City | undefined = data.find(x => x.cityId == this.event.cityId);
+        let city:City | undefined = data.find(x => x.cityId == 1);
         
-        this.event.cityName = city?.name ?? '';
+        // this.event.cityName = city?.name ?? '';
       });
   }
 
   private initMap(): void {
 
         // Initialize the map
-        this.map = L.map('map').setView([this.event.latitude, this.event.longitude], 13);
+        this.map = L.map('map').setView([ 51.338062, 35.699768], 13);
 
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -158,7 +159,7 @@ export class EventDetailComponent {
         });
     
         // Add the marker with the custom icon
-        const marker = L.marker([this.event.latitude, this.event.longitude], { icon: customIcon });
+        const marker = L.marker([ 51.338062, 35.699768], { icon: customIcon });
         marker.addTo(this.map);
   }
 }

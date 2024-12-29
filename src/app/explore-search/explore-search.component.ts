@@ -1,3 +1,4 @@
+
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
@@ -12,7 +13,7 @@ import { environment } from '../../environments/environment';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { ExploreGroupsApiResponse, GetPublicEventListSearchApiResponse, Group, SearchedEvents } from '../shared/models/group-model-type';
+import { ExploreGroupsApiResponse, GetPublicEventListSearchApiResponse, Group, SearchedEvents, TagsApiResponse } from '../shared/models/group-model-type';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

@@ -1,3 +1,4 @@
+
 <div class="default-header explore">
   <div class="btn1-container search">
     <button (click)="navigateToSearchExplore()" mat-button>
@@ -15,52 +16,51 @@
   <div
     matRipple
     class="chip-item"
-    [class.selected]="chip.isSelected"
-    (click)="toggleSelection(chip)"
-    *ngFor="let chip of chips"
+    *ngFor="let tag of tags"
+    [class.selected]="isTagSelected(tag)"
+    (click)="toggleTagSelection(tag)"
   >
-    {{ chip.label }}
+    {{ tag }}
   </div>
 </div>
 
 <div class="suggested-groups-container">
-    <span class="suggested-groups-title">
-        گروه های پیشنهادی
+  <span class="suggested-groups-title"> گروه های پیشنهادی </span>
+
+  <div matRipple class="group-preview" *ngFor="let group of suggested_groups">
+    <div class="image-pic"></div>
+
+    <span>
+      {{ group.name }}
     </span>
-
-    <div matRipple class="group-preview"  *ngFor="let group of suggested_groups">
-        <div class="image-pic">
-
-        </div>
-
-        <span>
-            {{group.name}}
-        </span>
-    </div>
+  </div>
 </div>
 
 <div>
-    <div class="events-list">
-  
-      <div class="event-card" *ngFor="let event of events">
-  
-        <div class="images-container">
-          <img src="../../../assets/icons/image.png" alt="Event Image" class="event-image" />
-  
-          <div class="event-header">
-            <img src="../../../assets/icons/image.png" alt="Profile" class="profile-image" />
-            <span class="profile-name">{{ event.name }}</span>
-          </div>
+  <div class="events-list">
+    <div class="event-card" *ngFor="let event of events">
+      <div class="images-container">
+        <img
+          src="../../../assets/icons/image.png"
+          alt="Event Image"
+          class="event-image"
+        />
+
+        <div class="event-header">
+          <img
+            src="../../../assets/icons/image.png"
+            alt="Profile"
+            class="profile-image"
+          />
+          <span class="profile-name">{{ event.name }}</span>
         </div>
-  
-        <div class="event-info">
-          <h3 class="event-title">{{ event.title }}</h3>
-          <p class="event-description">{{ event.description }}</p>
-          <div class="event-date">{{ event.date }}</div>
-        </div>
-  
       </div>
-  
+
+      <div class="event-info">
+        <h3 class="event-title">{{ event.title }}</h3>
+        <p class="event-description">{{ event.description }}</p>
+        <div class="event-date">{{ event.date }}</div>
+      </div>
     </div>
   </div>
-  
+</div>
