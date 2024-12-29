@@ -188,3 +188,35 @@ export interface TagsApiResponse {
   errorCode: number;
   tags: string[];
 }
+
+export interface GroupItem {
+  name: string;
+  id: string;
+  description: string;
+  image: string;
+}
+
+export interface GroupsApiResponse {
+  success: boolean;
+  message: string;
+  errorCode: number;
+  items: GroupItem[];
+}
+
+export interface EventItem {
+  id: string;
+  title: string;
+  description: string;
+  ownerName: string;
+  ownerImage: string;
+  date: string;
+  time: string;
+  imagePath: string;
+}
+
+export interface EventsApiResponse {
+  success: boolean;
+  message: string;
+  errorCode: number;
+  items: EventItem[];
+}

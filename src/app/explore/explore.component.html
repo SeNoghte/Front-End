@@ -27,7 +27,7 @@
 <div class="suggested-groups-container">
   <span class="suggested-groups-title"> گروه های پیشنهادی </span>
 
-  <div matRipple class="group-preview" *ngFor="let group of suggested_groups">
+  <div matRipple class="group-preview" *ngFor="let group of groups">
     <div class="image-pic"></div>
 
     <span>
@@ -52,7 +52,7 @@
             alt="Profile"
             class="profile-image"
           />
-          <span class="profile-name">{{ event.name }}</span>
+          <span class="profile-name">{{ event.title }}</span>
         </div>
       </div>
 

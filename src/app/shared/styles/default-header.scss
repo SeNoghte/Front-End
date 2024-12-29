@@ -23,6 +23,8 @@
   }
 
   .btn2-container {
+    margin-left: 0.5rem;
+
     .mat-stroked-text-regular.mat-mdc-outlined-button:not(:disabled),
     .mat-mdc-button:not(:disabled) {
       color: var(--primary) !important;
