@@ -37,8 +37,12 @@
       ایجاد شده در <span class="date">{{ group.createdDate }}</span>
     </p>
 
-    <div class="members">
-      <button class="add-member" (click)="toggleAddMemberModal()">
+    <div class="members" *ngIf="isFollowing">
+      <button
+        class="add-member"
+        [class.no-border]="isFollowing"
+        (click)="toggleAddMemberModal()"
+      >
         <img
           class="back-button"
           src="assets/icons/add-icon.svg"
@@ -47,35 +51,49 @@
         افزودن عضو
       </button>
 
-      <ng-container
-        *ngIf="group.members && group.members.length > 0; else noMembers"
-      >
-        <div *ngFor="let member of group.members" class="member">
-          <a [routerLink]="'/profile/' + member.userId" class="member-link">
-            <ng-container *ngIf="member.image; else defaultMemberAvatar">
-              <img
-                [src]="member.image"
-                alt="{{ member.name }}"
-                class="avatar"
-              />
-            </ng-container>
-            <ng-template #defaultMemberAvatar>
-              <div
-                class="avatar-placeholder"
-                [style.background-color]="generateAvatar(member.name).color"
-              >
-                {{ generateAvatar(member.name).letter }}
-              </div>
-            </ng-template>
-            <span class="name">{{ member.name }}</span>
-          </a>
-        </div>
+      <ng-container *ngIf="isAdmin">
+        <ng-container
+          *ngIf="group.members && group.members.length > 0; else noMembers"
+        >
+          <div *ngFor="let member of group.members" class="member">
+            <a [routerLink]="'/profile/' + member.userId" class="member-link">
+              <ng-container *ngIf="member.image; else defaultMemberAvatar">
+                <img
+                  [src]="member.image"
+                  alt="{{ member.name }}"
+                  class="avatar"
+                />
+              </ng-container>
+              <ng-template #defaultMemberAvatar>
+                <div
+                  class="avatar-placeholder"
+                  [style.background-color]="generateAvatar(member.name).color"
+                >
+                  {{ generateAvatar(member.name).letter }}
+                </div>
+              </ng-template>
+              <span class="name">{{ member.name }}</span>
+            </a>
+          </div>
+        </ng-container>
+        <ng-template #noMembers>
+          <p class="no-members-message">هیچ عضوی یافت نشد</p>
+        </ng-template>
       </ng-container>
-
-      <ng-template #noMembers>
-        <p class="no-members-message">هیچ عضوی یافت نشد</p>
-      </ng-template>
     </div>
+
+
+    <div *ngIf="!isAdmin">
+
+      <div *ngIf="isFollowing" class="unfollow-box">
+        <button class="unfollow-button" (click)="leaveGroup()">دنبال نکردن</button>
+      </div>
+
+      <div *ngIf="!isFollowing" class="follow-box">
+        <button class="follow-button" (click)="joinGroup()">دنبال کردن</button>
+      </div>
+    </div>
+
 
     <div class="modal" *ngIf="isAddMemberModalVisible">
       <div class="modal-content">
@@ -94,7 +112,5 @@
         </p>
       </div>
     </div>
-
-    <button class="leave-group">خروج از اکیپ</button>
   </div>
 </div>
