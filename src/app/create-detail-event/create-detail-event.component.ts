@@ -144,6 +144,7 @@ export class CreateDetailEventComponent implements OnInit {
   onSubmit() {
     console.log(this.eventData); // Form data from the previous component
     console.log(this.tasks()); // Form data from the previous component
+    console.log(this.numberValue)
 
     const tasks = this.tasks();
 

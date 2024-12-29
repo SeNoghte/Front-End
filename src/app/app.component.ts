@@ -16,7 +16,7 @@ import { GroupInfoComponent } from './group-info/group-info.component';
   imports: [
     RouterOutlet,
     NavigationComponent,
-    CommonModule, 
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -25,6 +25,7 @@ export class AppComponent {
   constructor(private router: Router, private navVisibilityService: NavigationVisibilityService) { }
 
   ngOnInit(): void {
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Hide navigation if the URL starts with specific paths

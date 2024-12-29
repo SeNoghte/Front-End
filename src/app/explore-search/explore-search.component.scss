@@ -3,7 +3,7 @@
 }
 
 .suggested-groups-container {
-  margin: 1.5rem 1.5rem 0 1.5rem;
+  margin: 1.5rem 1.5rem 4rem 1.5rem;
   border-radius: 0.5rem;
 
   .group-preview {
@@ -17,7 +17,7 @@
     border-bottom: none;
   }
 
-  .image-pic {
+  .image-pic , .event-pic {
     width: 2.5rem;
     height: 2.5rem;
     background-color: var(--primary);
@@ -99,4 +99,10 @@ img.event-image {
   text-overflow: ellipsis;
   white-space: normal;
   // max-height: 3rem; /* محدود کردن ارتفاع به دو خط */
+}
+
+.group-image-replacement{
+  width: 100%;
+  height: 4rem;
+  background-color: var(--gray-1);
 }

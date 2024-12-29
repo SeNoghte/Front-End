@@ -1,14 +1,20 @@
+
 <div>
   <div class="events-list" *ngIf="viewMode === 'headline_view'">
 
-    <div class="event-card" *ngFor="let event of events">
+    <div class="event-card"  *ngFor="let event of GropEvents" (click)="navigateToShowEventDetail(event.id)">
 
       <div class="images-container">
-        <img src="../../../assets/icons/image.png" alt="Event Image" class="event-image" />
+        <img *ngIf="event.imagePath" [src]="event.imagePath" alt="Event Image" class="event-image" />
+        <div *ngIf="!event.imagePath" class="event-image-replacement">
+        </div>
 
         <div class="event-header">
-          <img src="../../../assets/icons/image.png" alt="Profile" class="profile-image" />
-          <span class="profile-name">{{ event.name }}</span>
+          <img *ngIf="event.owner.image" [src]="event.owner.image" alt="Profile" class="profile-image" />
+          <div *ngIf="!event.owner.image" class="fallback">
+            {{ event.owner.name[0] }}
+          </div>
+          <span class="profile-name">{{ event.owner.name }}</span>
         </div>
       </div>
 
@@ -28,7 +34,7 @@
         name="favoriteColor"
         aria-label="Favorite Color"
         [hideSingleSelectionIndicator]="hideSingleSelectionIndicator()"
-        value="headline_view"
+        value="calendar_view"
         (change)="onToggleChange($event.value)"
       >
         <mat-button-toggle value="calendar_view">

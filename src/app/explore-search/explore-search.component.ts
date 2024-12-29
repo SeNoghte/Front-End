@@ -12,6 +12,8 @@ import { environment } from '../../environments/environment';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { ExploreGroupsApiResponse, GetPublicEventListSearchApiResponse, Group, SearchedEvents } from '../shared/models/group-model-type';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-explore-search',
@@ -36,13 +38,16 @@ export class ExploreSearchComponent {
   searchTerm: string = '';
   private searchSubject: Subject<string> = new Subject<string>();
   usersList: any[] = [];
+  publicGroups! : Group[] ; 
+  searchedEvents! : SearchedEvents[];
+
   groups = [
-    {name:'صخره نوردی ستاک'},
-    {name:'کافه بازی ونک'},
-    {name:'فوتبال دانشکده کامپیوتر'},
-    {name:'یوهو'},
-    {name:'املت'},
-    {name:'کوهنوردی'},
+    { name: 'صخره نوردی ستاک' },
+    { name: 'کافه بازی ونک' },
+    { name: 'فوتبال دانشکده کامپیوتر' },
+    { name: 'یوهو' },
+    { name: 'املت' },
+    { name: 'کوهنوردی' },
   ]
 
   events = [
@@ -66,9 +71,47 @@ export class ExploreSearchComponent {
     }
   ];
 
+  ngOnInit() {
+    const GetGroupsAPI = environment.apiUrl + '/Group/GetGroups';
+
+    const requestBody = {
+      filter: "",
+      isPrivate: false,
+      pageIndex: 1,
+      pageSize: 1000,
+    };
+
+    this.http.post<ExploreGroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
+      (res) => {
+        console.log(res);
+        this.publicGroups = res.filteredGroups
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
+
+    const GetEventsAPI = environment.apiUrl + '/Event/GetPublicEventListSearch';
+
+    const eventsRequestBody = {
+      searchString : ''
+    };
+
+    this.http.post<GetPublicEventListSearchApiResponse>(GetEventsAPI, eventsRequestBody).subscribe(
+      (res) => {
+        this.searchedEvents = res.items
+        console.log('searched events : ' , this.searchedEvents)
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
+  }
+
   constructor(
     private Router: Router,
     private http: HttpClient,
+    private toastr: ToastrService,
 
   ) { }
 
@@ -78,16 +121,41 @@ export class ExploreSearchComponent {
 
   onSearch() {
     this.searchSubject.next(this.searchTerm);
-    const getUsersApiUrl = environment.apiUrl + '/User/GetUsers';
-    const payload = {
-      filter: this.searchTerm,
-      pageIndex: 10,
-      pageSize: 10000,
+    console.log(this.searchTerm)
+
+    const GetEventsAPI = environment.apiUrl + '/Event/GetPublicEventListSearch';
+
+    const eventsRequestBody = {
+      searchString : this.searchTerm
     };
-    this.http.post(getUsersApiUrl, payload).subscribe(
-      (res: any) => {
-        this.usersList = res.filteredUsers;
+
+    this.http.post<GetPublicEventListSearchApiResponse>(GetEventsAPI, eventsRequestBody).subscribe(
+      (res) => {
+        this.searchedEvents = res.items
+        console.log('searched events : ' , this.searchedEvents)
       },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
+
+    const GetGroupsAPI = environment.apiUrl + '/Group/GetGroups';
+
+    const requestBody = {
+      filter: this.searchTerm,
+      isPrivate: false,
+      pageIndex: 1,
+      pageSize: 1000,
+    };
+
+    this.http.post<ExploreGroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
+      (res) => {
+        console.log(res);
+        this.publicGroups = res.filteredGroups
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
     );
   }
 
