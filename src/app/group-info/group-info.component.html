@@ -26,6 +26,8 @@
 
     <h2 class="group-name">{{ group.name }}</h2>
 
+    <p class="member-count">{{ group.members?.length || 0 }} عضو</p>
+
     <p
       class="group-description"
       *ngIf="group.description && group.description.trim()"
@@ -82,18 +84,17 @@
       </ng-container>
     </div>
 
-
     <div *ngIf="!isAdmin">
-
       <div *ngIf="isFollowing" class="unfollow-box">
-        <button class="unfollow-button" (click)="leaveGroup()">دنبال نکردن</button>
+        <button class="unfollow-button" (click)="leaveGroup()">
+          دنبال نکردن
+        </button>
       </div>
 
       <div *ngIf="!isFollowing" class="follow-box">
         <button class="follow-button" (click)="joinGroup()">دنبال کردن</button>
       </div>
     </div>
-
 
     <div class="modal" *ngIf="isAddMemberModalVisible">
       <div class="modal-content">

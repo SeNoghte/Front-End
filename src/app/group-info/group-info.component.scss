@@ -61,7 +61,7 @@
       object-fit: cover;
       border-radius: 50%;
 
-  }
+    }
 
 
     .avatar-placeholder {
@@ -83,6 +83,13 @@
     color: var(--base-opposite);
     text-align: center;
     margin-bottom: 20px;
+  }
+
+  .member-count {
+    font-size: 1rem;
+    color: var(--gray-4);
+    ;
+    text-align: center;
   }
 
   .group-description {
@@ -141,7 +148,8 @@
       }
 
       &.no-border {
-        border-bottom: none; /* حذف خط زیر دکمه */
+        border-bottom: none;
+        /* حذف خط زیر دکمه */
       }
     }
 
@@ -345,4 +353,3 @@
     }
   }
 }
-

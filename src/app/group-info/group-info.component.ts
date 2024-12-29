@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -54,6 +54,7 @@ export class GroupInfoComponent implements OnInit {
   isAddMemberModalVisible: boolean = false;
   isAdmin: boolean = false;
   isFollowing: boolean = false;
+  token: any;
 
   constructor(
     private http: HttpClient,
@@ -155,6 +156,7 @@ export class GroupInfoComponent implements OnInit {
     );
   }
 
+
   joinGroup(): void {
     if (!this.group) {
       this.toastr.error('اطلاعات گروه موجود نیست.', 'خطا');
@@ -232,7 +234,7 @@ export class GroupInfoComponent implements OnInit {
     console.log('Edit button clicked');
   }
 
-  redirectToChatGroup(){
+  redirectToChatGroup() {
     const groupId = this.route.snapshot.paramMap.get('id');
     this.router.navigate(['/chat-group', groupId]);
   }
