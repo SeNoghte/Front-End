@@ -84,5 +84,9 @@ export class GroupChatComponent implements OnInit {
       this.navVisibilityService.hide();
     }
   }
+
+  redirectToGroupPage(){
+    this.router.navigate(['group-page']);
+  }
 }
 

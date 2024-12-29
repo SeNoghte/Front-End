@@ -29,6 +29,15 @@ export class NavigationComponent {
   }
 
   setActive(tab: string) {
+    if(tab=='groups'){
+      this.Router.navigate(['group-page']);
+    }
+    if(tab=='profile'){
+      this.Router.navigate(['profile']);
+    }
+    if(tab=='home'){
+      this.Router.navigate(['landing']);
+    }
     this.activeTab = tab;
 
     if(tab=='search') {
@@ -39,4 +48,8 @@ export class NavigationComponent {
   goGroupList(){
     this.Router.navigate(['group-page']);
   }
+
+  // redirectGroupList(){
+    
+  // }
 }

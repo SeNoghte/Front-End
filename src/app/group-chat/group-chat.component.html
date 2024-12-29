@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading" class="chat">
   <div class="header">
-    <div class="back">
+    <div class="back" (click)="redirectToGroupPage()">
       <img class="back-button" src="assets/icons/back.svg" />
       <p class="back_title">بازگشت</p>
     </div>

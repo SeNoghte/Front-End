@@ -1,10 +1,10 @@
 <div class="group-info" *ngIf="group">
   <div class="header">
     <div class="header-up">
-      <a class="back" routerLink="/groups">
+      <div class="back" (click)="redirectToChatGroup()">
         <img class="back" src="assets/icons/back.svg" alt="بازگشت" />
         بازگشت
-      </a>
+      </div>
       <button class="edit" [routerLink]="'/group-edit'" (click)="editGroup()">
         ویرایش
       </button>
