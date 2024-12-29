@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EventDetails, GetEventApiResponse, GetProfileApiResponse, User } from '../shared/models/group-model-type';
 import { environment } from '../../environments/environment';
 import { log } from 'node:console';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-event-detail',
@@ -33,7 +34,8 @@ export class EventDetailComponent {
     private router: Router,
     private navVisibilityService: NavigationVisibilityService,
     private toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -91,4 +93,11 @@ export class EventDetailComponent {
     return event.members.some((member: any) => member.username === username);
   }
 
+  goBack(): void {
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/default-route']);
+    }
+  }
 }
