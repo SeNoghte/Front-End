@@ -1,7 +1,15 @@
 
 <div>
+  
+  
   <div class="events-list" *ngIf="viewMode === 'headline_view'">
-
+    <button (click)="addEvent()" mat-stroked-button>
+      
+      <span>
+        افزوودن برنامه
+      </span>
+    </button>
+    
     <div class="event-card"  *ngFor="let event of GropEvents" (click)="navigateToShowEventDetail(event.id)">
 
       <div class="images-container">

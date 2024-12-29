@@ -36,3 +36,13 @@ button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.m
     font-size: 1rem !important;
   }
 }
+
+.events-list .mat-mdc-outlined-button:not(:disabled) {
+  margin-bottom: 1rem;
+  /* margin-top: 2rem; */
+  text-align: center;
+  color: var(--mdc-outlined-button-label-text-color, var(--mat-app-primary));
+  border-color: var(--mdc-outlined-button-outline-color, var(--mat-app-outline));
+  WIDTH: 100%;
+  /* margin-right: 1.5rem; */
+}

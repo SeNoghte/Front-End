@@ -4,6 +4,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {ChangeDetectionStrategy, Component, Input, signal} from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiResponse, GetGroupMessageListRequest, GetGroupMessageListResult, Group, GroupEvent, Message } from '../../shared/models/group-model-type';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { ApiResponse, GetGroupMessageListRequest, GetGroupMessageListResult, Gro
   imports: [
     MainCalendarComponent,
     MatButtonToggleModule,
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
@@ -64,5 +66,9 @@ export class EventsComponent {
 
   navigateToShowEventDetail(id : string){
     this.Router.navigate(['show-event-detail'], { queryParams: { id: id } });
+  }
+
+  addEvent() {
+
   }
 }
