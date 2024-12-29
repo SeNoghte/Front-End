@@ -6,15 +6,13 @@
     </button>
   </div>
 
-  <span class="mid-span"> صخره نوردی ستاک </span>
+  <span class="mid-span">{{ group.name }}</span>
 
   <div class="btn2-container image">
-      <img class="img" [src]=group.image />
+    <img class="img" [src]="group.image" (click)="navigateToGroupInfo()" />
   </div>
 </div>
 
-
-<div *ngIf="!isLoading" class="chat">
   <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="پیام ها">
       <app-messages [group]="group"></app-messages>
@@ -23,4 +21,4 @@
       <app-events [GropEvents]="GropEvents"></app-events>
     </mat-tab>
   </mat-tab-group>
-</div>
+
