@@ -5,6 +5,7 @@ import {ChangeDetectionStrategy, Component, Input, signal} from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiResponse, GetGroupMessageListRequest, GetGroupMessageListResult, Group, GroupEvent, Message } from '../../shared/models/group-model-type';
 import { MatButtonModule } from '@angular/material/button';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class EventsComponent {
   }
 
   constructor(
-      private Router: Router,  
+      private Router: Router, 
+      private route: ActivatedRoute, 
     ) { }
 
   events = [
@@ -69,6 +71,7 @@ export class EventsComponent {
   }
 
   addEvent() {
-
+    const groupId = this.route.snapshot.paramMap.get('id');
+    this.Router.navigate(['create-event'], { queryParams: { id: groupId } });
   }
 }

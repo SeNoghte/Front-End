@@ -197,7 +197,7 @@ export class CreateEventComponent {
   selectedFile: File | null = null;
   imagePath = '';
   date = "";
-  groupId: string = '9155085b-a6ca-4ad3-b1d0-c28b25970c6f';
+  groupId: string = '';
 
   createEventForm = new FormGroup({
     title: new FormControl<string>(''),
@@ -219,23 +219,26 @@ export class CreateEventComponent {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        this.groupId = params['groupId'];
+        this.groupId = params['id'];
       }
       );
-    this.createEventForm.controls.groupId.setValue("9155085b-a6ca-4ad3-b1d0-c28b25970c6f");
+    this.createEventForm.controls.groupId.setValue(this.groupId);
+
   }
 
   redirectDetailEvent() {
     const formData = this.createEventForm.value;
     console.log(formData);
     this.Router.navigate(['/event-detail'],
-      { queryParams: {
-        title: this.createEventForm.value.title,
-        description: this.createEventForm.value.description,
-        date: this.createEventForm.value.date,
-        groupId: this.createEventForm.value.groupId,
-        imagePath: this.createEventForm.value.imagePath,
-      } }
+      {
+        queryParams: {
+          title: this.createEventForm.value.title,
+          description: this.createEventForm.value.description,
+          date: this.createEventForm.value.date,
+          groupId: this.createEventForm.value.groupId,
+          imagePath: this.createEventForm.value.imagePath,
+        }
+      }
     );
 
     // this.Router.navigate(['event-detail', {
@@ -287,6 +290,10 @@ export class CreateEventComponent {
         this.toastr.error('خطا در ثبت!');
       }
     );
+  }
+
+  redirectToChatGroup() {
+    this.Router.navigate(['/chat-group', this.groupId]);
   }
 
 }

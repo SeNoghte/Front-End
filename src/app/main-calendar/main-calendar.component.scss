@@ -1,11 +1,8 @@
 .day-box {
-  height: 620px;
   overflow-y: auto;
 }
 
 .calendar-container {
-  width: 100%;
-  max-width: 150rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
