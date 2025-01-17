@@ -72,6 +72,9 @@ export class ExploreComponent {
     this.fetchEvents();
   }
 
+  navigateToGroupChat(groupId: string): void {
+    this.Router.navigate(['/chat-group', groupId]);
+  }
   
   navigateToShowEventDetail(id : string){
     this.Router.navigate(['show-event-detail'], { queryParams: { id: id } });

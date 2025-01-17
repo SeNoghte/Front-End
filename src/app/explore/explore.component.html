@@ -26,7 +26,9 @@
 <div class="suggested-groups-container">
   <span class="suggested-groups-title"> گروه های پیشنهادی </span>
 
-  <div matRipple class="group-preview" *ngFor="let group of groups">
+  <div matRipple class="group-preview" *ngFor="let group of groups"
+  (click)="navigateToGroupChat(group.id)"
+  >
     <div class="image-pic">
       <img
         *ngIf="group.image"
