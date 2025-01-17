@@ -34,6 +34,7 @@ export class GroupChatComponent implements OnInit {
   group!: Group;
   GropEvents!: GroupEvent[];
   isLoading: boolean = true;
+  fromWhere : string | null = '';
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
@@ -54,6 +55,11 @@ export class GroupChatComponent implements OnInit {
       this.toastrService.error('شناسه گروه یافت نشد.');
       return;
     }
+
+    this.route.queryParamMap.subscribe((params) => {
+      this.fromWhere = params.get('fromWhere');
+      console.log('Additional Data:', this.fromWhere);
+    });
 
     const apiUrl = `https://api.becheen.ir:6001/api/Group/GetGroup`;
     const model = { groupId: groupId };
@@ -86,7 +92,16 @@ export class GroupChatComponent implements OnInit {
   }
 
   navigateToGroupPage(){
-    this.router.navigate(['/group-page']);
+    console.log('fromWhere' , this.fromWhere)
+    if(this.fromWhere == null){
+      this.router.navigate(['/group-page']);
+    }
+    else if(this.fromWhere == 'explore'){
+      this.router.navigate(['/explore']);
+    }
+    else{
+      this.router.navigate(['/explore-search']);
+    }
   }
 
   onTabChange(event: any): void {

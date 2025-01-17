@@ -220,3 +220,13 @@ export interface EventsApiResponse {
   errorCode: number;
   items: EventItem[];
 }
+
+export interface JoinEventRequest {
+  eventId: string;
+}
+
+export interface JoinEventResponse {
+  success: boolean;
+  message: string;
+  errorCode: number;
+}

@@ -39,8 +39,8 @@ export class ExploreSearchComponent {
   searchTerm: string = '';
   private searchSubject: Subject<string> = new Subject<string>();
   usersList: any[] = [];
-  publicGroups! : Group[] ; 
-  searchedEvents! : SearchedEvents[];
+  publicGroups!: Group[];
+  searchedEvents!: SearchedEvents[];
 
   groups = [
     { name: 'صخره نوردی ستاک' },
@@ -95,13 +95,13 @@ export class ExploreSearchComponent {
     const GetEventsAPI = environment.apiUrl + '/Event/GetPublicEventListSearch';
 
     const eventsRequestBody = {
-      searchString : ''
+      searchString: ''
     };
 
     this.http.post<GetPublicEventListSearchApiResponse>(GetEventsAPI, eventsRequestBody).subscribe(
       (res) => {
         this.searchedEvents = res.items
-        console.log('searched events : ' , this.searchedEvents)
+        console.log('searched events : ', this.searchedEvents)
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
@@ -127,13 +127,13 @@ export class ExploreSearchComponent {
     const GetEventsAPI = environment.apiUrl + '/Event/GetPublicEventListSearch';
 
     const eventsRequestBody = {
-      searchString : this.searchTerm
+      searchString: this.searchTerm
     };
 
     this.http.post<GetPublicEventListSearchApiResponse>(GetEventsAPI, eventsRequestBody).subscribe(
       (res) => {
         this.searchedEvents = res.items
-        console.log('searched events : ' , this.searchedEvents)
+        console.log('searched events : ', this.searchedEvents)
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
@@ -158,6 +158,16 @@ export class ExploreSearchComponent {
         this.toastr.error('خطا در ثبت!');
       }
     );
+  }
+
+  navigateToGroupChat(groupId: string): void {
+    this.Router.navigate(['/chat-group', groupId], {
+      queryParams: { fromWhere: 'explore-search' }
+    });
+  }
+
+  navigateToShowEventDetail(id: string) {
+    this.Router.navigate(['show-event-detail'], { queryParams: { id: id } });
   }
 
   onTabChange(event: any): void {

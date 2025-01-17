@@ -93,7 +93,7 @@
 <div *ngIf="!isPastEvent && !isUserInMembers" class="submit-container">
   <span> می خوای تو هم تو این برنامه باشی؟ </span>
 
-  <button mat-flat-button>منم هستم</button>
+  <button (click)="joinEvent()" mat-flat-button>منم هستم</button>
 </div>
 
 <div *ngIf="isPastEvent" class="submit-container">

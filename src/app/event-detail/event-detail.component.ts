@@ -6,12 +6,12 @@ import { ToastrService } from 'ngx-toastr';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { EventDetails, GetEventApiResponse, GetProfileApiResponse, User } from '../shared/models/group-model-type';
+import { EventDetails, GetEventApiResponse, GetProfileApiResponse, JoinEventRequest, JoinEventResponse, User } from '../shared/models/group-model-type';
 import { environment } from '../../environments/environment';
 import { log } from 'node:console';
 import { Location } from '@angular/common';
 import { City } from '../shared/models/event-types';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 import * as L from 'leaflet';
 
 @Component({
@@ -31,29 +31,7 @@ export class EventDetailComponent {
   profile!: User;
   event!: EventDetails
   isPastEvent: boolean = false;
-  isUserInMembers : boolean = false;
-
-  // event = {
-  //   image: 'https://via.placeholder.com/100',
-  //   profileImage: 'https://via.placeholder.com/40',
-  //   name: 'محمد حسین',
-  //   title: 'کوهنوردی در البرز',
-  //   description:
-  //     'برنامه مهیج و جذاب فتح بلند ترین قله ایران سه روزه حرکت از تهران |‌ ناهار با تور برای شرکت در این برنامه حتما باید قبلا سابقه صعود به قله ادامه توضیحات توضیحات بیشتر',
-  //   date: 'پنجشنبه ۱۴۰۲/۰۹/۱۰ ساعت ۰۸:۰۰',
-  //   members: [
-  //     'امیرحسین',
-  //     'رضا سادیسمی',
-  //     'محمدرضا',
-  //     'عرفان میرزایی',
-  //     '56 نفر دیگه'
-  //   ],
-  //   cityId: 1,
-  //   address: "علم و صنعت",
-  //   longitude: 51.338062,
-  //   latitude: 35.699768,
-  //   cityName: ''
-  // }
+  isUserInMembers: boolean = false;
 
   private map: L.Map | undefined;
 
@@ -88,6 +66,10 @@ export class EventDetailComponent {
       console.log('Event ID:', this.eventId);
     });
 
+    this.fetchEvent()
+  }
+
+  fetchEvent() {
     const GetEventAPI = environment.apiUrl + '/Event/GetEvent';
 
     const requestBody = {
@@ -110,16 +92,41 @@ export class EventDetailComponent {
     );
 
     if (this.event.members!!.length > 0) {
-      this.isUserInMembers = this.checkUserInEventMembers(this.event,  this.profile.username);
+      this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
       console.log('is user in event members : ', this.isUserInMembers)
     }
+  }
+
+  joinEvent() {
+    const EventAPI = environment.apiUrl + '/Event/JoinEvent';
+
+    const requestBody = {
+      eventId: this.eventId,
+    };
+
+    this.http.post<JoinEventResponse>(EventAPI, requestBody).subscribe(
+      (res) => {
+        if (res.success) {
+          this.fetchEvent()
+        }
+        else {
+          console.log(res)
+          console.log(this.eventId)
+          console.log(this.event)
+          this.toastr.error(res.message);
+        }
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
   }
 
   checkUserInEventMembers(event: any, username: string): boolean {
     if (!event.members || event.members.length === 0) {
       return false; // No members in the event
     }
-  
+
     return event.members.some((member: any) => member.username === username);
   }
 
@@ -134,32 +141,32 @@ export class EventDetailComponent {
   InitCityName() {
     if (1)
       this.http.get<City[]>('assets/cities.json').subscribe(data => {
-        let city:City | undefined = data.find(x => x.cityId == 1);
-        
+        let city: City | undefined = data.find(x => x.cityId == 1);
+
         // this.event.cityName = city?.name ?? '';
       });
   }
 
   private initMap(): void {
 
-        // Initialize the map
-        this.map = L.map('map').setView([ 51.338062, 35.699768], 13);
+    // Initialize the map
+    this.map = L.map('map').setView([51.338062, 35.699768], 13);
 
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors',
-        }).addTo(this.map);
-    
-        // Define a custom icon
-        const customIcon = L.icon({
-          iconUrl: 'assets/icons/location-marker.svg', // Path to your custom marker image
-          iconSize: [32, 32], // Size of the icon [width, height]
-          iconAnchor: [16, 32], // Anchor of the icon [x, y]
-          popupAnchor: [0, -32], // Anchor of the popup relative to the icon
-        });
-    
-        // Add the marker with the custom icon
-        const marker = L.marker([ 51.338062, 35.699768], { icon: customIcon });
-        marker.addTo(this.map);
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+    }).addTo(this.map);
+
+    // Define a custom icon
+    const customIcon = L.icon({
+      iconUrl: 'assets/icons/location-marker.svg', // Path to your custom marker image
+      iconSize: [32, 32], // Size of the icon [width, height]
+      iconAnchor: [16, 32], // Anchor of the icon [x, y]
+      popupAnchor: [0, -32], // Anchor of the popup relative to the icon
+    });
+
+    // Add the marker with the custom icon
+    const marker = L.marker([51.338062, 35.699768], { icon: customIcon });
+    marker.addTo(this.map);
   }
 }

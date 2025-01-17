@@ -27,7 +27,8 @@
   <mat-tab label="گروه ها">
     <div>
       <div class="events-list">
-        <div class="event-card" *ngFor="let group of publicGroups">
+        <div class="event-card" *ngFor="let group of publicGroups"
+        (click)="navigateToGroupChat(group.id)">
           <div class="images-container">
             <img
               *ngIf= group.image
@@ -64,7 +65,7 @@
   </mat-tab>
   <mat-tab label="برنامه ها">
     <div class="suggested-groups-container">
-      <div matRipple class="group-preview" *ngFor="let event of searchedEvents">
+      <div matRipple class="group-preview" *ngFor="let event of searchedEvents" (click)="navigateToShowEventDetail(event.id)">
         <div class="image-pic">
           <img class="event-pic" *ngIf="event.imagePath" [src]=event.imagePath>
         </div>

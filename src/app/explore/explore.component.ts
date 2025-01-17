@@ -73,7 +73,9 @@ export class ExploreComponent {
   }
 
   navigateToGroupChat(groupId: string): void {
-    this.Router.navigate(['/chat-group', groupId]);
+    this.Router.navigate(['/chat-group', groupId ], {
+      queryParams: { fromWhere: 'explore' }
+    });
   }
   
   navigateToShowEventDetail(id : string){
