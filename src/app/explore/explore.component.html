@@ -35,11 +35,9 @@
         class="event-image"
       />
 
-      <div
-      *ngIf="!group.image"
-      class="suggested-group-img-replacement">
+      <div *ngIf="!group.image" class="suggested-group-img-replacement">
         <span>
-          {{group.name[0]}}
+          {{ group.name[0] }}
         </span>
       </div>
     </div>
@@ -52,7 +50,7 @@
 
 <div>
   <div class="events-list">
-    <div class="event-card" *ngFor="let event of events">
+    <div class="event-card" *ngFor="let event of events" (click)="navigateToShowEventDetail(event.id)">
       <div class="images-container">
         <img
           *ngIf="event.imagePath"

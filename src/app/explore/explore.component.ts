@@ -72,6 +72,10 @@ export class ExploreComponent {
     this.fetchEvents();
   }
 
+  
+  navigateToShowEventDetail(id : string){
+    this.Router.navigate(['show-event-detail'], { queryParams: { id: id } });
+  }
 
   fetchGroups(): void {
     const GetGroupsAPI = environment.apiUrl + '/Group/GetPublicGroupsListByTag';
