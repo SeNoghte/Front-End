@@ -5,7 +5,7 @@
       <p class="back_title">بازگشت</p>
     </div>
     <h4 class="header-name">جزئیات برنامه جدید</h4>
-    <a class="next-button"  (click)="onSubmit()">ثبت</a>
+    <a class="next-button" (click)="onSubmit()">ثبت</a>
   </div>
   <div class="body">
     <div class="row" [ngClass]="{ 'border-unvisible': showTimeField }">
@@ -15,7 +15,20 @@
         labelPosition="before"
       ></mat-slide-toggle>
     </div>
-    <div class="row" [ngClass]="{ 'border-unvisible': eventDetails.saveAddress }">
+
+    <mat-form-field *ngIf="showTimeField" class="hour-field"  appearance="outline">
+      <mat-label>ساعت</mat-label>
+      <mat-select [(ngModel)]="selectedValueHour" name="food">
+        @for (hour of hours; track hour) {
+        <mat-option [value]="hour.value">{{ hour.viewValue }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div
+      class="row"
+      [ngClass]="{ 'border-unvisible': eventDetails.saveAddress }"
+    >
       <h3 class="topic">مکان</h3>
       <mat-slide-toggle
         [checked]="eventDetails.saveAddress"
@@ -97,9 +110,18 @@
     </div>
 
     <div class="capacity-input-container">
-      <mat-form-field *ngIf="isCapacityBoxVisible" appearance="outline" class="example-chip-list">
+      <mat-form-field
+        *ngIf="isCapacityBoxVisible"
+        appearance="outline"
+        class="example-chip-list"
+      >
         <mat-label>افزودن ظرفیت...</mat-label>
-        <input matInput type="number" [(ngModel)]="numberValue" placeholder="e.g. 123" />
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="numberValue"
+          placeholder="e.g. 123"
+        />
       </mat-form-field>
     </div>
   </div>

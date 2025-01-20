@@ -17,6 +17,13 @@ import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatIconModule } from '@angular/material/icon';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { MatSelectModule } from '@angular/material/select';
+
+interface Hour {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-create-detail-event',
@@ -24,14 +31,15 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     MatSlideToggleModule,
     FormsModule,
-    NgxMatTimepickerModule,
     CommonModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
     HttpClientModule,
     MatChipsModule,
-    MatIconModule],
+    MatIconModule,
+    FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule
+    ],
   templateUrl: './create-detail-event.component.html',
   styleUrl: './create-detail-event.component.scss'
 })
@@ -46,6 +54,60 @@ export class CreateDetailEventComponent implements OnInit {
       ? this.allTasks.filter(task => task.toLowerCase().includes(currentTask))
       : this.allTasks.slice();
   });
+
+  selectedValueHour?: string;
+
+  hours: Hour[] = [
+    {value: '12:00AM', viewValue: '12:00 AM'},
+    {value: '12:30AM', viewValue: '12:30 AM'},
+    {value: '1:00AM', viewValue: '1:00 AM'},
+    {value: '1:30AM', viewValue: '1:30 AM'},
+    {value: '2:00AM', viewValue: '2:00 AM'},
+    {value: '2:30AM', viewValue: '2:30 AM'},
+    {value: '3:00AM', viewValue: '3:00 AM'},
+    {value: '3:30AM', viewValue: '3:30 AM'},
+    {value: '4:00AM', viewValue: '4:00 AM'},
+    {value: '4:30AM', viewValue: '4:30 AM'},
+    {value: '5:00AM', viewValue: '5:00 AM'},
+    {value: '5:30AM', viewValue: '5:30 AM'},
+    {value: '6:00AM', viewValue: '6:00 AM'},
+    {value: '6:30AM', viewValue: '6:30 AM'},
+    {value: '7:00AM', viewValue: '7:00 AM'},
+    {value: '7:30AM', viewValue: '7:30 AM'},
+    {value: '8:00AM', viewValue: '8:00 AM'},
+    {value: '8:30AM', viewValue: '8:30 AM'},
+    {value: '9:00AM', viewValue: '9:00 AM'},
+    {value: '9:30AM', viewValue: '9:30 AM'},
+    {value: '10:00AM', viewValue: '10:00 AM'},
+    {value: '10:30AM', viewValue: '10:30 AM'},
+    {value: '11:00AM', viewValue: '11:00 AM'},
+    {value: '11:30AM', viewValue: '11:30 AM'},
+    {value: '12:00PM', viewValue: '12:00 PM'},
+    {value: '12:30PM', viewValue: '12:30 PM'},
+    {value: '1:00PM', viewValue: '1:00 PM'},
+    {value: '1:30PM', viewValue: '1:30 PM'},
+    {value: '2:00PM', viewValue: '2:00 PM'},
+    {value: '2:30PM', viewValue: '2:30 PM'},
+    {value: '3:00PM', viewValue: '3:00 PM'},
+    {value: '3:30PM', viewValue: '3:30 PM'},
+    {value: '4:00PM', viewValue: '4:00 PM'},
+    {value: '4:30PM', viewValue: '4:30 PM'},
+    {value: '5:00PM', viewValue: '5:00 PM'},
+    {value: '5:30PM', viewValue: '5:30 PM'},
+    {value: '6:00PM', viewValue: '6:00 PM'},
+    {value: '6:30PM', viewValue: '6:30 PM'},
+    {value: '7:00PM', viewValue: '7:00 PM'},
+    {value: '7:30PM', viewValue: '7:30 PM'},
+    {value: '8:00PM', viewValue: '8:00 PM'},
+    {value: '8:30PM', viewValue: '8:30 PM'},
+    {value: '9:00PM', viewValue: '9:00 PM'},
+    {value: '9:30PM', viewValue: '9:30 PM'},
+    {value: '10:00PM', viewValue: '10:00 PM'},
+    {value: '10:30PM', viewValue: '10:30 PM'},
+    {value: '11:00PM', viewValue: '11:00 PM'},
+    {value: '11:30PM', viewValue: '11:30 PM'},
+  ];
+  
 
 
   readonly announcer = inject(LiveAnnouncer);

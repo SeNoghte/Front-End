@@ -280,11 +280,18 @@ export class CreateEventComponent {
       this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
     }
 
+    console.log(this.createEventForm.value)
     const createEventApiUrl = environment.apiUrl + '/Event/Create';
     this.http.post<CreateEventApiResponse>(createEventApiUrl, this.createEventForm.value).subscribe(
       (res: any) => {
-        console.log(res);
-        this.toastr.success('رویداد با موفقیت ایجاد شد.');
+        if (res.success) {
+          console.log(res);
+          this.toastr.success('رویداد با موفقیت ایجاد شد.');
+        }
+        else {
+          console.log(res)
+          this.toastr.error('خطا در ثبت!');
+        }
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
@@ -306,10 +313,10 @@ interface ApiResponse {
 }
 
 interface CreateEventApiResponse {
-  "success": boolean,
-  "message": string,
-  "errorCode": number,
-  "eventId": string
+  success: boolean,
+  message: string,
+  errorCode: number,
+  eventId: string
 }
 
 
