@@ -230,3 +230,4 @@ export interface JoinEventResponse {
   message: string;
   errorCode: number;
 }
+

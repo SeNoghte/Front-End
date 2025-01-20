@@ -17,13 +17,31 @@ import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatIconModule } from '@angular/material/icon';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatSelectModule } from '@angular/material/select';
+import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 interface Hour {
   value: string;
   viewValue: string;
 }
+
+interface EventData {
+  date: string;
+  description: string;
+  groupId: string;
+  imagePath: string;
+  title: string;
+}
+
+interface CreateEventAPIresponse {
+  success: boolean;
+  message: string;
+  errorCode: number;
+  eventId: string;
+}
+
 
 @Component({
   selector: 'app-create-detail-event',
@@ -39,12 +57,12 @@ interface Hour {
     MatChipsModule,
     MatIconModule,
     FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule
-    ],
+  ],
   templateUrl: './create-detail-event.component.html',
   styleUrl: './create-detail-event.component.scss'
 })
 export class CreateDetailEventComponent implements OnInit {
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly separatorKeysCodes: number[] = [ENTER];
   readonly currentTask = signal('');
   readonly tasks = signal<string[]>([]);
   readonly allTasks: string[] = ['Meeting', 'Shopping', 'Exercise', 'Study', 'Cleaning'];
@@ -58,56 +76,56 @@ export class CreateDetailEventComponent implements OnInit {
   selectedValueHour?: string;
 
   hours: Hour[] = [
-    {value: '12:00AM', viewValue: '12:00 AM'},
-    {value: '12:30AM', viewValue: '12:30 AM'},
-    {value: '1:00AM', viewValue: '1:00 AM'},
-    {value: '1:30AM', viewValue: '1:30 AM'},
-    {value: '2:00AM', viewValue: '2:00 AM'},
-    {value: '2:30AM', viewValue: '2:30 AM'},
-    {value: '3:00AM', viewValue: '3:00 AM'},
-    {value: '3:30AM', viewValue: '3:30 AM'},
-    {value: '4:00AM', viewValue: '4:00 AM'},
-    {value: '4:30AM', viewValue: '4:30 AM'},
-    {value: '5:00AM', viewValue: '5:00 AM'},
-    {value: '5:30AM', viewValue: '5:30 AM'},
-    {value: '6:00AM', viewValue: '6:00 AM'},
-    {value: '6:30AM', viewValue: '6:30 AM'},
-    {value: '7:00AM', viewValue: '7:00 AM'},
-    {value: '7:30AM', viewValue: '7:30 AM'},
-    {value: '8:00AM', viewValue: '8:00 AM'},
-    {value: '8:30AM', viewValue: '8:30 AM'},
-    {value: '9:00AM', viewValue: '9:00 AM'},
-    {value: '9:30AM', viewValue: '9:30 AM'},
-    {value: '10:00AM', viewValue: '10:00 AM'},
-    {value: '10:30AM', viewValue: '10:30 AM'},
-    {value: '11:00AM', viewValue: '11:00 AM'},
-    {value: '11:30AM', viewValue: '11:30 AM'},
-    {value: '12:00PM', viewValue: '12:00 PM'},
-    {value: '12:30PM', viewValue: '12:30 PM'},
-    {value: '1:00PM', viewValue: '1:00 PM'},
-    {value: '1:30PM', viewValue: '1:30 PM'},
-    {value: '2:00PM', viewValue: '2:00 PM'},
-    {value: '2:30PM', viewValue: '2:30 PM'},
-    {value: '3:00PM', viewValue: '3:00 PM'},
-    {value: '3:30PM', viewValue: '3:30 PM'},
-    {value: '4:00PM', viewValue: '4:00 PM'},
-    {value: '4:30PM', viewValue: '4:30 PM'},
-    {value: '5:00PM', viewValue: '5:00 PM'},
-    {value: '5:30PM', viewValue: '5:30 PM'},
-    {value: '6:00PM', viewValue: '6:00 PM'},
-    {value: '6:30PM', viewValue: '6:30 PM'},
-    {value: '7:00PM', viewValue: '7:00 PM'},
-    {value: '7:30PM', viewValue: '7:30 PM'},
-    {value: '8:00PM', viewValue: '8:00 PM'},
-    {value: '8:30PM', viewValue: '8:30 PM'},
-    {value: '9:00PM', viewValue: '9:00 PM'},
-    {value: '9:30PM', viewValue: '9:30 PM'},
-    {value: '10:00PM', viewValue: '10:00 PM'},
-    {value: '10:30PM', viewValue: '10:30 PM'},
-    {value: '11:00PM', viewValue: '11:00 PM'},
-    {value: '11:30PM', viewValue: '11:30 PM'},
+    { value: '00:00:00', viewValue: '12:00 AM' },
+    { value: '00:30:00', viewValue: '12:30 AM' },
+    { value: '1:00:00', viewValue: '1:00 AM' },
+    { value: '1:30:00', viewValue: '1:30 AM' },
+    { value: '2:00:00', viewValue: '2:00 AM' },
+    { value: '2:30:00', viewValue: '2:30 AM' },
+    { value: '3:00:00', viewValue: '3:00 AM' },
+    { value: '3:30:00', viewValue: '3:30 AM' },
+    { value: '4:00:00', viewValue: '4:00 AM' },
+    { value: '4:30:00', viewValue: '4:30 AM' },
+    { value: '5:00:00', viewValue: '5:00 AM' },
+    { value: '5:30:00', viewValue: '5:30 AM' },
+    { value: '6:00:00', viewValue: '6:00 AM' },
+    { value: '6:30:00', viewValue: '6:30 AM' },
+    { value: '7:00:00', viewValue: '7:00 AM' },
+    { value: '7:30:00', viewValue: '7:30 AM' },
+    { value: '8:00:00', viewValue: '8:00 AM' },
+    { value: '8:30:00', viewValue: '8:30 AM' },
+    { value: '9:00:00', viewValue: '9:00 AM' },
+    { value: '9:30:00', viewValue: '9:30 AM' },
+    { value: '10:00:00', viewValue: '10:00 AM' },
+    { value: '10:30:00', viewValue: '10:30 AM' },
+    { value: '11:00:00', viewValue: '11:00 AM' },
+    { value: '11:30:00', viewValue: '11:30 AM' },
+    { value: '12:00:00', viewValue: '12:00 PM' },
+    { value: '12:30:00', viewValue: '12:30 PM' },
+    { value: '13:00:00', viewValue: '1:00 PM' },
+    { value: '13:30:00', viewValue: '1:30 PM' },
+    { value: '14:00:00', viewValue: '2:00 PM' },
+    { value: '14:30:00', viewValue: '2:30 PM' },
+    { value: '15:00:00', viewValue: '3:00 PM' },
+    { value: '15:30:00', viewValue: '3:30 PM' },
+    { value: '16:00:00', viewValue: '4:00 PM' },
+    { value: '16:30:00', viewValue: '4:30 PM' },
+    { value: '17:00:00', viewValue: '5:00 PM' },
+    { value: '17:30:00', viewValue: '5:30 PM' },
+    { value: '18:00:00', viewValue: '6:00 PM' },
+    { value: '18:30:00', viewValue: '6:30 PM' },
+    { value: '19:00:00', viewValue: '7:00 PM' },
+    { value: '19:30:00', viewValue: '7:30 PM' },
+    { value: '20:00:00', viewValue: '8:00 PM' },
+    { value: '20:30:00', viewValue: '8:30 PM' },
+    { value: '21:00:00', viewValue: '9:00 PM' },
+    { value: '21:30:00', viewValue: '9:30 PM' },
+    { value: '22:00:00', viewValue: '10:00 PM' },
+    { value: '22:30:00', viewValue: '10:30 PM' },
+    { value: '23:00:00', viewValue: '11:00 PM' },
+    { value: '23:30:00', viewValue: '11:30 PM' },
   ];
-  
+
 
 
   readonly announcer = inject(LiveAnnouncer);
@@ -156,8 +174,8 @@ export class CreateDetailEventComponent implements OnInit {
   filteredCities: City[] = []
 
   isTaskBoxVisible: boolean = false;
-  isCapacityBoxVisible : boolean = false;
-  eventData: any;
+  isCapacityBoxVisible: boolean = false;
+  eventData?: EventData;
 
   toggleTaskBox(): void {
     this.isTaskBoxVisible = !this.isTaskBoxVisible;
@@ -167,6 +185,7 @@ export class CreateDetailEventComponent implements OnInit {
   constructor(
     private Router: Router,
     private router: ActivatedRoute,
+    private toastr: ToastrService,
     private http: HttpClient) {
 
   }
@@ -186,7 +205,7 @@ export class CreateDetailEventComponent implements OnInit {
 
     this.router.queryParams.subscribe((params) => {
       console.log(params);
-      this.eventData = params;
+      this.eventData = params as EventData;
       console.log(this.eventData); // Form data from the previous component
     });
   }
@@ -207,18 +226,41 @@ export class CreateDetailEventComponent implements OnInit {
     console.log(this.eventData); // Form data from the previous component
     console.log(this.tasks()); // Form data from the previous component
     console.log(this.numberValue)
+    console.log(this.selectedValueHour)
 
-    const tasks = this.tasks();
 
-    // {
-    //   title: this.createEventForm.value.title,
-    //   description: this.createEventForm.value.description,
-    //   date: this.createEventForm.value.date,
-    //   groupId: this.createEventForm.value.groupId,
-    //   imagePath: this.createEventForm.value.imagePath,
-    //   tasks : tasks
-    // }
+    const CreateEventAPI = environment.apiUrl + '/Event/Create';
 
+    const requestBody = {
+      title: this.eventData?.title,
+      description: this.eventData?.description,
+      date: this.eventData?.date,
+      time: this.selectedValueHour,
+      groupId: this.eventData?.groupId,
+      imagePath: this.eventData?.imagePath,
+      isPrivate: true,
+      tasks: this.tasks(),
+      tags: ["پرایوت", "مشکل"],
+      cityId: this.eventDetails.cityId,
+      address: this.eventDetails.address,
+      longitude: this.eventDetails.longitude,
+      latitude: this.eventDetails.latitude
+    };
+
+    console.log("request body : ", requestBody)
+
+
+    this.http.post<CreateEventAPIresponse>(CreateEventAPI, requestBody).subscribe(
+      (response) => {
+        if (response.success) {
+          this.toastr.success(`رویداد یا موفقیت ایجاد شد`);
+          this.Router.navigate(['/chat-group', this.eventData?.groupId]);
+        }
+      },
+      (error) => {
+        this.toastr.error(`ایجاد رویداد ناموفق بود`);
+      }
+    );
   }
 
   private initMap(): void {
@@ -294,7 +336,7 @@ export class CreateDetailEventComponent implements OnInit {
     this.eventDetails.saveAddress = !this.eventDetails.saveAddress;
   }
 
-  toggleCapacityBox(){
+  toggleCapacityBox() {
     this.isCapacityBoxVisible = !this.isCapacityBoxVisible;
   }
 }
