@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import { City } from '../shared/models/event-types';
 import { MatDividerModule } from '@angular/material/divider';
 import * as L from 'leaflet';
+import moment from 'moment-jalaali';
 
 @Component({
   selector: 'app-event-detail',
@@ -32,7 +33,7 @@ export class EventDetailComponent {
   event!: EventDetails
   isPastEvent: boolean = false;
   isUserInMembers: boolean = false;
-
+  persianDate : string = '';
   private map: L.Map | undefined;
 
   constructor(
@@ -81,6 +82,9 @@ export class EventDetailComponent {
         this.event = res.event as unknown as EventDetails;
         console.log(this.event)
 
+        this.persianDate = moment(this.event.date, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
+        console.log(this.persianDate)
+        
         const eventDateTime = new Date(`${this.event.date}T${this.event.time}`);
         const currentDateTime = new Date();
 
