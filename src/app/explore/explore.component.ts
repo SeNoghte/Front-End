@@ -10,6 +10,7 @@ import { EventItem, EventsApiResponse, GroupItem, GroupsApiResponse, TagsApiResp
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import moment from 'moment-jalaali';
 
 @Component({
   selector: 'app-explore',
@@ -241,5 +242,9 @@ export class ExploreComponent {
 
   navigateToSearchExplore() {
     this.Router.navigate(['explore-search'])
+  }
+
+  dateToJalali( date : string ){
+    return moment(date, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
   }
 }
