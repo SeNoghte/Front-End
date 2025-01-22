@@ -33,6 +33,7 @@ interface EventData {
   groupId: string;
   imagePath: string;
   title: string;
+  isPrivate: boolean;
 }
 
 interface CreateEventAPIresponse {
@@ -64,14 +65,10 @@ interface CreateEventAPIresponse {
 export class CreateDetailEventComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER];
   readonly currentTask = signal('');
+  readonly currentTag = signal('');
   readonly tasks = signal<string[]>([]);
-  readonly allTasks: string[] = ['Meeting', 'Shopping', 'Exercise', 'Study', 'Cleaning'];
-  readonly filteredTasks = computed(() => {
-    const currentTask = this.currentTask().toLowerCase();
-    return currentTask
-      ? this.allTasks.filter(task => task.toLowerCase().includes(currentTask))
-      : this.allTasks.slice();
-  });
+  readonly tags = signal<string[]>([]);
+
 
   selectedValueHour?: string;
 
@@ -142,6 +139,18 @@ export class CreateDetailEventComponent implements OnInit {
     }
   }
 
+  addTag(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.tags.update(tags => [...tags, value]);
+    }
+
+    this.currentTask.set('');
+    if (event.input) {
+      event.input.value = '';
+    }
+  }
+
   removeTask(task: string): void {
     this.tasks.update(tasks => {
       const index = tasks.indexOf(task);
@@ -152,6 +161,19 @@ export class CreateDetailEventComponent implements OnInit {
       tasks.splice(index, 1);
       this.announcer.announce(`Removed ${task}`);
       return [...tasks];
+    });
+  }
+
+  removeTag(tag: string): void {
+    this.tags.update(tags => {
+      const index = tags.indexOf(tag);
+      if (index < 0) {
+        return tags;
+      }
+
+      tags.splice(index, 1);
+      this.announcer.announce(`Removed ${tag}`);
+      return [...tags];
     });
   }
 
@@ -176,6 +198,8 @@ export class CreateDetailEventComponent implements OnInit {
   isTaskBoxVisible: boolean = false;
   isCapacityBoxVisible: boolean = false;
   eventData?: EventData;
+  isEventPrivate: boolean = false;
+  is_private: boolean = false;
 
   toggleTaskBox(): void {
     this.isTaskBoxVisible = !this.isTaskBoxVisible;
@@ -204,9 +228,16 @@ export class CreateDetailEventComponent implements OnInit {
     this.InitCities();
 
     this.router.queryParams.subscribe((params) => {
-      console.log(params);
       this.eventData = params as EventData;
-      console.log(this.eventData); // Form data from the previous component
+
+      if(this.eventData.isPrivate as unknown as string == 'false') {
+        this.isEventPrivate = true;
+        console.log('public');
+      }
+      else{
+        this.isEventPrivate = false;
+        console.log('private');
+      }
     });
   }
 
@@ -227,25 +258,45 @@ export class CreateDetailEventComponent implements OnInit {
     console.log(this.tasks()); // Form data from the previous component
     console.log(this.numberValue)
     console.log(this.selectedValueHour)
-
+    var requestBody;
 
     const CreateEventAPI = environment.apiUrl + '/Event/Create';
 
-    const requestBody = {
-      title: this.eventData?.title,
-      description: this.eventData?.description,
-      date: this.eventData?.date,
-      time: this.selectedValueHour,
-      groupId: this.eventData?.groupId,
-      imagePath: this.eventData?.imagePath,
-      isPrivate: true,
-      tasks: this.tasks(),
-      tags: ["پرایوت", "مشکل"],
-      cityId: this.eventDetails.cityId,
-      address: this.eventDetails.address,
-      longitude: this.eventDetails.longitude,
-      latitude: this.eventDetails.latitude
-    };
+    if (this.isEventPrivate == true) {
+      requestBody = {
+        title: this.eventData?.title,
+        description: this.eventData?.description,
+        date: this.eventData?.date,
+        time: this.selectedValueHour,
+        groupId: this.eventData?.groupId,
+        imagePath: this.eventData?.imagePath,
+        isPrivate: this.eventData?.isPrivate,
+        tasks: this.tasks(),
+        tags: [],
+        cityId: this.eventDetails.cityId,
+        address: this.eventDetails.address,
+        longitude: this.eventDetails.longitude,
+        latitude: this.eventDetails.latitude
+      };
+    }
+    else {
+      requestBody = {
+        title: this.eventData?.title,
+        description: this.eventData?.description,
+        date: this.eventData?.date,
+        time: this.selectedValueHour,
+        groupId: this.eventData?.groupId,
+        imagePath: this.eventData?.imagePath,
+        isPrivate: this.eventData?.isPrivate,
+        tasks: [],
+        tags: this.tags(),
+        cityId: this.eventDetails.cityId,
+        address: this.eventDetails.address,
+        longitude: this.eventDetails.longitude,
+        latitude: this.eventDetails.latitude
+      };
+    }
+
 
     console.log("request body : ", requestBody)
 

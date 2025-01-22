@@ -35,6 +35,8 @@ export class GroupChatComponent implements OnInit {
   GropEvents!: GroupEvent[];
   isLoading: boolean = true;
   fromWhere : string | null = '';
+  groupId : string = '';
+  isGroupPrivate : boolean = false;
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
@@ -50,8 +52,8 @@ export class GroupChatComponent implements OnInit {
 
 
   GetGroupInfo(): void {
-    const groupId = this.route.snapshot.paramMap.get('id');
-    if (!groupId) {
+    this.groupId = this.route.snapshot.paramMap.get('id')!!;
+    if (!this.groupId) {
       this.toastrService.error('شناسه گروه یافت نشد.');
       return;
     }
@@ -62,12 +64,14 @@ export class GroupChatComponent implements OnInit {
     });
 
     const apiUrl = `https://api.becheen.ir:6001/api/Group/GetGroup`;
-    const model = { groupId: groupId };
+    const model = { groupId: this.groupId };
+    console.log('group ID : ', this.groupId);
 
     this.http.post<ApiResponse>(apiUrl, model).subscribe({
       next: (response) => {
         if (response.success) {
           this.group = response.group;
+          this.isGroupPrivate = this.group.isPrivate;
           this.GropEvents = response.events as unknown as GroupEvent[];
           console.log(this.GropEvents)
         } else {

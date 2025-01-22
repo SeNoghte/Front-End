@@ -198,6 +198,7 @@ export class CreateEventComponent {
   imagePath = '';
   date = "";
   groupId: string = '';
+  isGroupPrivate: boolean = false;
 
   createEventForm = new FormGroup({
     title: new FormControl<string>(''),
@@ -220,14 +221,17 @@ export class CreateEventComponent {
     this.route.queryParams
       .subscribe(params => {
         this.groupId = params['id'];
+        this.isGroupPrivate = params['isPrivate']
       }
       );
     this.createEventForm.controls.groupId.setValue(this.groupId);
 
+    console.log(' is group private ?   : ' , this.isGroupPrivate)
   }
 
   redirectDetailEvent() {
     const formData = this.createEventForm.value;
+    this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
     console.log(formData);
     this.Router.navigate(['/event-detail'],
       {
@@ -237,6 +241,7 @@ export class CreateEventComponent {
           date: this.createEventForm.value.date,
           groupId: this.createEventForm.value.groupId,
           imagePath: this.createEventForm.value.imagePath,
+          isPrivate:this.isGroupPrivate
         }
       }
     );

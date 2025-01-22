@@ -22,6 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EventsComponent {
   @Input() GropEvents!: GroupEvent[];
+  @Input() isPrivate!: boolean;
   viewMode: 'calendar_view' | 'headline_view' = 'calendar_view';
 
   onToggleChange(value: 'calendar_view' | 'headline_view') {
@@ -29,7 +30,7 @@ export class EventsComponent {
   }
 
   ngOnInit() {
-    console.log("events in events : ", this.GropEvents)
+    console.log("events in events : ", this.GropEvents)    
   }
 
   constructor(
@@ -51,6 +52,6 @@ export class EventsComponent {
 
   addEvent() {
     const groupId = this.route.snapshot.paramMap.get('id');
-    this.Router.navigate(['create-event'], { queryParams: { id: groupId } });
+    this.Router.navigate(['create-event'], { queryParams: { id: groupId , isPrivate : this.isPrivate } });
   }
 }

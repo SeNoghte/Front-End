@@ -16,7 +16,11 @@
       ></mat-slide-toggle>
     </div>
 
-    <mat-form-field *ngIf="showTimeField" class="hour-field"  appearance="outline">
+    <mat-form-field
+      *ngIf="showTimeField"
+      class="hour-field"
+      appearance="outline"
+    >
       <mat-label>ساعت</mat-label>
       <mat-select [(ngModel)]="selectedValueHour" name="food">
         @for (hour of hours; track hour) {
@@ -67,15 +71,19 @@
       <div id="map" style="height: 15rem; margin-top: 1.5rem"></div>
     </div>
 
-    <div class="row" [ngClass]="{ 'border-unvisible': isTaskBoxVisible }">
-      <h3 class="topic">تسک‌ها</h3>
+    <div
+      *ngIf="!isEventPrivate"
+      class="row"
+      [ngClass]="{ 'border-unvisible': isTaskBoxVisible }"
+    >
+      <h3 class="topic">کارهای برنامه</h3>
       <mat-slide-toggle
         labelPosition="before"
         (change)="toggleTaskBox()"
       ></mat-slide-toggle>
     </div>
 
-    <div class="chip-container" *ngIf="isTaskBoxVisible">
+    <div class="chip-container" *ngIf="isTaskBoxVisible && !isEventPrivate">
       <mat-form-field appearance="outline" class="example-chip-list">
         <mat-label>افزودن کار...</mat-label>
         <mat-chip-grid #chipGrid aria-label="Task selection">
@@ -97,6 +105,45 @@
           [matChipInputFor]="chipGrid"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="addTask($event)"
+        />
+      </mat-form-field>
+    </div>
+
+    <div
+      *ngIf="isEventPrivate"
+      class="row"
+      [ngClass]="{ 'border-unvisible': isTaskBoxVisible }"
+    >
+      <h3 class="topic">برچسب ها</h3>
+      <mat-slide-toggle
+        labelPosition="before"
+        (change)="toggleTaskBox()"
+      ></mat-slide-toggle>
+    </div>
+
+    <div class="chip-container" *ngIf="isTaskBoxVisible && isEventPrivate">
+
+      <mat-form-field appearance="outline" class="example-chip-list">
+        <mat-label>افزودن برچسب...</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Tag selection">
+          <mat-chip-row
+            *ngFor="let tag of tags(); let i = index"
+            (removed)="removeTag(tag)"
+          >
+            {{ tag }}
+            <button matChipRemove [attr.aria-label]="'Remove ' + tag">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+        <input
+          name="currentTag"
+          placeholder="کار جدید..."
+          #tagInput
+          [(ngModel)]="currentTag"
+          [matChipInputFor]="chipGrid"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="addTag($event)"
         />
       </mat-form-field>
     </div>
