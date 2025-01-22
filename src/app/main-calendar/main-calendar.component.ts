@@ -3,12 +3,13 @@ import { SolarHijriMonthsList, Seasons } from './calendar';
 import { MonthsModel, dayInMonthModel, SeasonsModel, DateType } from './calendar.model';
 import { MomentService } from './moment.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { pipe, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import moment from 'jalali-moment';
 import { ActivatedRoute } from '@angular/router';
-import { NgModel } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzPopoverModule } from 'ng-zorro-antd/popover'
 
 @Component({
   selector: 'app-main-calendar',
@@ -16,12 +17,14 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angul
   imports: [
     FormsModule,
     HttpClientModule,
-
+    NzButtonModule,
+    NzPopoverModule
   ],
   templateUrl: './main-calendar.component.html',
   styleUrl: './main-calendar.component.scss'
 })
 export class MainCalendarComponent {
+  visible: string | null = null;
   monthList: MonthsModel[] = SolarHijriMonthsList;
   dayList: dayInMonthModel[] = [];
   yearList: number[] = [];
@@ -44,6 +47,14 @@ export class MainCalendarComponent {
     public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute,
   ) { }
 
+  clickMe(): void {
+    this.visible = null;
+  }
+
+  change(id: string): void {
+    
+    Number(this.visible) === Number(id) ? null : id;
+  }
 
   public get DateType() {
     return DateType;
@@ -99,16 +110,22 @@ export class MainCalendarComponent {
     });
   }
 
-  hasEventForDay(monthId: number, day: string): { hasEvent: boolean; count: number } {
+  hasEventForDay(monthId: number, day: string): { hasEvent: boolean; count: number, list: Event[]} {
     const eventsForDay = this.dateEvent.filter(event =>
       event.monthEvent === monthId && event.dayEvent.toString() === day
     );
+    
+    const eventsList = eventsForDay.flatMap(item =>
+      Array.isArray(item.events) ? item.events : []
+    );
+
     const count = eventsForDay.reduce((total, event) => {
       return total + (Array.isArray(event.events) ? event.events.length : 0);
     }, 0);
     return {
       hasEvent: count > 0,
-      count: count
+      count: count,
+      list: eventsList,
     };
   }
 
@@ -279,7 +296,6 @@ interface User {
 
 interface Event {
   id: string;
-  title: string;
   description: string;
   owner: User;
   date: string;
@@ -290,6 +306,7 @@ interface Event {
   yearEvent: number;
   monthEvent: number;
   dayEvent: number;
+  title: string;
 }
 
 interface DateEventGroup {

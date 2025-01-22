@@ -36,7 +36,8 @@
             "styles": [
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
