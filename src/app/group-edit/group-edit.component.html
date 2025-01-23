@@ -1,38 +1,33 @@
 <div class="edit-group">
-
   <div class="default-header">
-    <div class="btn1-container">
-      <button (click)="navigateToGroupInfo()" mat-button>
-        <img class="back-button" src="assets/icons/back.svg" />
-        بازگشت
-      </button>
-    </div>
-
-    <div class="btn2-container">
-      <button (click)="saveChanges()" mat-button>ثبت</button>
-    </div>
+    <button (click)="navigateBack()" mat-button>
+      <img class="back-button" src="assets/icons/back.svg" />
+      بازگشت
+    </button>
+    <button (click)="saveChanges()" mat-button [disabled]="!isAdmin || !groupName">
+      ثبت
+    </button>
   </div>
 
   <div class="group-logo">
-    <img src="assets/icons/group-profile.svg" alt="Group Logo" />
+    <img [src]="groupImageUrl" alt="Group Logo" />
   </div>
 
-  <a class="edit-image" (click)="editImage()">ویرایش تصویر</a>
+  <a class="edit-image" (click)="editImage()" *ngIf="isAdmin">ویرایش تصویر</a>
 
   <mat-form-field class="edit-input" appearance="outline">
     <mat-label>نام</mat-label>
-    <input matInput [(ngModel)]="groupName" #nameInput="ngModel" required />
-    <mat-error *ngIf="nameInput.invalid && nameInput.touched">
-      وارد کردن نام الزامی است.
-    </mat-error>
+    <input matInput [(ngModel)]="groupName" [readonly]="!isAdmin" required />
   </mat-form-field>
 
   <mat-form-field class="edit-input" appearance="outline">
     <mat-label>توضیحات</mat-label>
-    <input matInput [(ngModel)]="groupDescription" />
+    <textarea matInput [(ngModel)]="groupDescription" [readonly]="!isAdmin"></textarea>
   </mat-form-field>
 
   <hr class="divider" />
 
-  <button class="delete-group" (click)="deleteGroup()">حذف اکیپ</button>
+  <button class="delete-group" (click)="deleteGroup()" *ngIf="isAdmin">
+    حذف اکیپ
+  </button>
 </div>

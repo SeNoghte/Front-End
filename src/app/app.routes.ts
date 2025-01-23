@@ -34,6 +34,7 @@ export const routes: Routes = [
   { path: 'chat-group', component: GroupChatComponent },
   { path: 'chat-group/:id', component: GroupChatComponent },
   { path: 'group-edit', component: GroupEditComponent },
+  { path: 'group-edit/:id', component: GroupEditComponent },
   { path: 'recovery-pass-email', component: RecoveryPassEmailComponent },
   { path: 'recovery-pass-code', component: RecoveryPassCodeComponent },
   { path: 'recovery-pass-new-pass', component: RecoveryPassNewPassComponent },

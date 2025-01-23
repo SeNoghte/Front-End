@@ -48,7 +48,7 @@ interface Group {
   styleUrls: ['./group-info.component.scss'],
 })
 export class GroupInfoComponent implements OnInit {
-  group: Group | null = null;
+  group!: Group;
   newMemberEmail: string = '';
   addMemberMessage: string = '';
   isAddMemberModalVisible: boolean = false;
@@ -232,6 +232,8 @@ export class GroupInfoComponent implements OnInit {
 
   editGroup(): void {
     console.log('Edit button clicked');
+    const groupId = this.route.snapshot.paramMap.get('id');
+    this.router.navigate(['/group-edit', groupId])
   }
 
   redirectToChatGroup() {
