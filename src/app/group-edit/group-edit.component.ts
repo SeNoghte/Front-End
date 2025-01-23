@@ -34,7 +34,7 @@ interface ApiResponse {
   ],
 })
 export class GroupEditComponent implements OnInit {
-  groupId: string = '';
+  groupId: string|null = '';
   groupName: string = '';
   groupDescription: string = '';
   groupImageUrl: string = 'assets/icons/default-profile-image.svg';
@@ -53,13 +53,13 @@ export class GroupEditComponent implements OnInit {
   }
 
   fetchGroupDetails(): void {
-    const groupId = this.route.snapshot.paramMap.get('id');
-    if (!groupId) {
+    this.groupId = this.route.snapshot.paramMap.get('id');
+    if (!this.groupId) {
       this.toastr.error('Group ID is not provided in the route.', 'Error');
       return;
     }
     const apiUrl = `${environment.apiUrl}/Group/GetGroup`;
-    const requestBody = { groupId };
+    const requestBody = { groupId: this.groupId };
 
     console.log('Fetching group details with:', requestBody);
 
@@ -188,7 +188,8 @@ export class GroupEditComponent implements OnInit {
   }
 
   navigateBack(): void {
-    this.router.navigate(['/group-info']);
+    const groupId = this.route.snapshot.paramMap.get('id');
+    this.router.navigate(['/group-info',groupId]);
   }
 
   deleteGroup(): void {
