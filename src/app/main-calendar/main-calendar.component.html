@@ -24,15 +24,31 @@
               @if(getBackgroundImage(month.month.id, day.dayInSolarHijri) === null){
               <div class="event-background-no-image"></div>
               }
-              <span class="jalali" [class.event-day]="getBackgroundImage(month.month.id, day.dayInSolarHijri) || getBackgroundImage(month.month.id, day.dayInSolarHijri) === null"
-                (click)="changeDay(day);">
-                {{ convertToPersianDigits(day.dayInSolarHijri) }}
+              <span nz-popover [nzPopoverTitle]="Title" [nzPopoverVisible]="visible === day.dayInSolarHijri"
+                 (nzPopoverVisibleChange)="change(day.dayInSolarHijri)" nzPopoverTrigger="click"
+                [nzPopoverContent]="contentTemplate" class="jalali">
+                <ng-container>
+                  {{ convertToPersianDigits(day.dayInSolarHijri) }}
+                </ng-container>
                 <div class="dots-container">
-                  @for(dot of [].constructor(hasEventForDay(month.month.id, day.dayInSolarHijri).count); track $index){
-                    <span class="dot"></span>
+                  @for(dot of [].constructor(hasEventForDay(month.month.id, day.dayInSolarHijri).count); track $index) {
+                  <span class="dot"></span>
                   }
                 </div>
               </span>
+              <ng-template #Title>
+                <h3 class="month-title">برنامه های {{ convertToPersianDigits(day.dayInSolarHijri) }} {{ month.month.name
+                  }}</h3>
+              </ng-template>
+              <ng-template #contentTemplate>
+                @for(item of hasEventForDay(month.month.id, day.dayInSolarHijri).list; track $index) {
+                <div class="item-day">
+                  <img class="day-event-img" [src]="item.imagePath" />
+                  <span>{{item.title}}</span>
+                </div>
+              }
+              <a class="close-button" (click)="clickMe()">بستن</a>
+              </ng-template>
               }
               @else{
               <span class="jalali fully-center" (click)="changeDay(day);">
@@ -48,5 +64,6 @@
     </table>
     <hr class="divider" />
     }
+
   </div>
 </div>
