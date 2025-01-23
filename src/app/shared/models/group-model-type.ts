@@ -71,6 +71,7 @@ export interface Message {
   sentTime: string;
   userId: string;
   isMe?: boolean;
+  image?: string;
 }
 
 export interface SendMessageToGroupRequest {

@@ -6,23 +6,24 @@
                 @if(!msg.isMe){
                 <p class="sender">{{ msg.username }}</p>
                 }
-                <div style="display: flex; justify-content: space-between; align-items: center">
+                <div style="display: flex; justify-content: space-between; gap: 5px">
 
-                    <p class="text">{{ msg.text }}</p>
                     <span [ngClass]="{'date-mine': msg.isMe, 'date-theirs': !msg.isMe}">{{ msg.sentTime | date:'HH:mm'
                         }}</span>
+                    <p class="text">{{ msg.text }}</p>
                 </div>
             </div>
-           
-        </div>
-        @if(!msg.isMe){
-            <img [src]="" alt="Profile Image" class="profile-image">
+
+            @if(!msg.isMe){
+            <img [src]="msg.image" alt="Profile Image" class="profile-image">
             }
+        </div>
 
     </div>
 
 </div>
 <div class="input-container" [ngClass]="{ 'focused': inputValue !== '' }">
     <img *ngIf="sendingMessage != ''" (click)="sendMessage()" src="assets/icons/up.svg">
-    <input class="field" style="margin-right: 20px;" type="text" placeholder="پیام" [(ngModel)]="sendingMessage" (ngModelChange)="adjustInputWidth()"/>
+    <input class="field" style="margin-right: 20px;" type="text" placeholder="پیام" [(ngModel)]="sendingMessage"
+        (ngModelChange)="adjustInputWidth()" />
 </div>
