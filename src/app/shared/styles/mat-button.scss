@@ -46,3 +46,16 @@ button.mdc-button.mdc-button--unelevated.mat-mdc-unelevated-button.mat-primary.m
   WIDTH: 100%;
   /* margin-right: 1.5rem; */
 }
+
+.submit-container {
+  .mat-mdc-outlined-button:not(:disabled) {
+    color: red !important;
+  }
+
+  .mat-mdc-outlined-button .mdc-button__ripple {
+    border-radius: 0.75rem !important;
+    border-width: 0.09rem;
+    border-style: solid;
+    border-color: red;
+}
+}

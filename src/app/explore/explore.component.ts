@@ -245,6 +245,7 @@ export class ExploreComponent {
   }
 
   dateToJalali( date : string ){
+    console.log(date)
     return moment(date, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
   }
 }

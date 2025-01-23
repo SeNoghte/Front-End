@@ -1,11 +1,12 @@
 import { MainCalendarComponent } from '../../main-calendar/main-calendar.component';
 import { CommonModule } from '@angular/common';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {ChangeDetectionStrategy, Component, Input, signal} from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiResponse, GetGroupMessageListRequest, GetGroupMessageListResult, Group, GroupEvent, Message } from '../../shared/models/group-model-type';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
+import moment from 'moment-jalaali';
 
 
 @Component({
@@ -30,28 +31,36 @@ export class EventsComponent {
   }
 
   ngOnInit() {
-    console.log("events in events : ", this.GropEvents)    
+    console.log("events in events : ", this.GropEvents)
   }
 
   constructor(
-      private Router: Router, 
-      private route: ActivatedRoute, 
-    ) { }
+    private Router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   hideSingleSelectionIndicator = signal(true);
   toggleSingleSelectionIndicator() {
     this.hideSingleSelectionIndicator.update(value => !value);
   }
-  calendarView(){
+  calendarView() {
     this.Router.navigate(['add-member']);
   }
 
-  navigateToShowEventDetail(id : string){
+  navigateToShowEventDetail(id: string) {
     this.Router.navigate(['show-event-detail'], { queryParams: { id: id } });
   }
 
   addEvent() {
     const groupId = this.route.snapshot.paramMap.get('id');
-    this.Router.navigate(['create-event'], { queryParams: { id: groupId , isPrivate : this.isPrivate } });
+    this.Router.navigate(['create-event'], { queryParams: { id: groupId, isPrivate: this.isPrivate } });
+  }
+
+  dateToJalali(date: string) {
+    //2024-07-11
+    //01/25/2025
+    const formattedDate = date.substring(6,10)+'-'+date.substring(0,2)+'-'+date.substring(3,5);
+    console.log(formattedDate);
+    return moment(formattedDate, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
   }
 }
