@@ -29,7 +29,7 @@
                             @if(getBackgroundImage(matchingMonth?.month.id, day.dayInSolarHijri) === null){
                             <div class="event-background-no-image"></div>
                             }
-                            <!-- <span nz-popover [nzPopoverTitle]="Title"
+                            <span nz-popover [nzPopoverTitle]="Title"
                                 [nzPopoverVisible]="visible === day.dayInSolarHijri"
                                 (nzPopoverVisibleChange)="change(day.dayInSolarHijri)" nzPopoverTrigger="click"
                                 [nzPopoverContent]="contentTemplate" class="jalali">
@@ -45,7 +45,7 @@
                                     </div>
 
                                 </div>
-                            </span> -->
+                            </span>
                             <ng-template #Title>
                                 <h3 class="month-title">برنامه های {{ convertToPersianDigits(day.dayInSolarHijri) }} {{
                                     matchingMonth?.month.name
