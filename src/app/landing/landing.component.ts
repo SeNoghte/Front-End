@@ -8,16 +8,16 @@ import { ToastrService } from 'ngx-toastr';
 import moment from 'jalali-moment';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover'
+// import { NzButtonModule } from 'ng-zorro-antd/button';
+// import { NzPopoverModule } from 'ng-zorro-antd/popover'
 
 @Component({
   selector: 'app-landing',
   standalone: true,
   imports: [
     HttpClientModule,
-    NzButtonModule,
-    NzPopoverModule
+    // NzButtonModule,
+    // NzPopoverModule
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'

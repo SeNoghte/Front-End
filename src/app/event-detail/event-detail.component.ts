@@ -89,16 +89,18 @@ export class EventDetailComponent {
         const currentDateTime = new Date();
 
         this.isPastEvent = currentDateTime > eventDateTime;
+
+        if (this.event.members!!.length > 0) {
+          this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
+          console.log('is user in event members : ', this.isUserInMembers)
+        }
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
       }
     );
 
-    if (this.event.members!!.length > 0) {
-      this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
-      console.log('is user in event members : ', this.isUserInMembers)
-    }
+
   }
 
   joinEvent() {
@@ -111,7 +113,9 @@ export class EventDetailComponent {
     this.http.post<JoinEventResponse>(EventAPI, requestBody).subscribe(
       (res) => {
         if (res.success) {
+          console.log(res)
           this.fetchEvent()
+          this.toastr.success("با موفقیت عضو شدی!");
         }
         else {
           console.log(res)
