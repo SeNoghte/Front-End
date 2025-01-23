@@ -214,9 +214,6 @@ export class CreateDetailEventComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
-    // این باید از API بگیره
-
     this.eventDetails = {
       address: "علم و صنعت",
       latitude: 35.699768,
@@ -231,11 +228,11 @@ export class CreateDetailEventComponent implements OnInit {
       this.eventData = params as EventData;
 
       if(this.eventData.isPrivate as unknown as string == 'false') {
-        this.isEventPrivate = true;
+        this.isEventPrivate = false;
         console.log('public');
       }
       else{
-        this.isEventPrivate = false;
+        this.isEventPrivate = true;
         console.log('private');
       }
     });
@@ -256,21 +253,44 @@ export class CreateDetailEventComponent implements OnInit {
   onSubmit() {
     console.log(this.eventData); // Form data from the previous component
     console.log(this.tasks()); // Form data from the previous component
+    console.log(this.tags()); // Form data from the previous component
     console.log(this.numberValue)
     console.log(this.selectedValueHour)
-    var requestBody;
+    console.log('title',typeof(this.eventData?.title))
+    console.log('description',typeof(this.eventData?.description))
+    console.log('date',typeof(this.eventData?.date))
+    console.log('groupId',typeof(this.eventData?.groupId))
+    console.log('imagePath',typeof(this.eventData?.imagePath))
+    console.log('isPrivate',typeof(this.eventData?.isPrivate))
+    console.log('tasks',typeof(this.tasks))
+    console.log('tags',typeof(this.tags))
+    console.log('address',typeof(this.eventDetails.address))
+    console.log('longitude',typeof(this.eventDetails.longitude))
+    console.log('latitude',typeof(this.eventDetails.latitude))
+
+    var is_private : boolean = false;
+    if(this.eventData?.isPrivate as unknown as string == 'false'){
+      is_private = false;
+    }
+    else{
+      is_private = true;
+    }
+
+    console.log('is_private',typeof(is_private))
+
 
     const CreateEventAPI = environment.apiUrl + '/Event/Create';
+    console.log('is evenet private : ',this.isEventPrivate)
 
     if (this.isEventPrivate == true) {
-      requestBody = {
+      const requestBody = {
         title: this.eventData?.title,
         description: this.eventData?.description,
         date: this.eventData?.date,
         time: this.selectedValueHour,
         groupId: this.eventData?.groupId,
         imagePath: this.eventData?.imagePath,
-        isPrivate: this.eventData?.isPrivate,
+        isPrivate: is_private,
         tasks: this.tasks(),
         tags: [],
         cityId: this.eventDetails.cityId,
@@ -278,16 +298,19 @@ export class CreateDetailEventComponent implements OnInit {
         longitude: this.eventDetails.longitude,
         latitude: this.eventDetails.latitude
       };
+      console.log("request body private : ", requestBody)
+
+      this.createEvent(CreateEventAPI,requestBody);
     }
     else {
-      requestBody = {
+      const requestBody = {
         title: this.eventData?.title,
         description: this.eventData?.description,
         date: this.eventData?.date,
         time: this.selectedValueHour,
         groupId: this.eventData?.groupId,
         imagePath: this.eventData?.imagePath,
-        isPrivate: this.eventData?.isPrivate,
+        isPrivate: is_private,
         tasks: [],
         tags: this.tags(),
         cityId: this.eventDetails.cityId,
@@ -295,12 +318,14 @@ export class CreateDetailEventComponent implements OnInit {
         longitude: this.eventDetails.longitude,
         latitude: this.eventDetails.latitude
       };
+
+      console.log("request body public : ", requestBody)
+
+      this.createEvent(CreateEventAPI,requestBody);
     }
+  }
 
-
-    console.log("request body : ", requestBody)
-
-
+  createEvent(CreateEventAPI : string , requestBody : any){
     this.http.post<CreateEventAPIresponse>(CreateEventAPI, requestBody).subscribe(
       (response) => {
         if (response.success) {

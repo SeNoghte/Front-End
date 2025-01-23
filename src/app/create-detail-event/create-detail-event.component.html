@@ -72,7 +72,7 @@
     </div>
 
     <div
-      *ngIf="!isEventPrivate"
+      *ngIf="isEventPrivate"
       class="row"
       [ngClass]="{ 'border-unvisible': isTaskBoxVisible }"
     >
@@ -83,7 +83,7 @@
       ></mat-slide-toggle>
     </div>
 
-    <div class="chip-container" *ngIf="isTaskBoxVisible && !isEventPrivate">
+    <div class="chip-container" *ngIf="isTaskBoxVisible && isEventPrivate">
       <mat-form-field appearance="outline" class="example-chip-list">
         <mat-label>افزودن کار...</mat-label>
         <mat-chip-grid #chipGrid aria-label="Task selection">
@@ -110,7 +110,7 @@
     </div>
 
     <div
-      *ngIf="isEventPrivate"
+      *ngIf="!isEventPrivate"
       class="row"
       [ngClass]="{ 'border-unvisible': isTaskBoxVisible }"
     >
@@ -121,7 +121,7 @@
       ></mat-slide-toggle>
     </div>
 
-    <div class="chip-container" *ngIf="isTaskBoxVisible && isEventPrivate">
+    <div class="chip-container" *ngIf="isTaskBoxVisible && !isEventPrivate">
 
       <mat-form-field appearance="outline" class="example-chip-list">
         <mat-label>افزودن برچسب...</mat-label>
