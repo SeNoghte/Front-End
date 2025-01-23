@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { EventDetails, GetEventApiResponse, GetProfileApiResponse, JoinEventRequest, JoinEventResponse, User } from '../shared/models/group-model-type';
+import { EventDetails, GetEventApiResponse, GetLeaveEventApiResponse, GetProfileApiResponse, JoinEventRequest, JoinEventResponse, User } from '../shared/models/group-model-type';
 import { environment } from '../../environments/environment';
 import { log } from 'node:console';
 import { Location } from '@angular/common';
@@ -33,7 +33,7 @@ export class EventDetailComponent {
   event!: EventDetails
   isPastEvent: boolean = false;
   isUserInMembers: boolean = false;
-  persianDate : string = '';
+  persianDate: string = '';
   private map: L.Map | undefined;
 
   constructor(
@@ -70,6 +70,26 @@ export class EventDetailComponent {
     this.fetchEvent()
   }
 
+  LeaveEvent() {
+    const LeaveEvent = environment.apiUrl + '/Event/LeaveEvent';
+
+    const requestBody = {
+      eventId: this.eventId,
+    };
+
+    this.http.post<GetLeaveEventApiResponse>(LeaveEvent, requestBody).subscribe(
+      (res) => {
+        if (res.success) {
+          this.toastr.success('با موفقیت از رویداد خارح شدی!');
+          this.fetchEvent()
+        }
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
+  }
+
   fetchEvent() {
     const GetEventAPI = environment.apiUrl + '/Event/GetEvent';
 
@@ -84,7 +104,7 @@ export class EventDetailComponent {
 
         this.persianDate = moment(this.event.date, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
         console.log(this.persianDate)
-        
+
         const eventDateTime = new Date(`${this.event.date}T${this.event.time}`);
         const currentDateTime = new Date();
 
@@ -94,13 +114,14 @@ export class EventDetailComponent {
           this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
           console.log('is user in event members : ', this.isUserInMembers)
         }
+        else{
+          this.isUserInMembers = false;
+        }
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
       }
     );
-
-
   }
 
   joinEvent() {
