@@ -174,6 +174,12 @@ export interface GetEventApiResponse {
   tags: Tag[];
 }
 
+export interface GetLeaveEventApiResponse {
+  success: boolean;
+  message: string;
+  errorCode: number;
+}
+
 export interface GetProfileApiResponse {
   success: boolean;
   message: string;
