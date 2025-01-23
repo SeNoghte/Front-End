@@ -27,14 +27,17 @@
               <span nz-popover [nzPopoverTitle]="Title" [nzPopoverVisible]="visible === day.dayInSolarHijri"
                  (nzPopoverVisibleChange)="change(day.dayInSolarHijri)" nzPopoverTrigger="click"
                 [nzPopoverContent]="contentTemplate" class="jalali">
-                <ng-container>
-                  {{ convertToPersianDigits(day.dayInSolarHijri) }}
-                </ng-container>
-                <div class="dots-container">
-                  @for(dot of [].constructor(hasEventForDay(month.month.id, day.dayInSolarHijri).count); track $index) {
-                  <span class="dot"></span>
-                  }
-                </div>
+                <div class="day-container">
+                  <p>
+                      {{ convertToPersianDigits(day.dayInSolarHijri) }}
+                  </p>
+                  <div class="nnnn">
+                      @for(dot of [].constructor(hasEventForDay(month.month.id,
+                      day.dayInSolarHijri).count); track $index) {
+                      <span class="dot"></span>
+                      }
+                  </div>
+              </div>
               </span>
               <ng-template #Title>
                 <h3 class="month-title">برنامه های {{ convertToPersianDigits(day.dayInSolarHijri) }} {{ month.month.name
@@ -43,12 +46,18 @@
               <ng-template #contentTemplate>
                 @for(item of hasEventForDay(month.month.id, day.dayInSolarHijri).list; track $index) {
                 <div class="item-day">
-                  <img class="day-event-img" [src]="item.imagePath" />
-                  <span>{{item.title}}</span>
+                  @if(item.imagePath && item.imagePath !== ''){
+                    <img class="day-event-img" [src]="item.imagePath" />
+                    }
+                    @else{
+                    <div class="day-event-avatar" [style.backgroundColor]="item.avatarColor">
+                        {{ item.avatarLetter }}
+                    </div>
+                    }
+                    <span>{{item.title}}</span>
                 </div>
               }
-              <a class="close-button" (click)="clickMe()">بستن</a>
-              </ng-template>
+               </ng-template>
               }
               @else{
               <span class="jalali fully-center" (click)="changeDay(day);">

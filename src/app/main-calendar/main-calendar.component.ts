@@ -86,6 +86,7 @@ export class MainCalendarComponent {
       const groupedEvents: { yearEvent: number; monthEvent: number; dayEvent: number; events: any[] }[] = [];
 
       for (const event of this.eventList) {
+        const { letter, color } = this.generateAvatar(event.title);
         const date = event.date.split(' ')[0];
         const jalaliDate = moment(date).locale('fa').format('YYYY/M/D');
         const [year, month, day] = jalaliDate.split('/').map(Number);
@@ -104,6 +105,8 @@ export class MainCalendarComponent {
           yearEvent: year,
           monthEvent: month,
           dayEvent: day,
+          avatarLetter: letter,
+          avatarColor: color,
         });
       }
       this.dateEvent = groupedEvents;
@@ -282,6 +285,19 @@ export class MainCalendarComponent {
       .replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);
   }
 
+  generateAvatar(name: string): { letter: string; color: string } {
+    const colors = [
+      '#F44336', '#E91E63', '#9C27B0', '#673AB7',
+      '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
+      '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+      '#FFEB3B', '#FFC107', '#FF9800', '#FF5722',
+    ];
+
+    const letter = name.charAt(0).toUpperCase();
+    const color = colors[name.charCodeAt(0) % colors.length];
+    return { letter, color };
+  }
+
 }
 
 interface User {
@@ -307,6 +323,8 @@ interface Event {
   monthEvent: number;
   dayEvent: number;
   title: string;
+  avatarLetter: string,
+  avatarColor: string,
 }
 
 interface DateEventGroup {

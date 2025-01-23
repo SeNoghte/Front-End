@@ -1,1 +1,87 @@
-<p>landing works!</p>
+<div class="day-box">
+    <div class="calendar-container">
+        <div class="month-title">
+            <img class="back-button" (click)="beforeMonth(matchingMonth?.month.id)" src="assets/icons/back.svg" />
+            <h3 class="month-title">{{ matchingMonth?.month.name }} ماه {{ convertToPersianDigits(this.CurrentYear) }}
+            </h3>
+            <img class="back-button" (click)="nextMonth(matchingMonth?.month.id)" src="assets/icons/next.svg" />
+        </div>
+        <table>
+            <thead class="day-ofweek-section">
+                <tr>
+                    @for(day of daysOfWeek; track $index){
+                    <th class="day-name">{{ day }}</th>
+                    }
+                </tr>
+            </thead>
+            <span class="margin-span"></span>
+            <tbody class="day-ofmonth-section">
+                @for(week of matchingMonth?.weeks; track $index){
+                <tr>
+                    @for(day of week; track $index){
+                    <td class="day-ofmonth-section" [class.not-in-month]="day.notInMonth">
+                        <div class="day-wrapper">
+                            @if(hasEventForDay(matchingMonth?.month.id, day.dayInSolarHijri).hasEvent){
+                            @if(getBackgroundImage(matchingMonth?.month.id, day.dayInSolarHijri)){
+                            <img class="event-background"
+                                [src]="getBackgroundImage(matchingMonth?.month.id, day.dayInSolarHijri)" />
+                            }
+                            @if(getBackgroundImage(matchingMonth?.month.id, day.dayInSolarHijri) === null){
+                            <div class="event-background-no-image"></div>
+                            }
+                            <span nz-popover [nzPopoverTitle]="Title"
+                                [nzPopoverVisible]="visible === day.dayInSolarHijri"
+                                (nzPopoverVisibleChange)="change(day.dayInSolarHijri)" nzPopoverTrigger="click"
+                                [nzPopoverContent]="contentTemplate" class="jalali">
+                                <div class="day-container">
+                                    <p>
+                                        {{ convertToPersianDigits(day.dayInSolarHijri) }}
+                                    </p>
+                                    <div class="nnnn">
+                                        @for(dot of [].constructor(hasEventForDay(matchingMonth?.month.id,
+                                        day.dayInSolarHijri).count); track $index) {
+                                        <span class="dot"></span>
+                                        }
+                                    </div>
+
+                                </div>
+                            </span>
+                            <ng-template #Title>
+                                <h3 class="month-title">برنامه های {{ convertToPersianDigits(day.dayInSolarHijri) }} {{
+                                    matchingMonth?.month.name
+                                    }}</h3>
+                            </ng-template>
+                            <ng-template #contentTemplate>
+                                @for(item of hasEventForDay(matchingMonth?.month.id, day.dayInSolarHijri).list; track
+                                $index) {
+                                <div class="item-day">
+                                    @if(item.imagePath && item.imagePath !== ''){
+                                    <img class="day-event-img" [src]="item.imagePath" />
+                                    }
+                                    @else{
+                                    <div class="day-event-avatar" [style.backgroundColor]="item.avatarColor">
+                                        {{ item.avatarLetter }}
+                                    </div>
+                                    }
+                                    <span>{{item.title}}</span>
+                                </div>
+                                }
+                            </ng-template>
+                            }
+                            @else{
+                            <span class="jalali fully-center" (click)="changeDay(day);">
+                                {{ convertToPersianDigits(day.dayInSolarHijri) }}
+                            </span>
+                            }
+                        </div>
+                    </td>
+                    }
+                </tr>
+                }
+            </tbody>
+        </table>
+        <hr class="divider" />
+
+
+    </div>
+</div>
