@@ -151,6 +151,7 @@ export interface EventDetails {
   imagePath?: string;
   isPrivate: boolean;
   members?: Member[];
+  tasks?: Task[];
 }
 
 export interface Task {

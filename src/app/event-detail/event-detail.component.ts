@@ -12,29 +12,56 @@ import { log } from 'node:console';
 import { Location } from '@angular/common';
 import { City } from '../shared/models/event-types';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
 import * as L from 'leaflet';
 import moment from 'moment-jalaali';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+
+export interface Task {
+  id: string;
+  title: string;
+  assignedUserId: string;
+  assignedUserName: string;
+}
+
+export interface Tag {
+  id: string;
+  tag: string;
+}
+
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     HttpClientModule,
     MatButtonModule,
     CommonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatChipsModule,
+    MatInputModule,
+
   ],
   templateUrl: './event-detail.component.html',
   styleUrl: './event-detail.component.scss'
 })
 export class EventDetailComponent {
   eventId !: number;
+  event: any = {};
   profile!: User;
-  event!: EventDetails
+  // event!: EventDetails
   isPastEvent: boolean = false;
   isUserInMembers: boolean = false;
-  persianDate : string = '';
+  persianDate: string = '';
   private map: L.Map | undefined;
+  tasksAssigned: any[] = [];
+  tasksUnassigned: any[] = [];
+  tags: string[] = [];
+  isEventPrivate: boolean = false;
+
 
   constructor(
     private http: HttpClient,
@@ -70,36 +97,101 @@ export class EventDetailComponent {
     this.fetchEvent()
   }
 
+
   fetchEvent() {
     const GetEventAPI = environment.apiUrl + '/Event/GetEvent';
 
-    const requestBody = {
-      eventId: this.eventId,
-    };
+    const requestBody = { eventId: this.eventId };
 
     this.http.post<GetEventApiResponse>(GetEventAPI, requestBody).subscribe(
       (res) => {
-        this.event = res.event as unknown as EventDetails;
-        console.log(this.event)
+        if (res.success && res.event && res.tasks && res.tags) {
+          this.event = res.event;
+          this.isEventPrivate = this.event.isPrivate;
 
-        this.persianDate = moment(this.event.date, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
-        console.log(this.persianDate)
-        
-        const eventDateTime = new Date(`${this.event.date}T${this.event.time}`);
-        const currentDateTime = new Date();
+          this.persianDate = moment(this.event.date, 'YYYY-MM-DD')
+            .locale('fa')
+            .format('dddd jD jMMMM jYYYY');
 
-        this.isPastEvent = currentDateTime > eventDateTime;
+          this.tasksAssigned = res.tasks.filter((task: Task) => task.assignedUserId);
+          this.tasksUnassigned = res.tasks.filter((task: Task) => !task.assignedUserId);
+
+          this.tags = res.tags.map((tag: Tag) => tag.tag);
+
+          console.log('Event:', this.event);
+          console.log('Assigned Tasks:', this.tasksAssigned);
+          console.log('Unassigned Tasks:', this.tasksUnassigned);
+          console.log('Tags:', this.tags);
+        } else {
+          this.toastr.error(res.message || 'اطلاعات دریافتی ناقص است.');
+        }
       },
       (err) => {
-        this.toastr.error('خطا در ثبت!');
+        console.error('Error fetching event:', err);
+        this.toastr.error(err.error?.message || 'خطا در دریافت اطلاعات رویداد!');
       }
     );
-
-    if (this.event.members!!.length > 0) {
-      this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
-      console.log('is user in event members : ', this.isUserInMembers)
-    }
   }
+
+
+  assignTaskToMe(taskId: string) {
+    const AssignTaskAPI = environment.apiUrl + '/Event/AssignTaskToMe';
+
+    const requestBody = { taskId };
+
+    this.http.post(AssignTaskAPI, requestBody).subscribe(
+      (res: any) => {
+        if (res.success) {
+          const assignedTaskIndex = this.tasksUnassigned.findIndex(
+            (task) => task.id === taskId
+          );
+          if (assignedTaskIndex !== -1) {
+            const assignedTask = this.tasksUnassigned.splice(assignedTaskIndex, 1)[0];
+            assignedTask.assignedUserId = this.profile.userId;
+            assignedTask.assignedUserName = this.profile.name;
+            this.tasksAssigned.push(assignedTask);
+          }
+          this.toastr.success('تسک به شما اختصاص یافت.');
+        } else {
+          this.toastr.error(res.message || 'خطا در اختصاص تسک.');
+        }
+      },
+      (err) => {
+        console.error('Error assigning task:', err);
+        this.toastr.error('خطا در اختصاص تسک.');
+      }
+    );
+  }
+
+  removeTaskFromMe(taskId: string) {
+    const RemoveTaskAPI = environment.apiUrl + '/Event/RemoveTaskFromMe';
+
+    const requestBody = { taskId };
+
+    this.http.post(RemoveTaskAPI, requestBody).subscribe(
+      (res: any) => {
+        if (res.success) {
+          const removedTaskIndex = this.tasksAssigned.findIndex(
+            (task) => task.id === taskId
+          );
+          if (removedTaskIndex !== -1) {
+            const removedTask = this.tasksAssigned.splice(removedTaskIndex, 1)[0];
+            removedTask.assignedUserId = null;
+            removedTask.assignedUserName = null;
+            this.tasksUnassigned.push(removedTask);
+          }
+          this.toastr.success('تسک از شما حذف شد.');
+        } else {
+          this.toastr.error(res.message || 'خطا در حذف تسک.');
+        }
+      },
+      (err) => {
+        console.error('Error removing task:', err);
+        this.toastr.error('خطا در حذف تسک.');
+      }
+    );
+  }
+
 
   joinEvent() {
     const EventAPI = environment.apiUrl + '/Event/JoinEvent';
