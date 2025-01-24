@@ -99,11 +99,11 @@ img.event-image {
 .event-description {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* تعداد خطوط قابل نمایش */
+  -webkit-line-clamp: 3;
+  /* تعداد خطوط قابل نمایش */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   white-space: normal;
-  // max-height: 3rem; /* محدود کردن ارتفاع به دو خط */
 }
 
 .divider {
@@ -126,23 +126,132 @@ img.event-image {
   z-index: 2;
 }
 
-
 .event-image-replacement {
-  width:100%;
+  width: 100%;
   height: 13rem;
   background-color: var(--gray-1);
 }
 
-.address-section
-{
-  .title
-  {
+.address-section {
+  .title {
     display: flex;
-    color: #6B6B6B;
+    color: #6b6b6b;
 
-    mat-divider
-    {
+    mat-divider {
       margin: 0 0.5rem;
     }
+  }
+}
+
+
+.tags-container {
+  margin-bottom: 1rem;
+
+  .tags-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tags-chip {
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    color: var(--primary);
+    font-weight: bold;
+  }
+}
+
+.tasks-container {
+  margin-bottom: 1rem;
+
+  .tasks-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .task-chip {
+    display: flex;
+    padding: 0.5rem 0.2rem;
+    border: 1px solid var(--gray-2);
+    font-size: 0.8rem;
+    color: var(--gray-2);
+    margin-bottom: 0.5rem;
+
+    &--assigned-to-me {
+      border-color: var(--primary);
+    }
+
+    &--assigned-to-others {
+      color: var(--gray-1);
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    &__title {
+      flex: 1;
+      font-size: 1rem;
+      overflow: hidden;
+      color: var(--gray-4);
+
+
+      &--assigned-to-me {
+        font-weight: bold;
+      }
+
+      &--assigned-to-others {
+        color: var(--gray-3);
+      }
+    }
+
+    &__assigned-info {
+      font-size: 0.8rem;
+
+      &--assigned-to-me {
+        color: var(--primary);
+        font-weight: bold;
+
+      }
+
+      &--assigned-to-others {
+        color: var(--gray-2);
+      }
+    }
+
+    &__remove-btn {
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+
+
+      &__remove-icon {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+
+    &__icon {
+      margin-inline-end: 0.5rem;
+      height: 1.5rem;
+      width: 1.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .unassigned-tasks__title {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--gray-5);
   }
 }
