@@ -50,9 +50,8 @@ export interface Tag {
 })
 export class EventDetailComponent {
   eventId !: number;
-  event: any = {};
   profile!: User;
-  // event!: EventDetails
+  event!: EventDetails
   isPastEvent: boolean = false;
   isUserInMembers: boolean = false;
   persianDate: string = '';
@@ -76,7 +75,19 @@ export class EventDetailComponent {
     this.navVisibilityService.hide();
     this.InitCityName();
     this.initMap();
+    this.getProfile();
+    this.getEventId();
+    this.fetchEvent()
+  }
 
+  getEventId() {
+    this.route.queryParams.subscribe((params) => {
+      this.eventId = params['id'];
+      console.log('Event ID:', this.eventId);
+    });
+  }
+
+  getProfile() {
     const GetProfileAPI = environment.apiUrl + '/User/Profile';
 
     this.http.post<GetProfileApiResponse>(GetProfileAPI, {}).subscribe(
@@ -88,13 +99,6 @@ export class EventDetailComponent {
         this.toastr.error('خطا در ثبت!');
       }
     );
-
-    this.route.queryParams.subscribe((params) => {
-      this.eventId = params['id'];
-      console.log('Event ID:', this.eventId);
-    });
-
-    this.fetchEvent()
   }
 
   LeaveEvent() {
@@ -124,23 +128,30 @@ export class EventDetailComponent {
 
     this.http.post<GetEventApiResponse>(GetEventAPI, requestBody).subscribe(
       (res) => {
-        if (res.success && res.event && res.tasks && res.tags) {
-          this.event = res.event;
-          this.isEventPrivate = this.event.isPrivate;
+        if (res.success) {
+          this.event = res.event as unknown as EventDetails;;
+          // this.isEventPrivate = this.event.isPrivate;
 
           this.persianDate = moment(this.event.date, 'YYYY-MM-DD')
             .locale('fa')
             .format('dddd jD jMMMM jYYYY');
 
+          const eventDateTime = new Date(`${this.event.date}T${this.event.time}`);
+          const currentDateTime = new Date();
+          this.isPastEvent = currentDateTime > eventDateTime;
+
+          if (this.event.members!!.length > 0) {
+            this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
+            console.log('is user in event members : ', this.isUserInMembers)
+          }
+          else {
+            this.isUserInMembers = false;
+          }
+
           this.tasksAssigned = res.tasks.filter((task: Task) => task.assignedUserId);
           this.tasksUnassigned = res.tasks.filter((task: Task) => !task.assignedUserId);
 
           this.tags = res.tags.map((tag: Tag) => tag.tag);
-
-          console.log('Event:', this.event);
-          console.log('Assigned Tasks:', this.tasksAssigned);
-          console.log('Unassigned Tasks:', this.tasksUnassigned);
-          console.log('Tags:', this.tags);
         } else {
           this.toastr.error(res.message || 'اطلاعات دریافتی ناقص است.');
         }
@@ -222,14 +233,10 @@ export class EventDetailComponent {
     this.http.post<JoinEventResponse>(EventAPI, requestBody).subscribe(
       (res) => {
         if (res.success) {
-          console.log(res)
           this.fetchEvent()
           this.toastr.success("با موفقیت عضو شدی!");
         }
         else {
-          console.log(res)
-          console.log(this.eventId)
-          console.log(this.event)
           this.toastr.error(res.message);
         }
       },
@@ -241,7 +248,7 @@ export class EventDetailComponent {
 
   checkUserInEventMembers(event: any, username: string): boolean {
     if (!event.members || event.members.length === 0) {
-      return false; // No members in the event
+      return false;
     }
 
     return event.members.some((member: any) => member.username === username);
