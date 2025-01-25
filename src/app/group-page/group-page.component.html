@@ -2,22 +2,30 @@
   <div class="default-header">
     <div class="btn1-container">
       <button (click)="toggleSearch()" mat-button>
-        <img class="search-button" src="assets/icons/search-icon.svg" />
+        <img
+          class="search-button"
+          src="assets/icons/search-icon.svg"
+          alt="جستجو"
+        />
         جستجو
       </button>
     </div>
 
-    <span class="mid-span"> اکیپ ها </span>
+    <span class="mid-span">اکیپ‌ها</span>
 
     <div class="btn2-container">
       <button (click)="redirectToCreateGroup()" mat-button>افزودن گروه</button>
     </div>
   </div>
+
   <div class="group-list">
     <div
       class="group-item"
-      *ngFor="let group of groups"
+      *ngFor="let group of groups; trackBy: trackByGroupId"
       (click)="navigateToGroupChat(group.id)"
+      tabindex="0"
+      role="button"
+      [attr.aria-label]="'رفتن به چت گروه ' + group.name"
     >
       <img *ngIf="group.image" [src]="group.image" alt="Group Image" />
 
@@ -25,29 +33,51 @@
         *ngIf="!group.image"
         class="avatar"
         [style.backgroundColor]="group.avatarColor"
+        [attr.aria-label]="'Avatar for ' + group.name"
       >
         {{ group.avatarLetter }}
       </div>
 
-      <span>{{ group.name }}</span>
-      <img
-        *ngIf="group.isPrivate"
-        src="assets/icons/private-groups.svg"
-        alt="Private Group Icon"
-        class="private-icon"
-      />
+      <div class="group-info">
+        <span class="group-name">{{ group.name }}</span>
+
+        <img
+          *ngIf="group.isPrivate"
+          src="assets/icons/private-groups.svg"
+          alt="Private Group Icon"
+          class="private-icon"
+        />
+
+        <span *ngIf="group.isAdmin" class="status-label admin-label">مدیر</span>
+        <span
+          *ngIf="!group.isAdmin && group.isMember"
+          class="status-label member-label"
+          >عضو</span
+        >
+      </div>
     </div>
+  </div>
+
+  <div *ngIf="groups.length === 0" class="no-groups-message">
+    شما عضو هیچ گروهی نیستید.
   </div>
 </div>
 
 <div class="search-page" *ngIf="searchMode">
   <div class="header">
-    <a (click)="toggleSearch()" class="back2">
-      <img class="back-button" src="assets/icons/back.svg" />
+    <button
+      (click)="toggleSearch()"
+      class="back-button"
+      mat-button
+      aria-label="بازگشت"
+    >
+      <img class="back-icon" src="assets/icons/back.svg" alt="بازگشت" />
       بازگشت
-    </a>
-    <h2>جستجو اکیپ ها</h2>
-    <a (click)="redirectToCreateGroup()" class="edit">ویرایش</a>
+    </button>
+    <h2>جستجو اکیپ‌ها</h2>
+    <button (click)="redirectToCreateGroup()" class="edit-button" mat-button>
+      افزودن گروه
+    </button>
   </div>
 
   <div class="search-bar">
@@ -59,9 +89,19 @@
         placeholder="جستجو"
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearch()"
+        aria-label="جستجو گروه‌ها"
       />
-      <button mat-icon-button matSuffix class="search-icon-button">
-        <img class="search-icon" src="assets/icons/search-box.svg" />
+      <button
+        mat-icon-button
+        matSuffix
+        class="search-icon-button"
+        aria-label="جستجو"
+      >
+        <img
+          class="search-icon"
+          src="assets/icons/search-box.svg"
+          alt="جستجو"
+        />
       </button>
     </mat-form-field>
   </div>
@@ -69,24 +109,40 @@
   <div class="group-list">
     <div
       class="group-item"
-      *ngFor="let group of searchResults"
+      *ngFor="let group of searchResults; trackBy: trackByGroupId"
       (click)="navigateToGroupChat(group.id)"
+      tabindex="0"
+      role="button"
+      [attr.aria-label]="'رفتن به چت گروه ' + group.name"
     >
       <img *ngIf="group.image" [src]="group.image" alt="Group Image" />
+
       <div
         *ngIf="!group.image"
         class="avatar"
         [style.backgroundColor]="group.avatarColor"
+        [attr.aria-label]="'Avatar for ' + group.name"
       >
         {{ group.avatarLetter }}
       </div>
-      <span>{{ group.name }}</span>
-      <img
-        *ngIf="group.isPrivate"
-        src="assets/icons/private-groups.svg"
-        alt="Private Group Icon"
-        class="private-icon"
-      />
+
+      <div class="group-info">
+        <span class="group-name">{{ group.name }}</span>
+
+        <img
+          *ngIf="group.isPrivate"
+          src="assets/icons/private-groups.svg"
+          alt="Private Group Icon"
+          class="private-icon"
+        />
+
+        <span *ngIf="group.isAdmin" class="status-label admin-label">مدیر</span>
+        <span
+          *ngIf="!group.isAdmin && group.isMember"
+          class="status-label member-label"
+          >عضو</span
+        >
+      </div>
     </div>
 
     <div

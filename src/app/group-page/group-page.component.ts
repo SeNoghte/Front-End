@@ -11,6 +11,23 @@ import { environment } from '../../environments/environment';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 
+interface UserProfileResponse {
+  success: boolean;
+  message: string;
+  errorCode: number;
+  user: User;
+  myGroups: Group[];
+}
+
+interface User {
+  userId: string;
+  name: string;
+  username: string;
+  email: string;
+  joinedDate: string;
+  image: string;
+  aboutMe: string;
+}
 
 interface Group {
   id: string;
@@ -19,6 +36,8 @@ interface Group {
   avatarLetter: string;
   avatarColor: string;
   isPrivate: boolean;
+  isAdmin: boolean;
+  isMember: boolean;
 }
 
 @Component({
@@ -46,13 +65,18 @@ export class GroupPageComponent implements OnInit, OnDestroy {
   groups: Group[] = [];
   searchResults: Group[] = [];
 
-
-  constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.searchSubscription = this.searchSubject.pipe(debounceTime(300)).subscribe((searchTerm) => {
-      this.performSearch(searchTerm);
-    });
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(300))
+      .subscribe((searchTerm) => {
+        this.performSearch(searchTerm);
+      });
 
     this.fetchGroups();
   }
@@ -83,7 +107,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
     const trimmedTerm = term.trim().toLowerCase();
 
     if (trimmedTerm === '') {
-      this.searchResults = [];
+      this.searchResults = this.groups;
     } else {
       this.searchResults = this.groups.filter((group) =>
         group.name.toLowerCase().includes(trimmedTerm)
@@ -91,33 +115,36 @@ export class GroupPageComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   fetchGroups(): void {
-    const apiUrl = environment.apiUrl + '/Group/GetGroups';
+    const apiUrl = environment.apiUrl + '/User/Profile';
     const requestBody = {
-      filter: '',
-      pageIndex: 1,
-      pageSize: 100,
+
     };
 
-    this.http.post<any>(apiUrl, requestBody).subscribe(
+    this.http.post<UserProfileResponse>(apiUrl, requestBody).subscribe(
       (response) => {
         console.log('API Response:', response);
-        if (response.success && response.filteredGroups) {
-          this.groups = response.filteredGroups.map((group: any): Group => {
+        if (response.success && response.myGroups) {
+
+          console.log('My Groups:', response.myGroups);
+
+          this.groups = response.myGroups.map((group: any): Group => {
             const { letter, color } = this.generateAvatar(group.name);
             return {
+              id: group.id,
               name: group.name,
               image: group.image || null,
               avatarLetter: letter,
               avatarColor: color,
               isPrivate: group.isPrivate || false,
-              id: group.id,
+              isAdmin: group.isAdmin || false,
+              isMember: group.isMember || false,
             };
           });
+
           this.searchResults = this.groups;
         } else {
+          console.error('No groups found or API response invalid');
           this.groups = [];
           this.searchResults = [];
         }
@@ -131,10 +158,22 @@ export class GroupPageComponent implements OnInit, OnDestroy {
 
   generateAvatar(name: string): { letter: string; color: string } {
     const colors = [
-      '#F44336', '#E91E63', '#9C27B0', '#673AB7',
-      '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
-      '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
-      '#FFEB3B', '#FFC107', '#FF9800', '#FF5722',
+      '#F44336',
+      '#E91E63',
+      '#9C27B0',
+      '#673AB7',
+      '#3F51B5',
+      '#2196F3',
+      '#03A9F4',
+      '#00BCD4',
+      '#009688',
+      '#4CAF50',
+      '#8BC34A',
+      '#CDDC39',
+      '#FFEB3B',
+      '#FFC107',
+      '#FF9800',
+      '#FF5722',
     ];
 
     const letter = name.charAt(0).toUpperCase();
@@ -144,5 +183,9 @@ export class GroupPageComponent implements OnInit, OnDestroy {
 
   navigateToGroupChat(groupId: string): void {
     this.router.navigate(['/chat-group', groupId]);
+  }
+
+  trackByGroupId(index: number, group: Group): string {
+    return group.id;
   }
 }
