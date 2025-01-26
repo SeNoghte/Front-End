@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
     imageUrl: ''
   };
 
-  teams: { name: string; icon: string | null; avatarLetter: string; avatarColor: string; isPrivate: boolean }[] = [];
+  teams: {id: string, name: string; icon: string | null; avatarLetter: string; avatarColor: string; isPrivate: boolean }[] = [];
 
 
 
@@ -89,6 +89,7 @@ export class ProfileComponent implements OnInit {
           this.teams = response.myGroups.map((group: any) => {
             const { letter, color } = this.generateAvatar(group.name);
             return {
+              id: group.id,
               name: group.name,
               icon: group.image || null,
               avatarLetter: letter,
@@ -134,5 +135,9 @@ export class ProfileComponent implements OnInit {
 
   redirectToLanding(){
     this.Router.navigate(['landing']);
+  }
+
+  redirectToChatGroup(id: string){
+    this.Router.navigate(['/chat-group', id]);
   }
 }
