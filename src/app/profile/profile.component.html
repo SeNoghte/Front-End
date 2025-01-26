@@ -54,11 +54,11 @@
       <div *ngFor="let team of teams" class="team">
         <img *ngIf="team.icon" [src]="team.icon" alt="Team Icon" class="common-avatar" />
 
-        <div *ngIf="!team.icon" class="avatar common-avatar" [style.backgroundColor]="team.avatarColor">
+        <div (click)="redirectToChatGroup(team.id)" *ngIf="!team.icon" class="avatar common-avatar" [style.backgroundColor]="team.avatarColor">
           {{ team.avatarLetter }}
         </div>
 
-        <span>{{ team.name }}</span>
+        <span (click)="redirectToChatGroup(team.id)">{{ team.name }}</span>
         <img *ngIf="!isOwner && team.isPrivate" src="assets/icons/private-groups.svg" alt="Private Group Icon"
           class="private-icon" />
       </div>
