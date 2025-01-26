@@ -63,7 +63,8 @@
                                         {{ item.avatarLetter }}
                                     </div>
                                     }
-                                    <span>{{item.title}}</span>
+                                    
+                                    <span (click)="redirectToDetail(item.id)">{{item.title}}</span>
                                 </div>
                                 }
                             </ng-template>

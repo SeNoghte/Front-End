@@ -9,7 +9,9 @@ import moment from 'jalali-moment';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover'
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { Router, RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-landing',
@@ -44,7 +46,7 @@ export class LandingComponent {
   groupId: string = "";
 
   constructor(
-    public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute,
+    public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute, private router: Router
   ) { }
 
   change(id: string): void {
@@ -112,7 +114,7 @@ export class LandingComponent {
     const eventsForDay = this.dateEvent.filter(event =>
       event.monthEvent === monthId && event.dayEvent.toString() === day
     );
-    
+
     const eventsList = eventsForDay.flatMap(item =>
       Array.isArray(item.events) ? item.events : []
     );
@@ -125,6 +127,10 @@ export class LandingComponent {
       count: count,
       list: eventsList,
     };
+  }
+
+  redirectToDetail(id: string){
+    this.router.navigate(['/show-event-detail'], { queryParams: { id } });
   }
 
   getBackgroundImage(monthId: number, day: string): string | null {
