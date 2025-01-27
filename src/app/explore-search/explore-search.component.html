@@ -50,14 +50,14 @@
                 alt="Profile"
                 class="profile-image"
               />
-              <span class="profile-name">owner name</span>
+              <span class="profile-name">{{group.owner}}</span>
             </div>
           </div>
 
           <div class="event-info">
             <h3 class="event-title">{{ group.name }}</h3>
             <p class="event-description">{{ group.description }}</p>
-            <div class="event-date">{{ group.createdDate }}</div>
+            <div class="event-date">{{ dateToJalali(group.createdDate) }}</div>
           </div>
         </div>
       </div>

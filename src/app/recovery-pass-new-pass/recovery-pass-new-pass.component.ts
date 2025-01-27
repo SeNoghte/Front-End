@@ -70,9 +70,6 @@ export class RecoveryPassNewPassComponent {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
       this.verificationCodeId = params['verificationCodeId'];
-
-      console.log(this.email);
-      console.log(this.verificationCodeId);
     });
   }
   onSubmit() {
@@ -91,8 +88,6 @@ export class RecoveryPassNewPassComponent {
             this.toastr.success('تغییر رمز با موفقیت انجام شد');
           }
           else {
-            console.log(response)
-            console.log(response.message)
             this.toastr.error(response.message);
           }
         },

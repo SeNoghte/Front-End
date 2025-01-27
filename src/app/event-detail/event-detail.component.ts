@@ -83,7 +83,6 @@ export class EventDetailComponent {
   getEventId() {
     this.route.queryParams.subscribe((params) => {
       this.eventId = params['id'];
-      console.log('Event ID:', this.eventId);
     });
   }
 
@@ -92,7 +91,6 @@ export class EventDetailComponent {
 
     this.http.post<GetProfileApiResponse>(GetProfileAPI, {}).subscribe(
       (res) => {
-        console.log(res)
         this.profile = res.user as unknown as User
       },
       (err) => {
@@ -142,11 +140,13 @@ export class EventDetailComponent {
 
           if (this.event.members!!.length > 0) {
             this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
-            console.log('is user in event members : ', this.isUserInMembers)
           }
           else {
             this.isUserInMembers = false;
           }
+
+          console.log('is user in members : ' , this.isUserInMembers)
+          console.log('is event passed : ' , this.isPastEvent)
 
           this.tasksAssigned = res.tasks.filter((task: Task) => task.assignedUserId);
           this.tasksUnassigned = res.tasks.filter((task: Task) => !task.assignedUserId);

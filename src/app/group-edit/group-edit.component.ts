@@ -61,8 +61,6 @@ export class GroupEditComponent implements OnInit {
     const apiUrl = `${environment.apiUrl}/Group/GetGroup`;
     const requestBody = { groupId: this.groupId };
 
-    console.log('Fetching group details with:', requestBody);
-
     this.http.post<any>(apiUrl, requestBody).subscribe(
       (response) => {
         if (response.success) {
@@ -74,7 +72,6 @@ export class GroupEditComponent implements OnInit {
           this.groupImageUrl = group.image || this.groupImageUrl;
           this.isAdmin = group.isAdmin;
 
-          console.log('Group details fetched successfully:', group);
         } else {
           console.error('API Response Error:', response);
           this.toastr.error(response.message || 'خطا در دریافت اطلاعات گروه.', 'خطا');
@@ -158,9 +155,7 @@ export class GroupEditComponent implements OnInit {
       description: this.groupDescription,
       image: this.uploadedImageId || this.groupImageUrl,
     };
-
-    console.log('Request Body:', requestBody);
-
+    
     this.http.post<any>(apiUrl, requestBody).subscribe(
       (response) => {
         if (response.success) {

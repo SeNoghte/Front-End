@@ -123,10 +123,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
 
     this.http.post<UserProfileResponse>(apiUrl, requestBody).subscribe(
       (response) => {
-        console.log('API Response:', response);
         if (response.success && response.myGroups) {
-
-          console.log('My Groups:', response.myGroups);
 
           this.groups = response.myGroups.map((group: any): Group => {
             const { letter, color } = this.generateAvatar(group.name);

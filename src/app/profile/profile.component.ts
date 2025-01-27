@@ -116,7 +116,6 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile(): void {
-    console.log('Edit button clicked');
   }
 
   generateAvatar(name: string | null): { letter: string; color: string } {

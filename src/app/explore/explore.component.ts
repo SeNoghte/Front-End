@@ -39,7 +39,6 @@ export class ExploreComponent {
 
     this.http.post<TagsApiResponse>(GetTagsAPI, {}).subscribe(
       (res) => {
-        console.log(res);
         this.tags = res.tags
       },
       (err) => {
@@ -68,7 +67,6 @@ export class ExploreComponent {
       this.selectedChips.splice(index, 1);
     }
 
-    console.log(this.selectedChips)
     this.fetchGroups();
     this.fetchEvents();
   }
@@ -99,8 +97,6 @@ export class ExploreComponent {
 
       this.http.post<GroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
         (response) => {
-          console.log(response)
-
           if (response.success) {
             response.items.forEach((group) => {
               if (!uniqueGroupIds.has(group.id)) {
@@ -197,8 +193,6 @@ export class ExploreComponent {
 
     this.http.post<GroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
       (response) => {
-        console.log(response)
-
         if (response.success) {
           response.items.forEach((group) => {
             if (!uniqueGroupIds.has(group.id)) {
@@ -232,8 +226,6 @@ export class ExploreComponent {
         (selectedChip) => selectedChip !== chip
       );
     }
-
-    console.log(this.selectedChips)
   }
 
   toggleSingleSelectionIndicator() {
@@ -245,7 +237,6 @@ export class ExploreComponent {
   }
 
   dateToJalali( date : string ){
-    console.log(date)
     return moment(date, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
   }
 }

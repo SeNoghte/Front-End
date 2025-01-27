@@ -55,7 +55,6 @@ export class ProfileEditComponent implements OnInit {
     this.http.post<any>(apiUrl, {})
       .subscribe(
         (response) => {
-          console.log('Profile Fetch Response:', response);
           if (response.success && response.user) {
             const user = response.user;
             this.fullName = user.name;
@@ -122,7 +121,6 @@ export class ProfileEditComponent implements OnInit {
       .subscribe(
         (response) => {
           this.isUploading = false;
-          console.log('Image Upload Response:', response);
           if (response && response.success && response.imageId) {
             this.uploadedImageId = response.imageId;
             this.imageUrl = response.imageId;
@@ -177,12 +175,9 @@ export class ProfileEditComponent implements OnInit {
       aboutMe: this.profileDescription,
     };
 
-    console.log('Request Body:', requestBody);
-
     this.http.post<any>(apiUrl, requestBody)
       .subscribe(
         (response) => {
-          console.log('Profile Edit Response:', response);
           if (response.success) {
             this.toastr.success('پروفایل با موفقیت به‌روزرسانی شد!', 'عملیات موفق');
             this.fetchUserProfile();

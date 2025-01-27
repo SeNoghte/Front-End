@@ -60,12 +60,10 @@ export class GroupChatComponent implements OnInit {
 
     this.route.queryParamMap.subscribe((params) => {
       this.fromWhere = params.get('fromWhere');
-      console.log('Additional Data:', this.fromWhere);
     });
 
     const apiUrl = `https://api.becheen.ir:6001/api/Group/GetGroup`;
     const model = { groupId: this.groupId };
-    console.log('group ID : ', this.groupId);
 
     this.http.post<ApiResponse>(apiUrl, model).subscribe({
       next: (response) => {
@@ -73,7 +71,6 @@ export class GroupChatComponent implements OnInit {
           this.group = response.group;
           this.isGroupPrivate = this.group.isPrivate;
           this.GropEvents = response.events as unknown as GroupEvent[];
-          console.log(this.GropEvents)
         } else {
           this.toastrService.error(response.message);
         }
@@ -96,7 +93,6 @@ export class GroupChatComponent implements OnInit {
   }
 
   navigateToGroupPage(){
-    console.log('fromWhere' , this.fromWhere)
     if(this.fromWhere == null){
       this.router.navigate(['/group-page']);
     }
