@@ -6,21 +6,13 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { environment } from '../../environments/environment';
-import { NgModule } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
-import moment from 'jalali-moment';
-import { CommonModule } from "@angular/common";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { CommonModule, DatePipe } from "@angular/common";
 import { MatDateFormats } from '@angular/material/core';
-import { MaterialJalaliMomentAdapterModule } from 'material-jalali-moment-adapter';
-import { JalaliMomentDateAdapter } from 'material-jalali-moment-adapter';
 import { JalaliDateAdapter } from './jalali-date-adapter';
-
-
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 export const JALALI_MOMENT_FORMATS: MatDateFormats = {
   parse: {
@@ -49,7 +41,9 @@ export const MOMENT_FORMATS: MatDateFormats = {
 @Component({
   selector: 'app-create-event',
   standalone: true,
-  imports: [CommonModule, FormsModule,MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, HttpClientModule, MatMomentDateModule, MatDatepickerModule, MatNativeDateModule,],
+  imports: [CommonModule, FormsModule,MatFormFieldModule, MatInputModule, 
+    ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule, 
+    HttpClientModule],
   templateUrl: './create-event.component.html',
   styleUrl: './create-event.component.scss',
   providers: [
@@ -83,7 +77,6 @@ export class CreateEventComponent {  selectedFile: File | null = null;
   ) { }
 
   ngOnInit() {
-    moment.locale('fa');
     this.route.queryParams
       .subscribe(params => {
         this.groupId = params['id'];

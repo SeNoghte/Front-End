@@ -37,6 +37,7 @@
     "ng-zorro-antd": "^18.0.0",
     "ngx-mat-timepicker": "^18.0.1",
     "ngx-material-timepicker": "^13.1.1",
+    "ngx-persian": "^2.0.1",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
