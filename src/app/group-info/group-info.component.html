@@ -58,7 +58,7 @@
           *ngIf="group.members && group.members.length > 0; else noMembers"
         >
           <div *ngFor="let member of group.members" class="member">
-            <a [routerLink]="'/profile/' + member.userId" class="member-link">
+            <a class="member-link">
               <ng-container *ngIf="member.image; else defaultMemberAvatar">
                 <img
                   [src]="member.image"

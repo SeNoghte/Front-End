@@ -6,7 +6,7 @@
     </button>
   </div>
 
-  <span class="mid-span">{{ group.name }}</span>
+  <span class="mid-span" (click)="navigateToGroupInfo()">{{ group.name }}</span>
 
   <div class="btn2-container image">
     <img class="img" [src]="group.image" (click)="navigateToGroupInfo()" />

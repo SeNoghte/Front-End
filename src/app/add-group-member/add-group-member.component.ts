@@ -87,7 +87,6 @@ export class AddGroupMemberComponent {
     this.newGroupInfo.controls.usersToAdd.setValue(selectedUsers.map((item) => item.userId));
     this.http.post(addMemberApiUrl, this.newGroupInfo.value).subscribe(
       (res: any) => {
-        this.Router.navigate(['create-event'], { queryParams: { groupId: this.groupId } });
         this.toastr.success('گروه با موفقیت ایجاد شد.');
       },
       (err) => {
