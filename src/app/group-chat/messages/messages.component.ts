@@ -88,7 +88,11 @@ export class MessagesComponent implements OnInit, OnDestroy {
       next: res => {
         if (res.success) {
           this.messages = res.items;
-
+          for (const msg of this.messages) {
+            const { letter, color } = this.generateAvatar(msg.username);
+            msg.avatarColor = color;
+            msg.avatarLetter = letter;
+          }
           this.messages.forEach(x => x.isMe = x.userId == this.currentUserId);
         }
         else {
@@ -125,6 +129,19 @@ export class MessagesComponent implements OnInit, OnDestroy {
         this.toastrService.error('مشکلی پیش آمد');
       }
     });
+  }
+
+  generateAvatar(name: string): { letter: string; color: string } {
+    const colors = [
+      '#F44336', '#E91E63', '#9C27B0', '#673AB7',
+      '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
+      '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+      '#FFEB3B', '#FFC107', '#FF9800', '#FF5722',
+    ];
+
+    const letter = name.charAt(0).toUpperCase();
+    const color = colors[name.charCodeAt(0) % colors.length];
+    return { letter, color };
   }
 
 }

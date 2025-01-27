@@ -65,12 +65,14 @@ export class GroupChatComponent implements OnInit {
 
     const apiUrl = `https://api.becheen.ir:6001/api/Group/GetGroup`;
     const model = { groupId: this.groupId };
-    console.log('group ID : ', this.groupId);
 
     this.http.post<ApiResponse>(apiUrl, model).subscribe({
       next: (response) => {
         if (response.success) {
           this.group = response.group;
+          const { letter, color } = this.generateAvatar(this.group.name);
+          this.group.avatarColor = color;
+          this.group.avatarLetter = letter;
           this.isGroupPrivate = this.group.isPrivate;
           this.GropEvents = response.events as unknown as GroupEvent[];
           console.log(this.GropEvents)
@@ -121,6 +123,19 @@ export class GroupChatComponent implements OnInit {
 
   redirectToGroupPage(){
     this.router.navigate(['group-page']);
+  }
+
+  generateAvatar(name: string): { letter: string; color: string } {
+    const colors = [
+      '#F44336', '#E91E63', '#9C27B0', '#673AB7',
+      '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
+      '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+      '#FFEB3B', '#FFC107', '#FF9800', '#FF5722',
+    ];
+
+    const letter = name.charAt(0).toUpperCase();
+    const color = colors[name.charCodeAt(0) % colors.length];
+    return { letter, color };
   }
 
   // generateAvatar(name: string): { letter: string; color: string } {

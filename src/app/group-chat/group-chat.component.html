@@ -9,7 +9,14 @@
   <span class="mid-span" (click)="navigateToGroupInfo()">{{ group.name }}</span>
 
   <div class="btn2-container image">
-    <img class="img" [src]="group.image" (click)="navigateToGroupInfo()" />
+    @if(group.image){
+      <img class="img" [src]="group.image" (click)="navigateToGroupInfo()" />
+    }
+    @else{
+      <div class="day-event-avatar" [style.backgroundColor]="group.avatarColor">
+        {{ group.avatarLetter }}
+    </div>
+    }
   </div>
 </div>
 
