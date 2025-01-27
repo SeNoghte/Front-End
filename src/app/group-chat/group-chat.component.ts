@@ -29,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './group-chat.component.scss'
 })
 export class GroupChatComponent implements OnInit {
-
+  defaultTabIndex = 0;
   messages: Message[] = [];
   group!: Group;
   GropEvents!: GroupEvent[];
@@ -57,6 +57,10 @@ export class GroupChatComponent implements OnInit {
       this.toastrService.error('شناسه گروه یافت نشد.');
       return;
     }
+
+    this.route.queryParams.subscribe(params => {
+      this.defaultTabIndex = params['defaultNumber'] || 0; // Default to 0 if not provided
+    });
 
     this.route.queryParamMap.subscribe((params) => {
       this.fromWhere = params.get('fromWhere');

@@ -168,9 +168,11 @@ export class CreateEventComponent {
   }
 
   redirectToChatGroup() {
-    this.Router.navigate(['/chat-group', this.groupId]);
+    this.Router.navigate(['/chat-group', this.groupId], {
+      queryParams: { defaultNumber: 1 } 
+    });
   }
-
+  
 }
 
 interface ApiResponse {
