@@ -127,7 +127,7 @@ export class EventDetailComponent {
         if (res.success) {
           this.event = res.event as unknown as EventDetails;;
           // this.isEventPrivate = this.event.isPrivate;
-
+        
           this.persianDate = moment(this.event.date, 'YYYY-MM-DD')
             .locale('fa')
             .format('dddd jD jMMMM jYYYY');

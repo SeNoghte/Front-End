@@ -40,7 +40,7 @@
     <div class="event-header" *ngFor="let member of event.members">
       <div class="content">
         <img
-          src="../../../assets/icons/image.png"
+          [src]="member.image"
           alt="Profile"
           class="profile-image"
         />
