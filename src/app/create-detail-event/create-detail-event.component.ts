@@ -215,7 +215,7 @@ export class CreateDetailEventComponent implements OnInit {
   }
   ngOnInit(): void {
     this.eventDetails = {
-      address: "علم و صنعت",
+      address: "",
       latitude: 35.699768,
       longitude: 51.338062,
       saveAddress: false,
@@ -270,10 +270,10 @@ export class CreateDetailEventComponent implements OnInit {
         isPrivate: is_private,
         tasks: this.tasks(),
         tags: [],
-        cityId: this.eventDetails.cityId,
+        cityId: this.selectedCity?.cityId,
         address: this.eventDetails.address,
-        longitude: this.eventDetails.longitude,
-        latitude: this.eventDetails.latitude
+        longitude: this.selectedCity?.lng,
+        latitude: this.selectedCity?.lat
       };
 
       this.createEvent(CreateEventAPI,requestBody);
@@ -289,10 +289,10 @@ export class CreateDetailEventComponent implements OnInit {
         isPrivate: is_private,
         tasks: [],
         tags: this.tags(),
-        cityId: this.eventDetails.cityId,
+        cityId: this.selectedCity?.cityId,
         address: this.eventDetails.address,
-        longitude: this.eventDetails.longitude,
-        latitude: this.eventDetails.latitude
+        longitude: this.selectedCity?.lng,
+        latitude: this.selectedCity?.lat
       };
 
       this.createEvent(CreateEventAPI,requestBody);
