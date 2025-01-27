@@ -38,6 +38,15 @@
         </mat-form-field>
       </div>
     </form>
+    <hr class="divider" />
+    <div class="toggle">
+      <h3 class="topic">خصوصی</h3>
+      <mat-slide-toggle
+        labelPosition="before"
+        [checked]="newGroupInfo.controls.isPrivate.value"
+        (change)="toggleBox($event)"
+      ></mat-slide-toggle>
+    </div>
   </div>
 
 </div>
