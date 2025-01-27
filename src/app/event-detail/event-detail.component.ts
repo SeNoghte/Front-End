@@ -75,9 +75,26 @@ export class EventDetailComponent {
     this.navVisibilityService.hide();
     this.InitCityName();
     this.initMap();
-    this.getProfile();
-    this.getEventId();
-    this.fetchEvent()
+    this.initPage();
+  }
+
+  initPage(){
+    const GetProfileAPI = environment.apiUrl + '/User/Profile';
+
+    this.http.post<GetProfileApiResponse>(GetProfileAPI, {}).subscribe(
+      (res) => {
+        this.profile = res.user as unknown as User
+
+        this.route.queryParams.subscribe((params) => {
+          this.eventId = params['id'];
+        });
+
+        this.fetchEvent()
+      },
+      (err) => {
+        this.toastr.error('خطا در ثبت!');
+      }
+    );
   }
 
   getEventId() {

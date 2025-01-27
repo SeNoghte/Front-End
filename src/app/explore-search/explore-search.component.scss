@@ -17,12 +17,23 @@
     border-bottom: none;
   }
 
-  .image-pic , .event-pic {
+  .image-pic,
+  .event-pic {
     width: 2.5rem;
     height: 2.5rem;
-    background-color: var(--primary);
-    margin-left: 1rem;
+    background-color: var(--gray-1);
     border-radius: 50%;
+  }
+
+  .image-pic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  .event-title {
+    margin-inline-start: 1rem;
   }
 }
 
@@ -67,6 +78,16 @@ img.profile-image {
   height: 2rem;
 }
 
+.owner-image-avator {
+  width: 2rem;
+  border-radius: 50%;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray-2);
+}
+
 img.event-image {
   width: -webkit-fill-available;
   border-top-right-radius: 0.5rem;
@@ -101,7 +122,7 @@ img.event-image {
   // max-height: 3rem; /* محدود کردن ارتفاع به دو خط */
 }
 
-.group-image-replacement{
+.group-image-replacement {
   width: 100%;
   height: 4rem;
   background-color: var(--gray-1);

@@ -85,6 +85,7 @@ export class ExploreSearchComponent {
 
     this.http.post<ExploreGroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
       (res) => {
+        console.log(res)
         this.publicGroups = res.filteredGroups
       },
       (err) => {
