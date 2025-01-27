@@ -61,7 +61,7 @@ export class SignUpComponent {
     if (this.signUpForm.valid) {
       const email = this.signUpForm.value.email;
 
-      this.http.post<VerificationResponse>(this.apiUrl, { email }).subscribe({
+      this.http.post<VerificationResponse>(this.apiUrl, { email : email , isForPasswordRecovery : false }).subscribe({
         next: (response) => {
           var verificationCodeId = '';
           if(response.success){
