@@ -40,6 +40,12 @@
     align-items: center;
     padding: 0.5rem 0;
     border-bottom: 1px solid var(--gray-2);
+
+    img.event-image[_ngcontent-ng-c2301464283] {
+      width: -webkit-fill-available;
+      height: -webkit-fill-available;
+      border-radius: 50%;
+    }
   }
 
   .group-preview:last-child {
