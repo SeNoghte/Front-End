@@ -1,4 +1,4 @@
-<div class="chat-box">
+<div [ngClass]="{'no-chat-box': !group.isPrivate && !group.isAdmin, 'chat-box': group.isPrivate || (!group.isPrivate && group.isAdmin)}">
     <div *ngFor="let msg of messages" class="total-message">
         <div [ngClass]="{'message-mine': msg.isMe, 'message-theirs': !msg.isMe }">
 
@@ -29,8 +29,20 @@
     </div>
 
 </div>
-<div class="input-container" [ngClass]="{ 'focused': inputValue !== '' }">
-    <img *ngIf="sendingMessage != ''" (click)="sendMessage()" src="assets/icons/up.svg">
-    <input class="field" style="margin-right: 20px;" type="text" placeholder="پیام" [(ngModel)]="sendingMessage"
-        (ngModelChange)="adjustInputWidth()" />
-</div>
+
+@if(!group.isPrivate){
+    @if(group.isAdmin){
+        <div class="input-container" [ngClass]="{ 'focused': inputValue !== '' }">
+            <img *ngIf="sendingMessage != ''" (click)="sendMessage()" src="assets/icons/up.svg">
+            <input class="field" style="margin-right: 20px;" type="text" placeholder="پیام" [(ngModel)]="sendingMessage"
+                (ngModelChange)="adjustInputWidth()" />
+        </div>
+    }
+}
+@else{
+    <div class="input-container" [ngClass]="{ 'focused': inputValue !== '' }">
+        <img *ngIf="sendingMessage != ''" (click)="sendMessage()" src="assets/icons/up.svg">
+        <input class="field" style="margin-right: 20px;" type="text" placeholder="پیام" [(ngModel)]="sendingMessage"
+            (ngModelChange)="adjustInputWidth()" />
+    </div>
+}
