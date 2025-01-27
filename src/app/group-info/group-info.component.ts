@@ -136,19 +136,24 @@ export class GroupInfoComponent implements OnInit {
       usersToAdd: [this.newMemberEmail],
     };
 
+    console.log(requestBody);
+
     this.http.post<any>(apiUrl, requestBody).subscribe(
       (response) => {
+        console.log(response);
         if (response.success) {
           this.addMemberMessage = 'عضو با موفقیت اضافه شد!';
           this.newMemberEmail = '';
           this.fetchGroupInfo();
+          this.toastr.success(this.addMemberMessage);
         } else {
           this.addMemberMessage = `خطا: ${response.message}`;
+          this.toastr.error(this.addMemberMessage);
         }
       },
       (error) => {
         this.addMemberMessage = 'خطا در برقراری ارتباط با سرور.';
-        console.error('Error adding member:', error);
+        this.toastr.success(this.addMemberMessage);
       }
     );
   }
