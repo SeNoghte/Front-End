@@ -78,7 +78,7 @@ export class EventDetailComponent {
     this.initPage();
   }
 
-  initPage(){
+  initPage() {
     const GetProfileAPI = environment.apiUrl + '/User/Profile';
 
     this.http.post<GetProfileApiResponse>(GetProfileAPI, {}).subscribe(
@@ -127,7 +127,7 @@ export class EventDetailComponent {
         if (res.success) {
           this.event = res.event as unknown as EventDetails;;
           // this.isEventPrivate = this.event.isPrivate;
-        
+
           this.persianDate = moment(this.event.date, 'YYYY-MM-DD')
             .locale('fa')
             .format('dddd jD jMMMM jYYYY');
@@ -143,8 +143,8 @@ export class EventDetailComponent {
             this.isUserInMembers = false;
           }
 
-          console.log('is user in members : ' , this.isUserInMembers)
-          console.log('is event passed : ' , this.isPastEvent)
+          console.log('is user in members : ', this.isUserInMembers)
+          console.log('is event passed : ', this.isPastEvent)
 
           this.tasksAssigned = res.tasks.filter((task: Task) => task.assignedUserId);
           this.tasksUnassigned = res.tasks.filter((task: Task) => !task.assignedUserId);
@@ -253,11 +253,9 @@ export class EventDetailComponent {
   }
 
   goBack(): void {
-    if (window.history.length > 1) {
-      this.location.back();
-    } else {
-      this.router.navigate(['/default-route']);
-    }
+    this.router.navigate(['/chat-group', this.event.groupId], {
+      queryParams: { defaultNumber: 1 }
+    });
   }
 
   InitCityName() {
