@@ -15,7 +15,12 @@
       alt="Event Image"
       class="event-image"
     />
-    <div *ngIf="!event.imagePath" class="event-image-replacement"></div>
+    <img
+      *ngIf="!event.imagePath"
+      src="assets/icons/group-default-photo.svg"
+      alt="Event Image"
+      class="event-image-replacement"
+    />
   </div>
 
   <div class="event-info">
