@@ -9,7 +9,6 @@ import moment from 'jalali-moment';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { Router, RouterModule } from '@angular/router';
 import { NzPopoverModule } from 'ng-zorro-antd/popover'
 import { environment } from '../../environments/environment';
