@@ -60,11 +60,8 @@ export const MOMENT_FORMATS: MatDateFormats = {
   ],
 })
 
-export class CreateEventComponent {
-  selectedDate: Date | null = null;
-  selectedFile: File | null = null;
+export class CreateEventComponent {  selectedFile: File | null = null;
   imagePath = '';
-  date = "";
   groupId: string = '';
   isGroupPrivate: boolean = false;
 
@@ -149,7 +146,7 @@ export class CreateEventComponent {
   onSubmit() {
     if (this.createEventForm.controls.date) {
       this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
-    }
+    }    
 
     const createEventApiUrl = environment.apiUrl + '/Event/Create';
     this.http.post<CreateEventApiResponse>(createEventApiUrl, this.createEventForm.value).subscribe(
@@ -158,7 +155,7 @@ export class CreateEventComponent {
           this.toastr.success('رویداد با موفقیت ایجاد شد.');
         }
         else {
-          this.toastr.error('خطا در ثبت!');
+          this.toastr.error(res.message);
         }
       },
       (err) => {

@@ -51,7 +51,7 @@ export interface Tag {
 export class EventDetailComponent {
   eventId !: number;
   profile!: User;
-  event!: EventDetails
+  event!: EventDetails;
   isPastEvent: boolean = false;
   isUserInMembers: boolean = false;
   persianDate: string = '';
@@ -73,8 +73,6 @@ export class EventDetailComponent {
 
   ngOnInit() {
     this.navVisibilityService.hide();
-    this.InitCityName();
-    this.initMap();
     this.initPage();
   }
 
@@ -150,6 +148,9 @@ export class EventDetailComponent {
           this.tasksUnassigned = res.tasks.filter((task: Task) => !task.assignedUserId);
 
           this.tags = res.tags.map((tag: Tag) => tag.tag);
+
+          this.InitCityName(res.event.cityId);
+          this.initMap(res.event.longitude, res.event.latitude);
         } else {
           this.toastr.error(res.message || 'اطلاعات دریافتی ناقص است.');
         }
@@ -258,19 +259,19 @@ export class EventDetailComponent {
     });
   }
 
-  InitCityName() {
+  InitCityName(cityId:number) {
     if (1)
       this.http.get<City[]>('assets/cities.json').subscribe(data => {
-        let city: City | undefined = data.find(x => x.cityId == 1);
+        let city: City | undefined = data.find(x => x.cityId == cityId);
 
-        // this.event.cityName = city?.name ?? '';
+        this.event.cityName = city?.name ?? '';
       });
   }
 
-  private initMap(): void {
+  private initMap(long:number, lat:number): void {
 
     // Initialize the map
-    this.map = L.map('map').setView([51.338062, 35.699768], 13);
+    this.map = L.map('map').setView([lat, long], 13);
 
     // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -286,7 +287,7 @@ export class EventDetailComponent {
     });
 
     // Add the marker with the custom icon
-    const marker = L.marker([51.338062, 35.699768], { icon: customIcon });
+    const marker = L.marker([lat, long], { icon: customIcon });
     marker.addTo(this.map);
   }
 }

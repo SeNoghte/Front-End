@@ -65,7 +65,7 @@
 
       <mat-form-field class="textarea-field" appearance="outline">
         <mat-label>آدرس</mat-label>
-        <textarea matInput [value]="eventDetails.address"></textarea>
+        <textarea matInput [(ngModel)]="eventDetails.address"></textarea>
       </mat-form-field>
 
       <div id="map" style="height: 15rem; margin-top: 1.5rem"></div>

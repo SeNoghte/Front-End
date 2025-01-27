@@ -157,6 +157,8 @@ export interface EventDetails {
   isPrivate: boolean;
   members?: Member[];
   tasks?: Task[];
+  cityName?:string;
+  address?:string;
 }
 
 export interface Task {
@@ -175,7 +177,7 @@ export interface GetEventApiResponse {
   success: boolean;
   message: string;
   errorCode: number;
-  event: Event;
+  event: any;
   tasks: Task[];
   tags: Tag[];
 }
