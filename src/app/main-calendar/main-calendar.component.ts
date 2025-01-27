@@ -10,6 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPopoverModule } from 'ng-zorro-antd/popover'
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-main-calendar',
@@ -44,7 +46,7 @@ export class MainCalendarComponent {
   groupId: string = "";
 
   constructor(
-    public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute,
+    public readonly momentService: MomentService, private http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute,private router: Router
   ) { }
 
   clickMe(): void {
@@ -296,6 +298,10 @@ export class MainCalendarComponent {
     const letter = name.charAt(0).toUpperCase();
     const color = colors[name.charCodeAt(0) % colors.length];
     return { letter, color };
+  }
+
+  redirectToDetail(id: string){
+    this.router.navigate(['/show-event-detail'], { queryParams: { id } });
   }
 
 }
