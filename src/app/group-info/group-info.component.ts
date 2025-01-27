@@ -55,6 +55,7 @@ export class GroupInfoComponent implements OnInit {
   isAdmin: boolean = false;
   isFollowing: boolean = false;
   token: any;
+  groups: FilteredUser[] = [];
 
   constructor(
     private http: HttpClient,
@@ -68,6 +69,7 @@ export class GroupInfoComponent implements OnInit {
   ngOnInit(): void {
     this.navVisibilityService.hide();
     this.fetchGroupInfo();
+    this.getGroups()
   }
 
 
@@ -119,6 +121,33 @@ export class GroupInfoComponent implements OnInit {
     }
   }
 
+  getGroups() {
+    const APIurl = `${environment.apiUrl}/User/GetUsers`;
+    const RequestBody = {
+      filter: '',
+      pageIndex: 1,
+      pageSize: 1000,
+    };
+
+    this.http.post<GetUsersResponse>(APIurl, RequestBody).subscribe(
+      (response) => {
+        if (response.success) {
+          this.groups = response.filteredUsers;
+          console.log('کاربران دریافت شدند:', this.groups);
+          console.log(this.groups);
+        } else {
+          console.error(`خطا در دریافت کاربران: ${response.message}`);
+        this.toastr.error(`خطا در دریافت کاربران: ${response.message}`);
+
+        }
+      },
+      (error) => {
+        console.error('خطا در برقراری ارتباط با سرور:', error);
+        this.toastr.error('خطا در برقراری ارتباط با سرور.', 'Error');
+      }
+    );
+  }
+
   addMember(): void {
     if (!this.newMemberEmail.trim()) {
       this.addMemberMessage = 'لطفاً ایمیل یا شناسه عضو را وارد کنید.';
@@ -130,6 +159,26 @@ export class GroupInfoComponent implements OnInit {
       return;
     }
 
+    const emailOrUsernameToFind = this.newMemberEmail;
+    const user = this.groups.find((group) =>
+      group.email === emailOrUsernameToFind || group.username === emailOrUsernameToFind
+    );
+
+    if (user) {
+      const userId = user.userId;
+      this.newMemberEmail = userId;
+      console.log('UserId پیدا شد:', userId);
+      this.AddMember();
+    } else {
+      console.error('کاربری با این ایمیل یا نام کاربری پیدا نشد.');
+      this.toastr.error('کاربری با این ایمیل یا نام کاربری پیدا نشد.');
+    }
+
+    this.isAddMemberModalVisible = !this.isAddMemberModalVisible
+  }
+
+
+  AddMember() {
     const apiUrl = `${environment.apiUrl}/Group/AddMember`;
     const requestBody = {
       groupId: this.group.id,
@@ -142,17 +191,20 @@ export class GroupInfoComponent implements OnInit {
           this.addMemberMessage = 'عضو با موفقیت اضافه شد!';
           this.newMemberEmail = '';
           this.fetchGroupInfo();
+          this.toastr.success('با موفقیت افزوده شد');
+
         } else {
           this.addMemberMessage = `خطا: ${response.message}`;
+          this.toastr.error(this.addMemberMessage)
         }
       },
       (error) => {
         this.addMemberMessage = 'خطا در برقراری ارتباط با سرور.';
         console.error('Error adding member:', error);
+        this.toastr.error(this.addMemberMessage)
       }
     );
   }
-
 
   joinGroup(): void {
     if (!this.group) {
@@ -236,4 +288,22 @@ export class GroupInfoComponent implements OnInit {
     const groupId = this.route.snapshot.paramMap.get('id');
     this.router.navigate(['/chat-group', groupId]);
   }
+}
+
+
+export interface FilteredUser {
+  userId: string;
+  name: string;
+  username: string;
+  email: string;
+  joinedDate: string;
+  image?: string | null;
+  aboutMe?: string | null;
+}
+
+export interface GetUsersResponse {
+  filteredUsers: FilteredUser[];
+  success: boolean;
+  message?: string | null;
+  errorCode: number;
 }
