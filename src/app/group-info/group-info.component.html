@@ -41,6 +41,7 @@
 
     <div class="members" *ngIf="isFollowing">
       <button
+        *ngIf="isAdmin"
         class="add-member"
         [class.no-border]="isFollowing"
         (click)="toggleAddMemberModal()"
