@@ -218,7 +218,7 @@ export class CreateDetailEventComponent implements OnInit {
       address: "علم و صنعت",
       latitude: 35.699768,
       longitude: 51.338062,
-      saveAddress: true,
+      saveAddress: false,
       cityId: 1
     }
 
@@ -294,7 +294,7 @@ export class CreateDetailEventComponent implements OnInit {
         longitude: this.eventDetails.longitude,
         latitude: this.eventDetails.latitude
       };
-      
+
       this.createEvent(CreateEventAPI,requestBody);
     }
   }
