@@ -15,7 +15,14 @@
             </div>
 
             @if(!msg.isMe){
+            @if(msg.image){
             <img [src]="msg.image" alt="Profile Image" class="profile-image">
+            }
+            @else{
+            <div class="day-event-avatar" [style.backgroundColor]="msg.avatarColor">
+                {{ msg.avatarLetter }}
+            </div>
+            }
             }
         </div>
 

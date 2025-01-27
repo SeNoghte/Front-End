@@ -19,6 +19,8 @@ export interface Group {
   isMember: boolean;
   owner: User;
   members: User[];
+  avatarLetter: string,
+  avatarColor: string,
 }
 
 export interface GroupEvent {
@@ -72,6 +74,8 @@ export interface Message {
   userId: string;
   isMe?: boolean;
   image?: string;
+  avatarLetter: string,
+  avatarColor: string,
 }
 
 export interface SendMessageToGroupRequest {
