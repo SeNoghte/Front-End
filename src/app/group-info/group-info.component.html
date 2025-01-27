@@ -5,11 +5,15 @@
         <img class="back" src="assets/icons/back.svg" alt="بازگشت" />
         بازگشت
       </div>
-      <button class="edit" [routerLink]="'/group-edit'" (click)="editGroup()">
+      <button
+        *ngIf="isAdmin"
+        class="edit"
+        [routerLink]="'/group-edit'"
+        (click)="editGroup()"
+      >
         ویرایش
       </button>
     </div>
-
     <div class="group-logo">
       <ng-container *ngIf="group.imageUrl; else defaultAvatar">
         <img [src]="group.imageUrl" alt="Group Logo" />
