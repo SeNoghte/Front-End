@@ -75,25 +75,21 @@ export class EventDetailComponent {
     this.navVisibilityService.hide();
     this.InitCityName();
     this.initMap();
-    this.getProfile();
-    this.getEventId();
-    this.fetchEvent()
+    this.initPage();
   }
 
-  getEventId() {
-    this.route.queryParams.subscribe((params) => {
-      this.eventId = params['id'];
-      console.log('Event ID:', this.eventId);
-    });
-  }
-
-  getProfile() {
+  initPage() {
     const GetProfileAPI = environment.apiUrl + '/User/Profile';
 
     this.http.post<GetProfileApiResponse>(GetProfileAPI, {}).subscribe(
       (res) => {
-        console.log(res)
         this.profile = res.user as unknown as User
+
+        this.route.queryParams.subscribe((params) => {
+          this.eventId = params['id'];
+        });
+
+        this.fetchEvent()
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
@@ -142,11 +138,13 @@ export class EventDetailComponent {
 
           if (this.event.members!!.length > 0) {
             this.isUserInMembers = this.checkUserInEventMembers(this.event, this.profile.username);
-            console.log('is user in event members : ', this.isUserInMembers)
           }
           else {
             this.isUserInMembers = false;
           }
+
+          console.log('is user in members : ', this.isUserInMembers)
+          console.log('is event passed : ', this.isPastEvent)
 
           this.tasksAssigned = res.tasks.filter((task: Task) => task.assignedUserId);
           this.tasksUnassigned = res.tasks.filter((task: Task) => !task.assignedUserId);
@@ -255,11 +253,9 @@ export class EventDetailComponent {
   }
 
   goBack(): void {
-    if (window.history.length > 1) {
-      this.location.back();
-    } else {
-      this.router.navigate(['/default-route']);
-    }
+    this.router.navigate(['/chat-group', this.event.groupId], {
+      queryParams: { defaultNumber: 1 }
+    });
   }
 
   InitCityName() {

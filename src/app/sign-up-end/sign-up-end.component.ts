@@ -63,9 +63,6 @@ export class SignUpEndComponent {
     this.route.queryParams.subscribe(params => {
       this.email = params['email'];
       this.verificationCodeId = params['verificationCodeId'];
-
-      console.log(this.email);
-      console.log(this.verificationCodeId);
     });
   }
 

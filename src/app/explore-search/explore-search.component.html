@@ -46,18 +46,26 @@
 
             <div class="event-header">
               <img
-                src="../../../assets/icons/image.png"
+                *ngIf="group.owner.image"
+                [src]=group.owner.image
                 alt="Profile"
                 class="profile-image"
               />
-              <span class="profile-name">owner name</span>
+
+              <div
+              class="owner-image-avator"
+              *ngIf="!group.owner.image">
+                {{group.owner.name[0]}}
+              </div>
+
+              <span class="profile-name">{{group.owner.name}}</span>
             </div>
           </div>
 
           <div class="event-info">
             <h3 class="event-title">{{ group.name }}</h3>
             <p class="event-description">{{ group.description }}</p>
-            <div class="event-date">{{ group.createdDate }}</div>
+            <div class="event-date">{{ dateToJalali(group.createdDate) }}</div>
           </div>
         </div>
       </div>
@@ -68,9 +76,13 @@
       <div matRipple class="group-preview" *ngFor="let event of searchedEvents" (click)="navigateToShowEventDetail(event.id)">
         <div class="image-pic">
           <img class="event-pic" *ngIf="event.imagePath" [src]=event.imagePath>
+
+          <div *ngIf="!event.imagePath">
+              {{event.title[0]}}
+          </div>
         </div>
 
-        <span>
+        <span class="event-title">
           {{ event.title }}
         </span>
       </div>

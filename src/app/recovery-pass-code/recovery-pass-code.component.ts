@@ -54,8 +54,6 @@ export class RecoveryPassCodeComponent {
   ) { }
 
   ngOnInit(): void {
-    console.log('here : recovery pass code')
-
     this.navVisibilityService.hide()
 
     this.route.queryParams.subscribe(params => {

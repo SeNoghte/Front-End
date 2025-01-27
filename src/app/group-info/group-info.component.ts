@@ -100,9 +100,6 @@ export class GroupInfoComponent implements OnInit {
           this.isAdmin = groupData.isAdmin;
           this.isFollowing = groupData.isMember;
 
-          console.log('Group Data:', this.group);
-          console.log('Is Admin:', this.isAdmin);
-          console.log('Is Following:', this.isFollowing);
         } else {
           this.toastr.error(response.message || 'Failed to fetch group info.', 'Error');
         }
@@ -231,7 +228,6 @@ export class GroupInfoComponent implements OnInit {
   }
 
   editGroup(): void {
-    console.log('Edit button clicked');
     const groupId = this.route.snapshot.paramMap.get('id');
     this.router.navigate(['/group-edit', groupId])
   }

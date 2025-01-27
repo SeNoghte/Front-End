@@ -93,7 +93,7 @@
           >
             {{ task }}
             <button matChipRemove [attr.aria-label]="'Remove ' + task">
-              <mat-icon>cancel</mat-icon>
+              <img src="assets/icons/close-icon.svg" />
             </button>
           </mat-chip-row>
         </mat-chip-grid>
@@ -122,7 +122,6 @@
     </div>
 
     <div class="chip-container" *ngIf="isTaskBoxVisible && !isEventPrivate">
-
       <mat-form-field appearance="outline" class="example-chip-list">
         <mat-label>افزودن برچسب...</mat-label>
         <mat-chip-grid #chipGrid aria-label="Tag selection">
@@ -132,7 +131,7 @@
           >
             {{ tag }}
             <button matChipRemove [attr.aria-label]="'Remove ' + tag">
-              <mat-icon>cancel</mat-icon>
+              <img src="assets/icons/close-icon.svg" />
             </button>
           </mat-chip-row>
         </mat-chip-grid>
@@ -167,6 +166,7 @@
           matInput
           type="number"
           [(ngModel)]="numberValue"
+          placeholder="123"
         />
       </mat-form-field>
     </div>

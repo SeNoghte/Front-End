@@ -94,14 +94,11 @@ export class CreateEventComponent {
       }
       );
     this.createEventForm.controls.groupId.setValue(this.groupId);
-
-    console.log(' is group private ?   : ' , this.isGroupPrivate)
   }
 
   redirectDetailEvent() {
     const formData = this.createEventForm.value;
     this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
-    console.log(formData);
     this.Router.navigate(['/event-detail'],
       {
         queryParams: {
@@ -154,16 +151,13 @@ export class CreateEventComponent {
       this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
     }
 
-    console.log(this.createEventForm.value)
     const createEventApiUrl = environment.apiUrl + '/Event/Create';
     this.http.post<CreateEventApiResponse>(createEventApiUrl, this.createEventForm.value).subscribe(
       (res: any) => {
         if (res.success) {
-          console.log(res);
           this.toastr.success('رویداد با موفقیت ایجاد شد.');
         }
         else {
-          console.log(res)
           this.toastr.error('خطا در ثبت!');
         }
       },
@@ -174,9 +168,11 @@ export class CreateEventComponent {
   }
 
   redirectToChatGroup() {
-    this.Router.navigate(['/chat-group', this.groupId]);
+    this.Router.navigate(['/chat-group', this.groupId], {
+      queryParams: { defaultNumber: 1 } 
+    });
   }
-
+  
 }
 
 interface ApiResponse {

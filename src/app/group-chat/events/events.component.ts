@@ -24,14 +24,13 @@ import moment from 'moment-jalaali';
 export class EventsComponent {
   @Input() GropEvents!: GroupEvent[];
   @Input() isPrivate!: boolean;
-  viewMode: 'calendar_view' | 'headline_view' = 'calendar_view';
+  viewMode: 'calendar_view' | 'headline_view' = 'headline_view';
 
   onToggleChange(value: 'calendar_view' | 'headline_view') {
     this.viewMode = value;
   }
 
   ngOnInit() {
-    console.log("events in events : ", this.GropEvents)
   }
 
   constructor(
@@ -57,10 +56,7 @@ export class EventsComponent {
   }
 
   dateToJalali(date: string) {
-    //2024-07-11
-    //01/25/2025
     const formattedDate = date.substring(6,10)+'-'+date.substring(0,2)+'-'+date.substring(3,5);
-    console.log(formattedDate);
     return moment(formattedDate, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
   }
 }

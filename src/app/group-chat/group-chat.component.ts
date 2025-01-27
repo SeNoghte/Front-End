@@ -29,7 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './group-chat.component.scss'
 })
 export class GroupChatComponent implements OnInit {
-
+  defaultTabIndex = 0;
   messages: Message[] = [];
   group!: Group;
   GropEvents!: GroupEvent[];
@@ -58,9 +58,12 @@ export class GroupChatComponent implements OnInit {
       return;
     }
 
+    this.route.queryParams.subscribe(params => {
+      this.defaultTabIndex = params['defaultNumber'] || 0; // Default to 0 if not provided
+    });
+
     this.route.queryParamMap.subscribe((params) => {
       this.fromWhere = params.get('fromWhere');
-      console.log('Additional Data:', this.fromWhere);
     });
 
     const apiUrl = `https://api.becheen.ir:6001/api/Group/GetGroup`;
@@ -75,7 +78,6 @@ export class GroupChatComponent implements OnInit {
           this.group.avatarLetter = letter;
           this.isGroupPrivate = this.group.isPrivate;
           this.GropEvents = response.events as unknown as GroupEvent[];
-          console.log(this.GropEvents)
         } else {
           this.toastrService.error(response.message);
         }
@@ -98,7 +100,6 @@ export class GroupChatComponent implements OnInit {
   }
 
   navigateToGroupPage(){
-    console.log('fromWhere' , this.fromWhere)
     if(this.fromWhere == null){
       this.router.navigate(['/group-page']);
     }

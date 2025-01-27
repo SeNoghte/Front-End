@@ -69,13 +69,15 @@ export class LandingComponent {
   sendAuthorizationCode(authCode: String) {
     const authorizationCode = authCode;
     const apiUrl = environment.apiUrl +'/User/GoogleLogin';
-    const requestBody = { authorizationCode };
+    const requestBody = { authorizationCode : authorizationCode };
 
     this.http.post(apiUrl, requestBody).subscribe(
       (response: any) => {
         if (response.success && response.token) {
-          console.log('JWT Token:', response.token);
-          localStorage.setItem('jwtToken', response.token);
+          console.log('JWT Token recieved :', response.token);
+          localStorage.setItem('JWTtoken', response.token);
+          const token = localStorage.getItem('JWTtoken');
+          console.log('loaded token from local storage : ', token);
         } else {
           console.error('Failed to retrieve JWT token:', response.message);
         }

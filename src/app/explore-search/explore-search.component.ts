@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { ExploreGroupsApiResponse, GetPublicEventListSearchApiResponse, Group, SearchedEvents, TagsApiResponse } from '../shared/models/group-model-type';
 import { ToastrService } from 'ngx-toastr';
+import moment from 'moment-jalaali';
 
 @Component({
   selector: 'app-explore-search',
@@ -84,7 +85,7 @@ export class ExploreSearchComponent {
 
     this.http.post<ExploreGroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
       (res) => {
-        console.log(res);
+        console.log(res)
         this.publicGroups = res.filteredGroups
       },
       (err) => {
@@ -101,7 +102,6 @@ export class ExploreSearchComponent {
     this.http.post<GetPublicEventListSearchApiResponse>(GetEventsAPI, eventsRequestBody).subscribe(
       (res) => {
         this.searchedEvents = res.items
-        console.log('searched events : ', this.searchedEvents)
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
@@ -122,7 +122,6 @@ export class ExploreSearchComponent {
 
   onSearch() {
     this.searchSubject.next(this.searchTerm);
-    console.log(this.searchTerm)
 
     const GetEventsAPI = environment.apiUrl + '/Event/GetPublicEventListSearch';
 
@@ -133,7 +132,6 @@ export class ExploreSearchComponent {
     this.http.post<GetPublicEventListSearchApiResponse>(GetEventsAPI, eventsRequestBody).subscribe(
       (res) => {
         this.searchedEvents = res.items
-        console.log('searched events : ', this.searchedEvents)
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
@@ -151,7 +149,6 @@ export class ExploreSearchComponent {
 
     this.http.post<ExploreGroupsApiResponse>(GetGroupsAPI, requestBody).subscribe(
       (res) => {
-        console.log(res);
         this.publicGroups = res.filteredGroups
       },
       (err) => {
@@ -170,12 +167,13 @@ export class ExploreSearchComponent {
     this.Router.navigate(['show-event-detail'], { queryParams: { id: id } });
   }
 
+  dateToJalali(date: string) {
+    return moment(date, 'YYYY-MM-DD').locale('fa').format('dddd jD jMMMM jYYYY');
+  }
+
   onTabChange(event: any): void {
-    // `event.index` gives the index of the selected tab
     if (event.index === 0) {
-      // Show the navigation bar for Option 1
     } else if (event.index === 1) {
-      // Hide the navigation bar for Option 2
     }
   }
 }
