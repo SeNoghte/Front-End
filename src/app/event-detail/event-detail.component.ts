@@ -97,25 +97,6 @@ export class EventDetailComponent {
     );
   }
 
-  getEventId() {
-    this.route.queryParams.subscribe((params) => {
-      this.eventId = params['id'];
-    });
-  }
-
-  getProfile() {
-    const GetProfileAPI = environment.apiUrl + '/User/Profile';
-
-    this.http.post<GetProfileApiResponse>(GetProfileAPI, {}).subscribe(
-      (res) => {
-        this.profile = res.user as unknown as User
-      },
-      (err) => {
-        this.toastr.error('خطا در ثبت!');
-      }
-    );
-  }
-
   LeaveEvent() {
     const LeaveEvent = environment.apiUrl + '/Event/LeaveEvent';
 
