@@ -7,12 +7,14 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../environments/environment';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 
 @Component({
   selector: 'app-create-group',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule,MatSlideToggleModule],
   templateUrl: './create-group.component.html',
   styleUrl: './create-group.component.scss'
 })
@@ -25,6 +27,7 @@ export class CreateGroupComponent {
     description: new FormControl<string>(''),
     imageUrl: new FormControl<string>(''),
     membersToAdd: new FormControl([]),
+    isPrivate: new FormControl<boolean>(true),
   });
 
   data = {
@@ -90,6 +93,10 @@ export class CreateGroupComponent {
 
   redirectToGroupPage(){
     this.Router.navigate(['group-page']);
+  }
+
+  toggleBox(event: any): void {
+      this.newGroupInfo.controls.isPrivate.setValue(event.checked);
   }
 
 }

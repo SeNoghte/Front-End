@@ -96,3 +96,20 @@
         width: 100%;
     }
 }
+
+.divider {
+    width: 90%;
+    margin: 20px auto;
+    border-top: 1px solid var(--gray-3);
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 6rem;
+}
+
+.topic {
+    margin: 0;
+}
