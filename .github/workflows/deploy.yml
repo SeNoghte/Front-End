@@ -1,0 +1,40 @@
+name: Deploy Angular App
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16  # Ensure it matches your Angular version requirements
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: npm ci
+
+    # Step 4: Build the project
+    - name: Build Angular project
+      run: npm run build -- --prod
+
+    # Step 5: Deploy to the server
+    - name: Deploy to server
+      env:
+        HOST: ${{ secrets.SERVER_HOST }}
+        USER: ${{ secrets.SERVER_USER }}
+        KEY: ${{ secrets.SERVER_SSH_KEY }}
+      run: |
+        echo "${KEY}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        rsync -avz --delete dist/your-project-name/ ${USER}@${HOST}:/var/www/becheen.ir
