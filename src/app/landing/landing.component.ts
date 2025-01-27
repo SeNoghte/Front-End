@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPopoverModule } from 'ng-zorro-antd/popover'
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-landing',
@@ -64,8 +65,40 @@ export class LandingComponent {
   weeksByMonth: { month: MonthsModel; weeks: dayInMonthModel[][] }[] = [];
 
 
+  sendAuthorizationCode(authCode: String) {
+    const authorizationCode = authCode;
+    const apiUrl = environment.apiUrl +'/User/GoogleLogin';
+    const requestBody = { authorizationCode };
+
+    this.http.post(apiUrl, requestBody).subscribe(
+      (response: any) => {
+        if (response.success && response.token) {
+          console.log('JWT Token:', response.token);
+          localStorage.setItem('jwtToken', response.token);
+        } else {
+          console.error('Failed to retrieve JWT token:', response.message);
+        }
+      },
+      (error) => {
+        console.error('API Error:', error);
+      }
+    );
+  }
+
+  getCodeFromUrl(): string | null {
+    const urlParams = new URLSearchParams(window.location.search);
+    let token = urlParams.get('code');
+
+    return token;
+  }
 
   ngOnInit(): void {
+    const token = this.getCodeFromUrl();
+    console.log('Received code Token from google :', token);
+    if (token){
+      this.sendAuthorizationCode(token)
+    }
+
     const id = this.route.snapshot.paramMap.get('id');
     this.momentService.timeSynced.subscribe(() => {
         this.goToday();
