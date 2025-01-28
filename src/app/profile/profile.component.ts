@@ -130,7 +130,7 @@ export class ProfileComponent implements OnInit {
           this.programs = response.myEvents.map((event: any) => ({
             id: event.id,
             name: event.title || 'بدون عنوان',
-            imagePath: event.imagePath || 'assets/icons/default-event-image.svg',
+            imagePath: event.imagePath || null,
           }));
         } else {
           this.toastr.warning('برنامه‌ای برای نمایش وجود ندارد.', 'هشدار');
