@@ -34,6 +34,17 @@ export class ProfileComponent implements OnInit {
 
   teams: {id: string, name: string; icon: string | null; avatarLetter: string; avatarColor: string; isPrivate: boolean }[] = [];
 
+  programs: {
+    id: string;
+    name: string;
+    description: string;
+    date: string;
+    time: string;
+    groupName: string;
+    imagePath: string;
+  }[] = [];
+
+
 
 
   programsMessage = {
@@ -49,6 +60,7 @@ export class ProfileComponent implements OnInit {
     moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' });
     this.fetchUserProfile();
     this.fetchUserTeams();
+    this.fetchUserPrograms();
 
   }
 
@@ -110,6 +122,32 @@ export class ProfileComponent implements OnInit {
   }
 
 
+  fetchUserPrograms(): void {
+    const apiUrl = environment.apiUrl + '/Event/GetMyEvents'; // مسیر API
+
+    this.http.post<any>(apiUrl, {}).subscribe(
+      (response) => {
+        if (response.success && response.myEvents) {
+          this.programs = response.myEvents.map((event: any) => ({
+            id: event.id,
+            name: event.title || 'بدون عنوان',
+            imagePath: event.imagePath || 'assets/icons/default-event-image.svg',
+          }));
+        } else {
+          this.toastr.warning('برنامه‌ای برای نمایش وجود ندارد.', 'هشدار');
+          console.error('No events found or error in API response');
+        }
+      },
+      (error) => {
+        this.toastr.error('ارتباط با سرور برقرار نشد', 'خطا در دریافت رویدادها');
+        console.error('API request failed:', error);
+      }
+    );
+  }
+
+
+
+
 
   switchTab(tab: string): void {
     this.activeTab = tab;
@@ -135,6 +173,11 @@ export class ProfileComponent implements OnInit {
   redirectToLanding(){
     this.Router.navigate(['landing']);
   }
+
+  redirectToEvent(id: string): void {
+    this.Router.navigate(['/show-event-detail', id]);
+  }
+
 
   redirectToChatGroup(id: string){
     this.Router.navigate(['/chat-group', id]);
