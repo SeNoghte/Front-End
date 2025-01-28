@@ -1,40 +1,69 @@
-name: Deploy Angular App
+name: CI/CD Pipeline for Angular App
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Set up Node.js
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16  # Ensure it matches your Angular version requirements
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
-    # Step 3: Install dependencies
-    - name: Install dependencies
-      run: npm ci
+      # Install dependencies and run build
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build --prod
 
-    # Step 4: Build the project
-    - name: Build Angular project
-      run: npm run build -- --prod
+      # Set up Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
 
-    # Step 5: Deploy to the server
-    - name: Deploy to server
-      env:
-        HOST: ${{ secrets.SERVER_HOST }}
-        USER: ${{ secrets.SERVER_USER }}
-        KEY: ${{ secrets.SERVER_SSH_KEY }}
-      run: |
-        echo "${KEY}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        rsync -avz --delete dist/your-project-name/ ${USER}@${HOST}:/var/www/becheen.ir
+      # Build Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t your-dockerhub-username/angular-app:latest .
+
+      # Log in to DockerHub
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Push Docker image to DockerHub
+      - name: Push Docker image
+        run: |
+          docker push your-dockerhub-username/angular-app:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      # SSH into server and deploy the app
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            docker pull your-dockerhub-username/angular-app:latest
+            docker stop angular-app || true
+            docker rm angular-app || true
+            docker run -d --name angular-app -p 80:80 your-dockerhub-username/angular-app:latest
