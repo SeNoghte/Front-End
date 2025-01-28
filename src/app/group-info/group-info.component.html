@@ -89,7 +89,7 @@
       </ng-container>
     </div>
 
-    <div *ngIf="!isAdmin">
+    <div *ngIf="!group.isPrivate && !isAdmin">
       <div *ngIf="isFollowing" class="unfollow-box">
         <button class="unfollow-button" (click)="leaveGroup()">
           دنبال نکردن

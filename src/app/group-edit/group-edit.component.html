@@ -4,7 +4,11 @@
       <img class="back-button" src="assets/icons/back.svg" />
       بازگشت
     </button>
-    <button (click)="saveChanges()" mat-button [disabled]="!isAdmin || !groupName">
+    <button
+      (click)="saveChanges()"
+      mat-button
+      [disabled]="!isAdmin || !groupName"
+    >
       ثبت
     </button>
   </div>
@@ -22,12 +26,28 @@
 
   <mat-form-field class="edit-input" appearance="outline">
     <mat-label>توضیحات</mat-label>
-    <textarea matInput [(ngModel)]="groupDescription" [readonly]="!isAdmin"></textarea>
+    <textarea
+      matInput
+      [(ngModel)]="groupDescription"
+      [readonly]="!isAdmin"
+    ></textarea>
   </mat-form-field>
 
   <hr class="divider" />
 
-  <button class="delete-group" (click)="deleteGroup()" *ngIf="isAdmin">
+  <button class="delete-group" (click)="confirmDeleteGroup()" *ngIf="isAdmin">
     حذف اکیپ
   </button>
+
+  <div class="confirm-dialog" *ngIf="isDeleteDialogVisible">
+    <p>آیا از حذف این گروه اطمینان دارید؟</p>
+    <div class="dialog-actions">
+      <button class="dialog-button confirm-button" (click)="deleteGroup()">
+        بله
+      </button>
+      <button class="dialog-button cancel-button" (click)="closeDeleteDialog()">
+        خیر
+      </button>
+    </div>
+  </div>
 </div>

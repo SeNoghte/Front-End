@@ -34,7 +34,7 @@ interface ApiResponse {
   ],
 })
 export class GroupEditComponent implements OnInit {
-  groupId: string|null = '';
+  groupId: string | null = '';
   groupName: string = '';
   groupDescription: string = '';
   groupImageUrl: string = 'assets/icons/default-profile-image.svg';
@@ -43,6 +43,7 @@ export class GroupEditComponent implements OnInit {
   uploadedImageId: string | null = null;
   isUploading: boolean = false;
   isAdmin: boolean = true;
+  isDeleteDialogVisible: boolean = false;
 
 
   constructor(public router: Router, private http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute) { }
@@ -82,6 +83,14 @@ export class GroupEditComponent implements OnInit {
         this.toastr.error('خطا در دریافت اطلاعات گروه.', 'خطا');
       }
     );
+  }
+
+  confirmDeleteGroup(): void {
+    this.isDeleteDialogVisible = true;
+  }
+
+  closeDeleteDialog(): void {
+    this.isDeleteDialogVisible = false;
   }
 
 
@@ -155,7 +164,7 @@ export class GroupEditComponent implements OnInit {
       description: this.groupDescription,
       image: this.uploadedImageId || this.groupImageUrl,
     };
-    
+
     this.http.post<any>(apiUrl, requestBody).subscribe(
       (response) => {
         if (response.success) {
@@ -184,25 +193,38 @@ export class GroupEditComponent implements OnInit {
 
   navigateBack(): void {
     const groupId = this.route.snapshot.paramMap.get('id');
-    this.router.navigate(['/group-info',groupId]);
+    this.router.navigate(['/group-info', groupId]);
   }
 
   deleteGroup(): void {
-    const apiUrl = `${environment.apiUrl}/Group/Delete/${this.groupId}`;
-    this.http.delete<any>(apiUrl).subscribe(
+    if (!this.groupId) {
+      this.toastr.error('شناسه گروه موجود نیست.', 'خطا');
+      return;
+    }
+
+    const apiUrl = `${environment.apiUrl}/Group/Delete`;
+    const requestBody = { groupId: this.groupId };
+
+    this.http.post<any>(apiUrl, requestBody).subscribe(
       (response) => {
         if (response.success) {
-          this.toastr.success('گروه با موفقیت حذف شد!', 'عملیات موفق');
-          this.router.navigate(['/']);
+          this.toastr.success('گروه با موفقیت حذف شد!', 'موفقیت');
+          this.router.navigate(['/group-page']);
         } else {
           this.toastr.error(response.message || 'خطا در حذف گروه.', 'خطا');
         }
       },
       (error: HttpErrorResponse) => {
         console.error('خطا در حذف گروه:', error);
-        this.toastr.error('خطا در حذف گروه.', 'خطا');
+        if (error.status === 404) {
+          this.toastr.error('گروه یافت نشد یا قبلاً حذف شده است.', 'خطا');
+        } else {
+          this.toastr.error('خطا در حذف گروه. لطفاً دوباره تلاش کنید.', 'خطا');
+        }
       }
     );
+
+    this.closeDeleteDialog();
   }
 }
 
