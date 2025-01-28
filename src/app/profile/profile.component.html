@@ -65,7 +65,20 @@
     </div>
 
     <div *ngIf="activeTab === 'programs'" class="programs">
-      <p>{{ isOwner ? programsMessage.owner : programsMessage.others }}</p>
+      <div *ngIf="programs.length > 0; else noPrograms">
+        <div
+          *ngFor="let program of programs"
+          class="program"
+          (click)="redirectToEvent(program.id)">
+          <img *ngIf="program.imagePath" [src]="program.imagePath" alt="Program Image" class="common-avatar" />
+          <div *ngIf="!program.imagePath" class="avatar common-avatar">
+            {{ program.name.charAt(0).toUpperCase() }}
+          </div>
+          <span>{{ program.name }}</span>
+        </div>
+      </div>
+      <ng-template #noPrograms>
+        <p>{{ isOwner ? programsMessage.owner : programsMessage.others }}</p>
+      </ng-template>
     </div>
-  </div>
 </div>
