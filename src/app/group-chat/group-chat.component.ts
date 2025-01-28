@@ -78,6 +78,7 @@ export class GroupChatComponent implements OnInit {
           this.group.avatarLetter = letter;
           this.isGroupPrivate = this.group.isPrivate;
           this.GropEvents = response.events as unknown as GroupEvent[];
+          console.log('group chat : ',this.isGroupPrivate);
         } else {
           this.toastrService.error(response.message);
         }

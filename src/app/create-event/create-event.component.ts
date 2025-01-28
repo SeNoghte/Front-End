@@ -89,6 +89,7 @@ export class CreateEventComponent {  selectedFile: File | null = null;
   redirectDetailEvent() {
     const formData = this.createEventForm.value;
     this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
+    console.log('is group private : ',this.isGroupPrivate)
     this.Router.navigate(['/event-detail'],
       {
         queryParams: {
@@ -101,10 +102,6 @@ export class CreateEventComponent {  selectedFile: File | null = null;
         }
       }
     );
-
-    this.Router.navigate(['event-detail', {
-      queryParams: formData,
-    }]);
   }
 
   onFileSelected(event: any): void {

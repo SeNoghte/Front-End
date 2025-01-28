@@ -251,6 +251,7 @@ export class CreateDetailEventComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('submit')
     var is_private : boolean = false;
     if(this.eventData?.isPrivate as unknown as string == 'false'){
       is_private = false;
@@ -258,7 +259,7 @@ export class CreateDetailEventComponent implements OnInit {
     else{
       is_private = true;
     }
-
+    console.log('is private  :',this.isEventPrivate);
     const CreateEventAPI = environment.apiUrl + '/Event/Create';
 
     if (this.isEventPrivate == true) {
@@ -281,6 +282,8 @@ export class CreateDetailEventComponent implements OnInit {
       this.createEvent(CreateEventAPI,requestBody);
     }
     else {
+      console.log('group is private');
+
       const requestBody = {
         title: this.eventData?.title,
         description: this.eventData?.description,
@@ -297,6 +300,8 @@ export class CreateDetailEventComponent implements OnInit {
         latitude: this.selectedCity?.lat
       };
 
+      console.log(requestBody);
+
       this.createEvent(CreateEventAPI,requestBody);
     }
   }
@@ -304,6 +309,7 @@ export class CreateDetailEventComponent implements OnInit {
   createEvent(CreateEventAPI : string , requestBody : any){
     this.http.post<CreateEventAPIresponse>(CreateEventAPI, requestBody).subscribe(
       (response) => {
+        console.log('api response : ',response)
         if (response.success) {
           this.toastr.success(`رویداد یا موفقیت ایجاد شد`);
           this.Router.navigate(['/chat-group', this.eventData?.groupId]);
