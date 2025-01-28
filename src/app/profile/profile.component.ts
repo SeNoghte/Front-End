@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
             email: response.user.email,
             status: response.user.aboutMe,
             lastUpdated: jalaliDate,
-            imageUrl: response.user.image || 'assets/icons/default-profile-image.svg',
+            imageUrl: response.user.image,
           };
         } else {
           this.toastr.error('پروفایل بارگذاری نشد', 'خطا در دریافت اطلاعات کاربر');
