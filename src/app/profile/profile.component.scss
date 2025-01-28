@@ -143,7 +143,7 @@
         .common-avatar {
           width: 40px;
           height: 40px;
-          border-radius: 50%;
+          border-radius: 50% !important;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -152,6 +152,8 @@
           margin-inline-end: 12px;
           overflow: hidden;
         }
+
+
 
         img.common-avatar {
           object-fit: cover;
@@ -192,7 +194,7 @@
         .common-avatar {
           width: 40px;
           height: 40px;
-          border-radius: 50%;
+          border-radius: 50% !important;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -229,3 +231,16 @@
   }
 }
 
+.profile-replacement {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-inline-end: 12px;
+  overflow: hidden;
+  background-color: var(--gray-1);
+}

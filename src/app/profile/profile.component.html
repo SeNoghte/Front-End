@@ -70,8 +70,8 @@
           *ngFor="let program of programs"
           class="program"
           (click)="redirectToEvent(program.id)">
-          <img *ngIf="program.imagePath" [src]="program.imagePath" alt="Program Image" class="common-avatar" />
-          <div *ngIf="!program.imagePath" class="avatar common-avatar">
+          <img *ngIf="program.imagePath" [src]="program.imagePath" class="common-avatar" />
+          <div  class="profile-replacement" *ngIf="!program.imagePath">
             {{ program.name.charAt(0).toUpperCase() }}
           </div>
           <span>{{ program.name }}</span>
