@@ -68,7 +68,7 @@ export class LoginComponent {
           if (response.success) {
             localStorage.setItem('JWTtoken', response.token);
             console.log('Saved JWT Token:', localStorage.getItem('JWTtoken'));
-            this.toastr.success('Login successful!');
+            this.toastr.success('!با موفقیت وارد شدید');
             this.router.navigate(['/landing']);
           }
           else {

@@ -88,6 +88,7 @@ export class AddGroupMemberComponent {
     this.http.post(addMemberApiUrl, this.newGroupInfo.value).subscribe(
       (res: any) => {
         this.toastr.success('گروه با موفقیت ایجاد شد.');
+        this.Router.navigate(['/group-page']);
       },
       (err) => {
         this.toastr.error('خطا در ثبت!');
