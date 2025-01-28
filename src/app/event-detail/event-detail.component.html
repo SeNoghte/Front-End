@@ -71,10 +71,7 @@
     </div>
 
     <div
-      *ngIf="
-        isEventPrivate &&
-        (tasksAssigned.length > 0 || tasksUnassigned.length > 0)
-      "
+      
       class="tasks-container"
     >
       <div *ngIf="tasksAssigned.length > 0" class="assigned-tasks">
@@ -160,6 +157,7 @@
           </mat-chip>
         </mat-chip-list>
       </div>
+    
     </div>
 
     <div class="divider"></div>

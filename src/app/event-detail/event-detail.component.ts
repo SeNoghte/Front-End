@@ -152,7 +152,7 @@ export class EventDetailComponent {
 
           this.tasksAssigned = res.tasks.filter((task: Task) => task.assignedUserId);
           this.tasksUnassigned = res.tasks.filter((task: Task) => !task.assignedUserId);
-
+          
           this.tags = res.tags.map((tag: Tag) => tag.tag);
 
           this.InitCityName(res.event.cityId);
@@ -264,7 +264,7 @@ export class EventDetailComponent {
       this.router.navigate(['/profile']);
       return;
     }
-    
+
     this.router.navigate(['/chat-group', this.event.groupId], {
       queryParams: { defaultNumber: 1 }
     });
