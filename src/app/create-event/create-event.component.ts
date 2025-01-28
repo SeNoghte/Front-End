@@ -102,9 +102,9 @@ export class CreateEventComponent {  selectedFile: File | null = null;
       }
     );
 
-    // this.Router.navigate(['event-detail', {
-    //   queryParams: formData,
-    // }]);
+    this.Router.navigate(['event-detail', {
+      queryParams: formData,
+    }]);
   }
 
   onFileSelected(event: any): void {
@@ -140,6 +140,8 @@ export class CreateEventComponent {  selectedFile: File | null = null;
     if (this.createEventForm.controls.date) {
       this.createEventForm.controls.date.setValue(this.datePipe.transform(this.createEventForm.controls.date.value, 'yyyy-MM-dd')?.toString() ?? '');
     }    
+
+    console.log('event form : ',this.createEventForm.value)
 
     const createEventApiUrl = environment.apiUrl + '/Event/Create';
     this.http.post<CreateEventApiResponse>(createEventApiUrl, this.createEventForm.value).subscribe(

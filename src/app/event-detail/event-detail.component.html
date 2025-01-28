@@ -31,10 +31,18 @@
     <div class="event-header becheener">
       <div class="content">
         <img
+          *ngIf="event.owner?.image"
           [src]="event.owner?.image"
           alt="owner image"
           class="profile-image"
         />
+        <div
+          *ngIf="!event.owner?.image"
+          alt="owner image"
+          class="profile-image-replacement"
+        >
+        {{event.owner!!.name[0]}}
+        </div>
         <div class="becheener-name-container">
           <div class="role">برنامه بچین:</div>
           <div class="becheener-name">{{ event.owner?.name }}</div>
@@ -44,11 +52,10 @@
 
     <div class="event-header" *ngFor="let member of event.members">
       <div class="content">
-        <img
-          [src]="member.image"
-          alt="Profile"
-          class="profile-image"
-        />
+        <img *ngIf="member.image" [src]="member.image" alt="Profile" class="profile-image" />
+        <div class="member-profile-image-replacement" *ngIf="!member.image">
+          {{member.name[0]}}
+        </div>
         <span class="profile-name">{{ member.name }}</span>
       </div>
     </div>
@@ -160,8 +167,8 @@
     <div class="address-section">
       <div class="title">
         <img src="assets/icons/location.svg" alt="" />
-        <span style="margin:0 0.5rem">{{event.cityName}}</span>
-        <span>{{event.address}}</span>
+        <span style="margin: 0 0.5rem">{{ event.cityName }}</span>
+        <span>{{ event.address }}</span>
       </div>
       <div
         id="map"
@@ -189,8 +196,8 @@
 
 <div *ngIf="!isPastEvent && !isUserInMembers" class="submit-container">
   <span>می خوای تو هم تو این برنامه باشی؟</span>
-  <button mat-flat-button  (click)="joinEvent()">منم هستم</button>
-  </div>
+  <button mat-flat-button (click)="joinEvent()">منم هستم</button>
+</div>
 
 <div *ngIf="isPastEvent" class="submit-container">
   <span>دیر رسیدی برنامه تموم شد.</span>

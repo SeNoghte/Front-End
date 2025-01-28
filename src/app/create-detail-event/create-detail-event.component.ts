@@ -233,6 +233,8 @@ export class CreateDetailEventComponent implements OnInit {
       else{
         this.isEventPrivate = true;
       }
+
+      console.log('event data : ',this.eventData)
     });
   }
 
