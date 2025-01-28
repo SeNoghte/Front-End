@@ -3,7 +3,7 @@
   
   
   <div class="events-list" *ngIf="viewMode === 'headline_view'">
-    <button (click)="addEvent()" mat-stroked-button>
+    <button *ngIf="isAdmin" (click)="addEvent()" mat-stroked-button>
       
       <span>
         افزودن برنامه

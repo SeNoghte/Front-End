@@ -24,6 +24,8 @@ import moment from 'moment-jalaali';
 export class EventsComponent {
   @Input() GropEvents!: GroupEvent[];
   @Input() isPrivate!: boolean;
+  @Input() isAdmin!: boolean;
+  
   viewMode: 'calendar_view' | 'headline_view' = 'headline_view';
 
   onToggleChange(value: 'calendar_view' | 'headline_view') {

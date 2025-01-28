@@ -34,9 +34,10 @@ export class GroupChatComponent implements OnInit {
   group!: Group;
   GropEvents!: GroupEvent[];
   isLoading: boolean = true;
-  fromWhere : string | null = '';
-  groupId : string = '';
-  isGroupPrivate : boolean = false;
+  fromWhere: string | null = '';
+  groupId: string = '';
+  isGroupPrivate: boolean = false;
+  isAdmin = false;
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
@@ -77,8 +78,9 @@ export class GroupChatComponent implements OnInit {
           this.group.avatarColor = color;
           this.group.avatarLetter = letter;
           this.isGroupPrivate = this.group.isPrivate;
+          this.isAdmin = this.group.isAdmin;
           this.GropEvents = response.events as unknown as GroupEvent[];
-          console.log('group chat : ',this.isGroupPrivate);
+          console.log('group chat : ', this.isGroupPrivate);
         } else {
           this.toastrService.error(response.message);
         }
@@ -100,17 +102,17 @@ export class GroupChatComponent implements OnInit {
     this.router.navigate(['/group-info', this.group.id]);
   }
 
-  navigateToGroupPage(){
-    if(this.fromWhere == null){
+  navigateToGroupPage() {
+    if (this.fromWhere == null) {
       this.router.navigate(['/group-page']);
     }
-    else if(this.fromWhere == 'explore'){
+    else if (this.fromWhere == 'explore') {
       this.router.navigate(['/explore']);
     }
-    else if(this.fromWhere == 'profile'){
+    else if (this.fromWhere == 'profile') {
       this.router.navigate(['/profile']);
     }
-    else{
+    else {
       this.router.navigate(['/explore-search']);
     }
   }
@@ -126,7 +128,7 @@ export class GroupChatComponent implements OnInit {
     }
   }
 
-  redirectToGroupPage(){
+  redirectToGroupPage() {
     this.router.navigate(['group-page']);
   }
 
