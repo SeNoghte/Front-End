@@ -106,6 +106,9 @@ export class GroupChatComponent implements OnInit {
     else if(this.fromWhere == 'explore'){
       this.router.navigate(['/explore']);
     }
+    else if(this.fromWhere == 'profile'){
+      this.router.navigate(['/profile']);
+    }
     else{
       this.router.navigate(['/explore-search']);
     }

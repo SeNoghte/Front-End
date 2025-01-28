@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
     imageUrl: ''
   };
 
-  teams: {id: string, name: string; icon: string | null; avatarLetter: string; avatarColor: string; isPrivate: boolean }[] = [];
+  teams: { id: string, name: string; icon: string | null; avatarLetter: string; avatarColor: string; isPrivate: boolean }[] = [];
 
   programs: {
     id: string;
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
 
   activeTab: string = 'teams';
 
-  constructor(private http: HttpClient, private toastr: ToastrService,private Router: Router,) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, private Router: Router,) { }
 
   ngOnInit(): void {
     moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' });
@@ -169,16 +169,18 @@ export class ProfileComponent implements OnInit {
     return { letter, color };
   }
 
-  redirectToLanding(){
+  redirectToLanding() {
     this.Router.navigate(['landing']);
   }
 
   redirectToEvent(id: string): void {
-    this.Router.navigate(['show-event-detail'], { queryParams: { id: id , back : 'profile' } });
+    this.Router.navigate(['show-event-detail'], { queryParams: { id: id, back: 'profile' } });
   }
 
 
-  redirectToChatGroup(id: string){
-    this.Router.navigate(['/chat-group', id]);
+  redirectToChatGroup(id: string) {
+    this.Router.navigate(['/chat-group', id], {
+      queryParams: { fromWhere: 'profile' }
+    });
   }
 }
