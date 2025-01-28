@@ -60,7 +60,7 @@ export class EventDetailComponent {
   tasksUnassigned: any[] = [];
   tags: string[] = [];
   isEventPrivate: boolean = false;
-
+  backToprofile = false;
 
   constructor(
     private http: HttpClient,
@@ -85,6 +85,12 @@ export class EventDetailComponent {
 
         this.route.queryParams.subscribe((params) => {
           this.eventId = params['id'];
+          if(params['back']=='profile'){
+            this.backToprofile = true;
+          }
+          else {
+            this.backToprofile = false;
+          }
         });
 
         this.fetchEvent()
@@ -254,6 +260,11 @@ export class EventDetailComponent {
   }
 
   goBack(): void {
+    if(this.backToprofile == true){
+      this.router.navigate(['/profile']);
+      return;
+    }
+    
     this.router.navigate(['/chat-group', this.event.groupId], {
       queryParams: { defaultNumber: 1 }
     });

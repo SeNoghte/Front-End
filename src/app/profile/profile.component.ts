@@ -121,7 +121,6 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-
   fetchUserPrograms(): void {
     const apiUrl = environment.apiUrl + '/Event/GetMyEvents'; // مسیر API
 
@@ -175,7 +174,7 @@ export class ProfileComponent implements OnInit {
   }
 
   redirectToEvent(id: string): void {
-    this.Router.navigate(['/show-event-detail', id]);
+    this.Router.navigate(['show-event-detail'], { queryParams: { id: id , back : 'profile' } });
   }
 
 
